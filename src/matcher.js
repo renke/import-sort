@@ -32,7 +32,7 @@ export function isNodeModule(imported) {
 }
 
 export function isRelativeModule({node, text}) {
-  return node.source.value.startsWith("./");
+  return node.source.value.startsWith(".");
 }
 
 export function startsWithUpperCase({node, text}) {
