@@ -14,7 +14,11 @@
     "auto-test": "mocha --compilers js:babel/register --watch"
   },
   "author": "Renke Grunwald <renke@renke.org> (https://github.com/renke)",
-  "license": "ISC",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/renke/import-sort.git"
+  },
   "devDependencies": {
     "babel": "^5.8.23",
     "chai": "^3.2.0",
