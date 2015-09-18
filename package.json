@@ -1,6 +1,6 @@
 {
   "name": "import-sort",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Sort ES6 imports.",
   "main": "lib",
   "bin": {
@@ -8,10 +8,8 @@
   },
   "scripts": {
     "prepublish": "npm run compile",
-
     "compile": "babel src --out-dir lib",
     "auto-compile": "babel src --out-dir lib --watch",
-
     "test": "mocha --compilers js:babel/register",
     "auto-test": "mocha --compilers js:babel/register --watch"
   },
