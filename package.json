@@ -1,6 +1,6 @@
 {
   "name": "import-sort",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Sort ES6 imports.",
   "main": "lib",
   "bin": {
