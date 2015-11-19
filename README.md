@@ -24,4 +24,4 @@ I appreciate any kind of feedback. Just create an issue or drop me a mail. Thank
 
 ## License ##
 
-See LICENSE.
+See [LICENSE](LICENSE).
