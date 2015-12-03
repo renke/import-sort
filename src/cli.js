@@ -1,17 +1,22 @@
 #!/usr/bin/env node
 
 import "babel/polyfill";
-
-import {readFileSync, writeFileSync} from "fs";
+import { argv } from 'yargs';
+import { readFileSync, writeFileSync } from "fs";
 
 import importSort from "./index";
 
-let source = process.argv[2];
+const source = argv._[0];
+const target = argv._[1];
+const stylePath = argv.s || argv.style;
+
+let style = stylePath && require(stylePath);
+
 let unsorted = "";
 
 // Read code from file
 if (source) {
-  unsorted = readFileSync(source, {encoding: "utf8"});
+  unsorted = readFileSync(source, { encoding: "utf8" });
   write();
 
 // Read code from stdin
@@ -29,8 +34,7 @@ if (source) {
 
 function write() {
   try {
-    let sorted = importSort(unsorted)
-    let target = process.argv[3];
+    let sorted = importSort(unsorted, style)
 
     // Write to file
     if (target) {

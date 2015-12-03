@@ -16,7 +16,11 @@ TODO
 Usage
 -----
 
+###### Clean usage
 `$ import-sort input.js output.js`
+
+###### Custom style
+`$ import-sort input.js -s custom-style.js output.js`
 
 ## Feedback ##
 
