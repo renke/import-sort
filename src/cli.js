@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 import "babel/polyfill";
-
-import {readFileSync, writeFileSync} from "fs";
+import { argv } from 'yargs';
+import { readFileSync, writeFileSync } from "fs";
 
 import importSort from "./index";
 
