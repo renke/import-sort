@@ -17,10 +17,14 @@ Usage
 -----
 
 ###### Clean usage
+
 `$ import-sort input.js output.js`
 
 ###### Custom style
+
 `$ import-sort input.js -s custom-style.js output.js`
+
+…where `custom-style.js` should be the absolute path to a style module. See the [built-in default style](src/styles/default.js) for an example. 
 
 ## Feedback ##
 
