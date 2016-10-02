@@ -1,7 +1,7 @@
 {
   "name": "atom-import-sort",
   "private": true,
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "Sort ES2015 (aka ES6) imports. Manually – or automatically when you save your JavaSript or TypeScript files.",
   "keywords": [
     "es6",
@@ -38,7 +38,7 @@
     "typescript": "^2.1.0-dev.20160901"
   },
   "dependencies": {
-    "import-sort": "^2.0.6",
+    "import-sort": "^2.0.7",
     "import-sort-config": "^2.0.6",
     "import-sort-parser-babylon": "^2.0.6",
     "import-sort-parser-typescript": "^2.0.6",
