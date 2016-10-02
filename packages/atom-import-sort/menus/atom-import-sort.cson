@@ -1,0 +1,21 @@
+'context-menu':
+  'atom-text-editor[data-grammar~="source"][data-grammar~="js"], atom-text-editor[data-grammar~="source"][data-grammar~="ts"]': [
+    {
+      'label': 'Sort Imports'
+      'command': 'import-sort:sort'
+    }
+  ]
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'Import Sort'
+      'submenu': [
+        {
+          'label': 'Sort Imports'
+          'command': 'import-sort:sort'
+        }
+      ]
+    ]
+  }
+]

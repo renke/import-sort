@@ -1,0 +1,24 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "target": "es5",
+    "module": "commonjs",
+    "strictNullChecks": true,
+    "declaration": true,
+    "rootDir": ".",
+    "outDir": "../lib"
+  },
+  "filesGlob": [
+    "**/*.ts",
+    "!../node_modules/**"
+  ],
+  "atom": {
+    "rewriteTsconfig": true
+  },
+  "files": [
+    "index.d.ts",
+    "index.ts"
+  ]
+}

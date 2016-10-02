@@ -1,0 +1,20 @@
+{
+  "name": "example-babylon-renke",
+  "private": true,
+  "version": "2.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Renke Grunwald <renke@renke.org> (https://github.com/renke)",
+  "repository": "renke/import-sort",
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^3.5.0",
+    "import-sort-style-renke": "^2"
+  },
+  "importSort": {
+    ".es6": {
+      "parser": "babylon",
+      "style": "renke"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "target": "es5",
+    "strictNullChecks": true,
+    "declaration": true
+  },
+  "filesGlob": [
+    "src/*.ts",
+    "test/*.ts",
+    "!node_modules/**",
+    "node_modules/@types/node/**/*.ts"
+  ],
+  "atom": {
+    "rewriteTsconfig": true
+  },
+  "files": [
+    "src/index.ts",
+    "node_modules/@types/node/index.d.ts"
+  ]
+}

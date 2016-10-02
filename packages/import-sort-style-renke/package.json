@@ -1,0 +1,30 @@
+{
+  "name": "import-sort-style-renke",
+  "version": "2.0.0",
+  "description": "Renke's personal import-sort style",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "tsc -p src",
+    "watch:build": "tsc -p src -w",
+    "test": "mocha --compilers ts:ts-node/register,tsx:ts-node/register --recursive test",
+    "watch:test": "mocha -w --compilers ts:ts-node/register,tsx:ts-node/register --recursive test"
+  },
+  "author": "Renke Grunwald <renke@renke.org> (https://github.com/renke)",
+  "repository": "renke/import-sort",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^3.4.32",
+    "@types/mocha": "^2.2.31",
+    "@types/node": "^6.0.38",
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2",
+    "ts-node": "^1.3.0",
+    "tslint": "^3.15.1",
+    "typescript": "^2.1.0-dev.20160901",
+    "import-sort-style": "^2"
+  },
+  "dependencies": {
+  }
+}
