@@ -1,5 +1,5 @@
+.vscode/
+lerna-debug.log
 node_modules
 npm-debug.log
-lerna-debug.log
 packages/*/lib/
-.vscode/
