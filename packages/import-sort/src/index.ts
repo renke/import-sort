@@ -195,7 +195,7 @@ export function sortImports(code: string, parser: IParser, style: IStyle): ISort
   if (after.match(/^\s+$/)) {
     afterChange = {
       start,
-      end: oldAfterLength,
+      end: start + oldAfterLength,
       code: "",
       note: "after-trim",
     };
@@ -215,7 +215,7 @@ export function sortImports(code: string, parser: IParser, style: IStyle): ISort
     start: before.length,
     end: before.length,
     code: importsCode,
-    node: "imports",
+    note: "imports",
   };
 
   changes.push(change);

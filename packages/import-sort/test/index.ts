@@ -92,6 +92,58 @@ console.log("Hello World");
     assert.equal(applyChanges(code, changes), expected);
   });
 
+  it("should sort code containing imports and other things", () => {
+    const code =
+`
+import b from "b";
+import a from "a";
+
+console.log("Hello World");
+`.trim() + "\n";
+
+    const expected =
+`
+import a from "a";
+import b from "b";
+
+console.log("Hello World");
+`.trim() + "\n";
+
+    const result = sortImports(code, parser, ONE_BUCKET_NATURALLY_STYLE);
+
+    const actual = result.code;
+    const changes = result.changes;
+
+    assert.equal(actual, expected);
+    assert.equal(applyChanges(code, changes), expected);
+  });
+
+  it("should sort code containing imports, a comment and trailing new lines", () => {
+    const code =
+`
+// Above
+
+import b from "b";
+import a from "a";
+`.trim() + "\n\n";
+
+    const expected =
+`
+// Above
+
+import a from "a";
+import b from "b";
+`.trim() + "\n";
+
+    const result = sortImports(code, parser, ONE_BUCKET_NATURALLY_STYLE);
+
+    const actual = result.code;
+    const changes = result.changes;
+
+    assert.equal(actual, expected);
+    assert.equal(applyChanges(code, changes), expected);
+  });
+
   it("should sort code containing imports followed by a comment", () => {
     const code =
 `

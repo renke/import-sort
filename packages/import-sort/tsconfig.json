@@ -18,7 +18,6 @@
     "rewriteTsconfig": true
   },
   "files": [
-    "src/index.d.ts",
     "src/index.ts",
     "src/style/StyleAPI.ts",
     "test/index.ts",
