@@ -19,7 +19,7 @@ const insidePlaceholderRepo = {
 
 exec('git clone git@github.com:renke/atom-import-sort.git atom-import-sort-placeholder');
 exec('rm -rf "atom-import-sort-placeholder/.*" 2> /dev/null');
-exec('cp -R packages/atom-import-sort/* atom-import-sort-placeholder/');
+exec('cp -R packages/atom-import-sort/. atom-import-sort-placeholder/');
 exec('cd atom-import-sort-placeholder');
 exec('git add -A', insidePlaceholderRepo);
 exec(`git commit -m "v${version}"`, insidePlaceholderRepo);
