@@ -3,9 +3,6 @@
 # Changes
 
 # Sorting imports
-- Atom / Visual Studio Code
-- Cli
-- Library
 
 # Dealing with comments
 

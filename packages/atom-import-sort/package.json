@@ -2,7 +2,7 @@
   "name": "atom-import-sort",
   "private": true,
   "version": "2.0.1",
-  "description": "Sort ES2015 (aka ES6) imports. Manually – or automatically when you save your JavasSript or TypeScript files.",
+  "description": "Sort ES2015 (aka ES6) imports. Manually – or automatically when you save your JavaSript or TypeScript files.",
   "keywords": [
     "es6",
     "eslint",
