@@ -1,4 +1,5 @@
 #!/bin/bash
 
-import b from "b";
-import a from "a";
+import a from 'a';
+import b from 'b';
+import c from 'b';

@@ -1,9 +1,9 @@
 import "atom";
 
+import {allowUnsafeEval, allowUnsafeNewFunction} from "loophole";
 import {dirname, extname} from "path";
 import sortImports, {ICodeChange} from "import-sort";
 
-import {allowUnsafeEval, allowUnsafeNewFunction} from "loophole";
 import {getConfig} from "import-sort-config";
 
 // tslint:disable-next-line
@@ -48,7 +48,10 @@ export class Plugin {
       this.bufferWillSaveDisposables = new CompositeDisposable();
 
       this.editorObserverDisposable = atom.workspace.observeTextEditors(editor => {
-        this.bufferWillSaveDisposables.add(editor.getBuffer().onWillSave(this.sortEditor));
+        this.bufferWillSaveDisposables.add(editor.getBuffer().onWillSave(() => {
+          console.log("editor", editor);
+          this.sortEditor(editor, true);
+        }));
       });
     }
   }
@@ -62,7 +65,7 @@ export class Plugin {
     }
   }
 
-  private sortEditor(editor) {
+  private sortEditor(editor, notifyErrors = false) {
     const scopeDescriptor = editor.getRootScopeDescriptor();
 
     if (!scopeDescriptor) {
@@ -106,18 +109,21 @@ export class Plugin {
       const sortConfig = getConfig(extension, directory);
 
       if (!sortConfig) {
-        atom.notifications.addWarning(`No configuration found for this file type`);
+        if (!notifyErrors) {
+          atom.notifications.addWarning(`No configuration found for this file type`);
+        }
+
         return;
       }
 
       const {parser, style} = sortConfig;
 
       if (!parser || !style) {
-        if (!parser) {
+        if (!parser && !notifyErrors) {
             atom.notifications.addWarning(`Parser '${sortConfig.config.parser}' not found`);
         }
 
-        if (!style) {
+        if (!style && !notifyErrors) {
           atom.notifications.addWarning(`Style '${sortConfig.config.style}' not found`);
         }
 
@@ -147,7 +153,9 @@ export class Plugin {
       // editor.setText(sorted);
       editor.setCursorBufferPosition(cursor);
     } catch (e) {
-      atom.notifications.addWarning(`Failed to sort imports:\n${e.toString()}`);
+      if (!notifyErrors) {
+        atom.notifications.addWarning(`Failed to sort imports:\n${e.toString()}`);
+      }
     }
   }
 
