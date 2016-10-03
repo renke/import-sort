@@ -20,7 +20,7 @@ The package also offers a "sort on save" option to automatically sort your impor
 
 Sort your imports from the command line. Useful to sort all your files in bulk or from a script in your `package.json`.
 
-Install it with `npm install --save-dev import-sort-cli import-sort-style-eslint`.
+Install it with `npm install --save-dev import-sort-cli import-sort-parser-babylon import-sort-style-eslint`.
 
 
 ```
