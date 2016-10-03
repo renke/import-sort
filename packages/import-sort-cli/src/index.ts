@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-import * as yargs from "yargs";
 import * as mkdirp from "mkdirp";
+import * as yargs from "yargs";
 
 import {IResolvedConfig, getConfig} from "import-sort-config";
-import {dirname, extname, basename, join} from "path";
+import {basename, dirname, extname, join} from "path";
 import {lstatSync, readFileSync, realpathSync, writeFileSync} from "fs";
 import sortImports, {ISortResult} from "import-sort";
 
@@ -37,20 +37,20 @@ Usage: import-sort [OPTION] [FILE]
        import-sort [OPTION] [DIRECTORY]
 `.trim())
 
-  .describe("overwrite", "overwrite")
+  .describe("overwrite", "Sort files in-place")
   .boolean("overwrite")
   .alias("overwrite", "o")
 
-  .describe("write", "write")
+  .describe("write", "Sort and write files to specified location")
   .string("write")
   .requiresArg("write")
   .alias("write", "w")
 
-  .describe("diff", "diff")
+  .describe("diff", "Print unified diffs of changes")
   .boolean("diff")
   .alias("diff", "d")
 
-  .describe("status", "status")
+  .describe("status", "Only set the exit code")
   .boolean("status")
   .alias("status", "s")
 
