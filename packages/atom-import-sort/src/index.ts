@@ -8,7 +8,6 @@ import {getConfig} from "import-sort-config";
 
 // tslint:disable-next-line
 const CompositeDisposable = require("atom").CompositeDisposable;
-
 export class Plugin {
   public bufferWillSaveDisposables?;
   public editorObserverDisposable?;
@@ -49,7 +48,6 @@ export class Plugin {
 
       this.editorObserverDisposable = atom.workspace.observeTextEditors(editor => {
         this.bufferWillSaveDisposables.add(editor.getBuffer().onWillSave(() => {
-          console.log("editor", editor);
           this.sortEditor(editor, true);
         }));
       });
