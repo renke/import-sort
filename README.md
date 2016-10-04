@@ -70,28 +70,27 @@ That means that things like `// eslint-disable line` and `// eslint-disable-next
 
 # Using a different style or parser
 
-While styles were already supported by previous versions of `import-sort`, they were never really exposed to the user.
-
-Styles (and parsers) can now be configured on a per-project basis including support for different types of files (currently JavaScript and TypeScript).
+Styles (and parsers) can be configured on a per-project basis including support for different types of files (currently JavaScript and TypeScript).
 
 Just add the following to your `package.json` and adapt it to your liking:
 
 ```json
-".js, .jsx, .es6, .es": {
-  "parser": "babylon",
-  "style": "eslint"
-},
-".ts, .tsx": {
-  "parser": "typescript",
-  "style": "eslint"
-},
+"importSort": {
+  ".js, .jsx, .es6, .es": {
+    "parser": "babylon",
+    "style": "eslint"
+  },
+  ".ts, .tsx": {
+    "parser": "typescript",
+    "style": "eslint"
+  }
 ```
 
 The keys are a list of file extensions that map to the parser and style that should be used for files that have any of the listed file extensions.
 
 By default, `import-sort` comes with two styles.
 
-* `import-sort-style-eslint` (default): A style that sorts your imports such that they conform to [ESLint](http://eslint.org/) rule [sort-imports](http://eslint.org/docs/rules/sort-impo).
+* `import-sort-style-eslint` (default): A style that sorts your imports such that they conform to [ESLint](http://eslint.org/) rule [sort-imports](http://eslint.org/docs/rules/sort-imports).
 
 * `import-sort-style-renke`: My personal style. It's a bit more "complex" than the `eslint` style and is probably not for everybody (hence not being the default).
 
