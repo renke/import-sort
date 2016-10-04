@@ -90,9 +90,9 @@ The keys are a list of file extensions that map to the parser and style that sho
 
 By default, `import-sort` comes with two styles.
 
-* `import-sort-style-eslint` (default): A style that sorts your imports such that they conform to [ESLint](http://eslint.org/) rule [sort-imports](http://eslint.org/docs/rules/sort-imports). See [example-babylon-eslint](https://github.com/renke/import-sort/tree/master/packages/example-babylon-eslint).
+* `import-sort-style-eslint` (default): A style that sorts your imports such that they conform to [ESLint](http://eslint.org/) rule [sort-imports](http://eslint.org/docs/rules/sort-imports).
 
-* `import-sort-style-renke`: My personal style. It's a bit more "complex" than the `eslint` style and is probably not for everybody (hence not being the default). See [example-babylon-renke](https://github.com/renke/import-sort/tree/master/packages/example-babylon-renke).
+* `import-sort-style-renke`: My personal style. It's a bit more "complex" than the `eslint` style and is probably not for everybody (hence not being the default).
 
 # Writing you own custom style
 
