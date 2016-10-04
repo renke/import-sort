@@ -1,6 +1,6 @@
 {
   "name": "import-sort-config",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Parser for the import-sort config key.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -23,8 +23,8 @@
     "@types/resolve-from": "0.0.17",
     "chai": "^3.5.0",
     "import-sort-parser": "^2.0.14",
-    "import-sort-parser-babylon": "^2.0.14",
-    "import-sort-parser-typescript": "^2.0.14",
+    "import-sort-parser-babylon": "^2.2.1",
+    "import-sort-parser-typescript": "^2.2.1",
     "import-sort-style-eslint": "^2.0.14",
     "mocha": "^3.0.2",
     "ts-node": "^1.3.0",
