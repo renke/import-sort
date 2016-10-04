@@ -1,11 +1,12 @@
 import {
-  IStyleAPI,
+  IComparatorFunction,
   IMatcherFunction,
-  ISorterFunction,
   INamedMemberSorterFunction,
   IPredicateFunction,
-  IComparatorFunction,
+  ISorterFunction,
+  IStyleAPI,
 } from "import-sort-style";
+
 import {IImport} from "import-sort-parser";
 
 function member(predicate: IPredicateFunction): IMatcherFunction;

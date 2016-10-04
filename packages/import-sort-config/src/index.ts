@@ -1,6 +1,7 @@
-import * as minimatch from "minimatch";
-import {readFileSync} from "fs";
 import * as assign from "core-js/library/fn/object/assign";
+import * as minimatch from "minimatch";
+
+import {readFileSync} from "fs";
 
 import resolve = require("resolve-from");
 import findRoot = require("find-root");
