@@ -118,16 +118,24 @@ export function formatImport(code: string, imported: IImport): string {
   return originalImportCode.replace(/\{[\s\S]*\}/g, namedMembersString => {
       const useMultipleLines = namedMembersString.indexOf("\n") !== -1;
 
+      let prefix: string | undefined;
+
       if (useMultipleLines) {
-          const prefix = namedMembersString.split("\n")[1].match(/^\s*/)![0];
-          return formatNamedMembers(namedMembers, useMultipleLines, prefix);
+          prefix = namedMembersString.split("\n")[1].match(/^\s*/)![0];
       }
 
-      return formatNamedMembers(namedMembers, useMultipleLines);
+      let useSpaces = namedMembersString.charAt(1) === " ";
+
+      return formatNamedMembers(namedMembers, useMultipleLines, useSpaces, prefix);
   });
 }
 
-function formatNamedMembers(namedMembers: Array<NamedMember>, useMultipleLines: boolean, prefix?: string): string {
+function formatNamedMembers(
+  namedMembers: Array<NamedMember>,
+  useMultipleLines: boolean,
+  useSpaces: boolean,
+  prefix: string | undefined,
+): string {
   if (useMultipleLines) {
     return "{\n" + namedMembers.map(({name, alias}) => {
       if (name === alias) {
@@ -137,12 +145,14 @@ function formatNamedMembers(namedMembers: Array<NamedMember>, useMultipleLines: 
       return `${prefix}${name} as ${alias},\n`;
     }).join("") + "}";
   } else {
-    return "{" + namedMembers.map(({name, alias}) => {
+    const space = useSpaces ? " " : "";
+
+    return "{" + space + namedMembers.map(({name, alias}) => {
       if (name === alias) {
         return `${name}`;
       }
 
       return `${name} as ${alias}`;
-    }).join(", ") + "}";
+    }).join(", ") + space + "}";
   }
 }

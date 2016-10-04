@@ -275,4 +275,30 @@ import {
 
     assert.equal(formatImport(actual, imported), expected);
   });
+
+  it("should preserve whitespace around braces in one-line imports", () => {
+    const actual =
+`
+import { a, b, c } from "xyz"
+`.trim();
+
+    const imported: IImport = {
+      start: 0,
+      end: 29,
+      type: "import",
+      moduleName: "xyz",
+      namedMembers: [
+        {name: "a", alias: "a"},
+        {name: "b", alias: "b"},
+        {name: "c", alias: "c"},
+      ],
+    };
+
+    const expected =
+`
+import { a, b, c } from "xyz"
+`.trim();
+
+    assert.equal(formatImport(actual, imported), expected);
+  });
 });
