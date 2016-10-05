@@ -20,6 +20,7 @@
   },
   "files": [
     "index.ts",
+    "style/StyleAPI.d.ts",
     "style/StyleAPI.ts",
     "../node_modules/@types/node/index.d.ts"
   ]

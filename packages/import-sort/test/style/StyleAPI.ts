@@ -29,4 +29,36 @@ describe("StyleAPI", () => {
 
     assert.isBelow(StyleAPI.member(comparator)(firstImport, secondImport), 0);
   });
+
+  it("should detect Node modules", () => {
+    const imported: IImport = stubImport({moduleName: "fs"});
+    assert.isTrue(StyleAPI.isNodeModule(imported));
+  });
+
+  it("should detect non-Node modules", () => {
+    const imported: IImport = stubImport({moduleName: "foo"});
+    assert.isFalse(StyleAPI.isNodeModule(imported));
+  });
+
+  it("should sort by dot segment count", () => {
+    let firstImport: IImport = stubImport({moduleName: "./a"});
+    let secondImport: IImport = stubImport({moduleName: "./b"});
+
+    assert.equal(StyleAPI.dotSegmentCount(firstImport, secondImport), 0);
+
+    firstImport = stubImport({moduleName: "../a"});
+    secondImport = stubImport({moduleName: "./b"});
+
+    assert.isBelow(StyleAPI.dotSegmentCount(firstImport, secondImport), 0);
+
+    firstImport = stubImport({moduleName: "./a"});
+    secondImport = stubImport({moduleName: "../b"});
+
+    assert.isAbove(StyleAPI.dotSegmentCount(firstImport, secondImport), 0);
+
+    firstImport = stubImport({moduleName: "../../a"});
+    secondImport = stubImport({moduleName: "../b"});
+
+    assert.isBelow(StyleAPI.dotSegmentCount(firstImport, secondImport), 0);
+  });
 });

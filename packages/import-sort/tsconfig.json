@@ -19,6 +19,7 @@
   },
   "files": [
     "src/index.ts",
+    "src/style/StyleAPI.d.ts",
     "src/style/StyleAPI.ts",
     "test/index.ts",
     "test/stubImport.ts",

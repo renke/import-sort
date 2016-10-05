@@ -9,6 +9,8 @@ import {
 
 import {IImport} from "import-sort-parser";
 
+import isNodeModulePredicate = require("is-builtin-module");
+
 function member(predicate: IPredicateFunction): IMatcherFunction;
 function member(comparator: IComparatorFunction): ISorterFunction;
 function member(predicateOrComparator: IPredicateFunction | IComparatorFunction): IMatcherFunction | ISorterFunction {
@@ -127,6 +129,10 @@ function hasSingleMember(imported): boolean {
   return (imported.namedMembers.length + (imported.defaultMember ? 1 : 0)) === 1 && !hasNamespaceMember(imported);
 }
 
+function isNodeModule(imported: IImport): boolean {
+  return isNodeModulePredicate(imported.moduleName);
+}
+
 function isRelativeModule(imported: IImport): boolean {
   return imported.moduleName.indexOf(".") === 0;
 }
@@ -165,6 +171,21 @@ function unicode(first: string, second: string): number {
   return 0;
 }
 
+function dotSegmentCount(firstImport: IImport, secondImport: IImport): number {
+  const firstCount = (firstImport.moduleName.match(/\./g) || []).length;
+  const secondCount = (secondImport.moduleName.match(/\./g) || []).length;
+
+  if (firstCount > secondCount) {
+    return -1;
+  }
+
+  if (firstCount < secondCount) {
+    return 1;
+  }
+
+  return 0;
+}
+
 const StyleAPI: IStyleAPI = {
   member,
 
@@ -192,6 +213,7 @@ const StyleAPI: IStyleAPI = {
   hasMultipleMembers,
   hasSingleMember,
 
+  isNodeModule,
   isRelativeModule,
   isAbsoluteModule,
 
@@ -201,6 +223,7 @@ const StyleAPI: IStyleAPI = {
 
   naturally,
   unicode,
+  dotSegmentCount,
 };
 
 export default StyleAPI;

@@ -32,7 +32,7 @@ export interface IStyleAPI {
   hasMultipleMembers: IMatcherFunction;
   hasSingleMember: IMatcherFunction;
 
-  // isNodeModule: IMatcherFunction;
+  isNodeModule: IMatcherFunction;
   isRelativeModule: IMatcherFunction;
   isAbsoluteModule: IMatcherFunction;
 
@@ -43,6 +43,7 @@ export interface IStyleAPI {
   // reverse: (sorter: ISorterFunction) => ISorterFunction;
   naturally: IComparatorFunction;
   unicode: IComparatorFunction;
+  dotSegmentCount: ISorterFunction;
 }
 
 export interface IMatcherFunction {
