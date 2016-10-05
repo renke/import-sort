@@ -6,7 +6,7 @@ export interface IStyleAPI {
   // firstNamedMember: ISelectorFunction;
   // defaultMember: ISelectorFunction;
   // namespaceMember: ISelectorFunction;
-  //
+
   moduleName: ISelectorFunction;
 
   name: INamedMemberSelectorFunction;
@@ -31,16 +31,15 @@ export interface IStyleAPI {
 
   hasMultipleMembers: IMatcherFunction;
   hasSingleMember: IMatcherFunction;
-  //
+
   // isNodeModule: IMatcherFunction;
   isRelativeModule: IMatcherFunction;
   isAbsoluteModule: IMatcherFunction;
-  //
-  // startsWithUpperCase: IPredicateFunction;
-  // startsWithLowerCase: IPredicateFunction;
-  // startsWithAlphanumeric: IPredicateFunction;
 
-  //  TODO
+  startsWithUpperCase: IPredicateFunction;
+  startsWithLowerCase: IPredicateFunction;
+  startsWithAlphanumeric: IPredicateFunction;
+
   // reverse: (sorter: ISorterFunction) => ISorterFunction;
   naturally: IComparatorFunction;
   unicode: IComparatorFunction;

@@ -78,13 +78,13 @@ function not(matcher: IMatcherFunction): IMatcherFunction {
 function and(...matchers: Array<IMatcherFunction>): IMatcherFunction {
   return imported => {
     return matchers.every(matcher => matcher(imported));
-  }
+  };
 }
 
 function or(...matchers: Array<IMatcherFunction>): IMatcherFunction {
   return imported => {
     return matchers.some(matcher => matcher(imported));
-  }
+  };
 }
 
 function hasMember(imported: IImport): boolean {
@@ -135,6 +135,20 @@ function isAbsoluteModule(imported: IImport): boolean {
   return !isRelativeModule(imported);
 }
 
+function startsWithUpperCase(text: string): boolean {
+  let start = text.charAt(0);
+  return text.charAt(0) === start.toUpperCase();
+}
+
+function startsWithLowerCase(text: string): boolean {
+  let start = text.charAt(0);
+  return text.charAt(0) === start.toLowerCase();
+}
+
+function startsWithAlphanumeric(text: string): boolean {
+  return !!text.match(/^[A-Za-z0-9]/);
+}
+
 function naturally(first: string, second: string): number {
   return first.localeCompare(second, "en");
 }
@@ -180,6 +194,10 @@ const StyleAPI: IStyleAPI = {
 
   isRelativeModule,
   isAbsoluteModule,
+
+  startsWithUpperCase,
+  startsWithLowerCase,
+  startsWithAlphanumeric,
 
   naturally,
   unicode,

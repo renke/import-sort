@@ -8,6 +8,7 @@ import {getConfig} from "import-sort-config";
 
 // tslint:disable-next-line
 const CompositeDisposable = require("atom").CompositeDisposable;
+
 export class Plugin {
   public bufferWillSaveDisposables?;
   public editorObserverDisposable?;
@@ -148,7 +149,6 @@ export class Plugin {
         }
       });
 
-      // editor.setText(sorted);
       editor.setCursorBufferPosition(cursor);
     } catch (e) {
       if (!notifyErrors) {
