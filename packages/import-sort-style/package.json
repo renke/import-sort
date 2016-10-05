@@ -1,6 +1,6 @@
 {
   "name": "import-sort-style",
-  "version": "2.0.14",
+  "version": "2.3.0",
   "description": "Interfaces for import-sort styles.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
