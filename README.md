@@ -84,6 +84,7 @@ Just add the following to your `package.json` and adapt it to your liking:
     "parser": "typescript",
     "style": "eslint"
   }
+}
 ```
 
 The keys are a list of file extensions that map to the parser and style that should be used for files that have any of the listed file extensions.
