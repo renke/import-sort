@@ -1,6 +1,6 @@
 {
   "name": "import-sort-style-eslint",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "An import-sort style that is compatible with ESLint's sort-imports rule",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",

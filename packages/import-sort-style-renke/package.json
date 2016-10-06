@@ -1,6 +1,6 @@
 {
   "name": "import-sort-style-renke",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Renke's personal import-sort style",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
