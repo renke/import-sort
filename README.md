@@ -89,11 +89,13 @@ Just add the following to your `package.json` and adapt it to your liking:
 
 The keys are a list of file extensions that map to the parser and style that should be used for files that have any of the listed file extensions.
 
-By default, `import-sort` comes with two styles.
+By default, `import-sort` comes with these styles:
 
-* `import-sort-style-eslint` (default): A style that sorts your imports such that they conform to [ESLint](http://eslint.org/) rule [sort-imports](http://eslint.org/docs/rules/sort-imports).
+* [`import-sort-style-eslint` (default)](packages/import-sort-style-eslint): A style that that is compatible with [ESLint's](http://eslint.org/) [sort-imports](http://eslint.org/docs/rules/sort-imports) rule.
 
-* `import-sort-style-renke`: My personal style. It's a bit more "complex" than the `eslint` style and is probably not for everybody (hence not being the default).
+* [`import-sort-style-module`](packages/import-sort-style-module): A style that groups and sorts by module.
+
+* [`import-sort-style-renke`](packages/import-sort-style-renke): Renke's personal style.
 
 # Writing you own custom style
 

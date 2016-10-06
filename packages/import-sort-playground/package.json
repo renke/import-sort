@@ -1,7 +1,7 @@
 {
-  "name": "example-babylon-renke",
+  "name": "import-sort-playground",
   "private": true,
-  "version": "2.3.0",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "author": "Renke Grunwald <renke@renke.org> (https://github.com/renke)",
@@ -9,10 +9,17 @@
   "license": "ISC",
   "dependencies": {
     "eslint": "^3.5.0",
-    "import-sort-style-renke": "^2.3.0"
+    "tslint": "^3.15.1",
+    "typescript": "^1.8.10",
+    "import-sort-style-renke": "^2",
+    "import-sort-style-eslint": "^2",
+    "import-sort-style-module": "^2"
+  },
+  "devDependencies": {
+    "tslint": "^3.15.1"
   },
   "importSort": {
-    ".es6": {
+    ".js": {
       "parser": "babylon",
       "style": "renke"
     }
