@@ -96,7 +96,7 @@ function parseImportDeclaration(
 
   let type: ImportType = "import";
 
-  let moduleName = importDeclaration.moduleSpecifier.getText().replace(/"/g, "");
+  let moduleName = importDeclaration.moduleSpecifier.getText().replace(/"|'/g, "");
 
   const imported: IImport = {
     start,
