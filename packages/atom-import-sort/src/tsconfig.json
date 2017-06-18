@@ -3,7 +3,7 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "strictNullChecks": true,
     "declaration": true,

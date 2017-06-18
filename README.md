@@ -39,7 +39,7 @@ Options:
 
 Sort your imports via [Node.js](https://nodejs.org/). For more information take a look at the code of the `import-sort-cli` package.
 
-To use it you probably want to install `import-sort`, `import-sort-config`, a parser (say `import-sort-babylon`) and a style (say `import-sort-style-eslint`).
+To use it you probably want to install `import-sort`, `import-sort-config`, a parser (say `import-sort-parser-babylon`) and a style (say `import-sort-style-eslint`).
 
 The `import-sort` library is basically the heart that powers `import-sort-cli` and `atom-import-sort` and should be used if you want to integrate it with other environments.
 

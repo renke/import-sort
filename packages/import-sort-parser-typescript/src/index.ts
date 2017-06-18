@@ -150,7 +150,7 @@ function getComments(
     const parentPos = isTrailing ? node.parent.end : node.parent.pos;
 
     if (node.parent.kind === typescript.SyntaxKind.SourceFile || nodePos !== parentPos) {
-      let comments: Array<typescript.CommentRange>;
+      let comments: Array<typescript.CommentRange> | undefined;
 
       if (isTrailing) {
         comments = typescript.getTrailingCommentRanges(sourceFile.text, nodePos);

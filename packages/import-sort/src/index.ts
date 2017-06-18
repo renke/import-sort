@@ -1,6 +1,3 @@
-import * as assign from "core-js/library/fn/object/assign";
-import * as findIndex from "core-js/library/fn/array/find-index";
-
 import {IImport, IParser, NamedMember} from "import-sort-parser";
 import {INamedMemberSorterFunction, ISorterFunction, IStyle} from "import-sort-style";
 
@@ -56,7 +53,7 @@ export function sortImports(code: string, parser: IParser, style: IStyle): ISort
   for (const imported of imports) {
     let sortedImport = imported;
 
-    const index = findIndex(items, item => {
+    const index = items.findIndex(item => {
       sortedImport = sortNamedMembers(imported, item.sortNamedMembers);
       return !!item.match && item.match!(sortedImport);
     });
@@ -240,7 +237,7 @@ function sortNamedMembers(
   }
 
   if (!Array.isArray(sort)) {
-    const sortedImport = assign({}, imported);
+    const sortedImport = Object.assign({}, imported);
     sortedImport.namedMembers.sort(sort as INamedMemberSorterFunction);
     return sortedImport;
   }
@@ -263,7 +260,7 @@ function sortNamedMembers(
       return comparison;
   };
 
-  const sortedImport = assign({}, imported);
+  const sortedImport = Object.assign({}, imported);
   sortedImport.namedMembers.sort(multiSort);
 
   return sortedImport;

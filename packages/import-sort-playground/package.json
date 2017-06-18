@@ -8,20 +8,25 @@
   "repository": "renke/import-sort",
   "license": "ISC",
   "dependencies": {
-    "eslint": "^3.5.0",
-    "tslint": "^3.15.1",
-    "typescript": "^1.8.10",
-    "import-sort-style-renke": "^2.4.0",
+    "eslint": "^4.0.0",
+    "import-sort-parser-babylon": "^2.3.0",
+    "import-sort-parser-typescript": "^2.2.1",
     "import-sort-style-eslint": "^2.4.0",
-    "import-sort-style-module": "^2.4.0"
+    "import-sort-style-module": "^2.4.0",
+    "import-sort-style-renke": "^2.4.0",
+    "typescript": "^2.3.4"
   },
   "devDependencies": {
-    "tslint": "^3.15.1"
+    "tslint": "^5.4.3"
   },
   "importSort": {
     ".js": {
       "parser": "babylon",
-      "style": "renke"
+      "style": "module"
+    },
+    ".ts": {
+      "parser": "typescript",
+      "style": "module"
     }
   }
 }

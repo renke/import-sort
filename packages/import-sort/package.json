@@ -1,7 +1,7 @@
 {
   "name": "import-sort",
   "version": "2.4.0",
-  "description": "Sort ES2015 (aka ES6) imports programmatially.",
+  "description": "Sort ES2015 (aka ES6) imports programmatically.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
@@ -14,23 +14,21 @@
   "repository": "renke/import-sort",
   "license": "ISC",
   "devDependencies": {
-    "@types/chai": "^3.4.32",
-    "@types/core-js": "^0.9.34",
-    "@types/mocha": "^2.2.31",
-    "@types/node": "^6.0.38",
-    "chai": "^3.5.0",
-    "import-sort-parser": "^2.0.14",
+    "@types/chai": "^4.0.0",
+    "@types/mocha": "^2.2.41",
+    "@types/node": "^7.0.31",
+    "chai": "^4.0.2",
     "import-sort-parser-babylon": "^2.3.0",
     "import-sort-parser-typescript": "^2.2.1",
-    "import-sort-style": "^2.3.0",
     "import-sort-style-eslint": "^2.4.0",
-    "mocha": "^3.0.2",
-    "ts-node": "^1.3.0",
-    "tslint": "^3.15.1",
-    "typescript": "^2.1.0-dev.20160901"
+    "mocha": "^3.4.2",
+    "ts-node": "^3.0.6",
+    "tslint": "^5.4.3",
+    "typescript": "^2.3.4"
   },
   "dependencies": {
-    "core-js": "^2.4.1",
+    "import-sort-parser": "^2.0.14",
+    "import-sort-style": "^2.3.0",
     "is-builtin-module": "^1.0.0"
   }
 }
