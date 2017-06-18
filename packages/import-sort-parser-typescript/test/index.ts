@@ -67,6 +67,14 @@ import l, * as m from "o";
     assert.equal(imports[6].namespaceMember, "m");
   });
 
+  it("should deal with single quotes (issue #22 and #15)", () => {
+    const imports = parseImports(`
+import 'a';    
+`);
+
+    assert.equal(imports[0].moduleName, "a");
+  })
+
   it("should include nearby comments", () => {
     const imports = parseImports(
 `
