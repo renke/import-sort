@@ -48,6 +48,10 @@
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.2.1.tgz#72c2a4c35448fd4c6b15e82efd0852e71dd630f8"
 
+"@types/lodash@^4.14.66":
+  version "4.14.66"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.66.tgz#3dbb83477becf130611f8fac82a8fdb199805981"
+
 "@types/minimatch@^2.0.29":
   version "2.0.29"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-2.0.29.tgz#5002e14f75e2d71e564281df0431c8c1b4a2a36a"

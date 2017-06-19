@@ -136,7 +136,7 @@ export class Plugin {
 
       allowUnsafeNewFunction(() => {
         allowUnsafeEval(() => {
-          changes = sortImports(unsorted, parser!, style!).changes;
+          changes = sortImports(unsorted, parser!, style!, path).changes;
         });
       });
 

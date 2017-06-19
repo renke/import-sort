@@ -1,2 +1,1 @@
-import b from "c";
-import a from "a";
+import { __ } from "ramda";

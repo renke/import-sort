@@ -90,7 +90,7 @@ if (file) {
   let sortResult: ISortResult | undefined;
 
   try {
-    sortResult = sortImports(unsortedCode, config.parser!, config.style!);
+    sortResult = sortImports(unsortedCode, config.parser!, config.style!, file);
   } catch (e) {
     bail(`Failed to parse '${fileOrDirectory}'`);
   }
@@ -143,7 +143,7 @@ if (directory) {
       let sortResult: ISortResult | undefined;
 
       try {
-        sortResult = sortImports(unsortedCode, config.parser!, config.style!);
+        sortResult = sortImports(unsortedCode, config.parser!, config.style!, file);
       } catch (e) {
         return;
       }

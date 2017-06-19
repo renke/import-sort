@@ -22,7 +22,7 @@
   "importSort": {
     ".js": {
       "parser": "babylon",
-      "style": "module"
+      "style": "eslint"
     },
     ".ts": {
       "parser": "typescript",

@@ -7,7 +7,7 @@
       }
   },
   "rules": {
-    "sort-imports": 2,
+    "sort-imports": [2, {ignoreCase: true}],
     "quotes": [2, "double"]
   }
 }

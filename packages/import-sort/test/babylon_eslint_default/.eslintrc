@@ -1,0 +1,9 @@
+{
+  "parserOptions": {
+    "sourceType": "module",
+  },
+
+  "rules": {
+    "sort-imports": [2, {"ignoreCase": false}],
+  },
+}
