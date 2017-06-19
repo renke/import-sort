@@ -35,6 +35,8 @@ yargs
 `
 Usage: import-sort [OPTION] [FILE]
        import-sort [OPTION] [DIRECTORY]
+       
+The exit code is the number of affected files or -1 if something failed.          
 `.trim())
 
   .describe("overwrite", "Sort files in-place")

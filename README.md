@@ -26,6 +26,8 @@ Install it with `npm install --save-dev import-sort-cli import-sort-parser-babyl
 ```
 Usage: import-sort [OPTION] [FILE]
        import-sort [OPTION] [DIRECTORY]
+       
+The exit code is the number of affected files or -1 if something failed.       
 
 Options:
   --overwrite, -o  Sort files in-place                                 [boolean]
