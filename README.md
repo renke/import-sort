@@ -14,7 +14,7 @@ Sort your imports directy from within [Visual Studio Code](https://code.visualst
 
 See [sort-imports](https://marketplace.visualstudio.com/items?itemName=peterjuras.sort-imports) in the Visual Studio Marketplace for more details.
 
-This extension is developed by [Peter Juras](https://github.com/peterjuras). Thanks you very much!
+This extension is developed by [Peter Juras](https://github.com/peterjuras). Thank you very much!
 
 ## Atom (atom-import-sort)
 
