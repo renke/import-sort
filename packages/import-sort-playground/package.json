@@ -1,7 +1,7 @@
 {
   "name": "import-sort-playground",
   "private": true,
-  "version": "2.4.0",
+  "version": "3.0.0",
   "description": "",
   "main": "index.js",
   "author": "Renke Grunwald <renke@renke.org> (https://github.com/renke)",
@@ -10,15 +10,14 @@
   "dependencies": {
     "babel-eslint": "^7.2.3",
     "eslint": "^4.0.0",
-    "import-sort-parser-babylon": "^2.3.0",
-    "import-sort-parser-typescript": "^2.2.1",
-    "import-sort-style-eslint": "^2.4.0",
-    "import-sort-style-module": "^2.4.0",
-    "import-sort-style-renke": "^2.4.0",
+    "import-sort-parser-babylon": "^3.0.0",
+    "import-sort-parser-typescript": "^3.0.0",
+    "import-sort-style-eslint": "^3.0.0",
+    "import-sort-style-module": "^3.0.0",
+    "import-sort-style-renke": "^3.0.0",
     "tslint": "^5.4.3",
     "typescript": "^2.3.4"
   },
-  "devDependencies": {},
   "importSort": {
     ".js": {
       "parser": "babylon",

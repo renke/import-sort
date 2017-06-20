@@ -1,6 +1,6 @@
 {
   "name": "import-sort-parser",
-  "version": "2.0.14",
+  "version": "3.0.0",
   "description": "Interfaces for import-sort parsers.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -21,6 +21,5 @@
     "ts-node": "^3.0.6",
     "tslint": "^5.4.3",
     "typescript": "^2.3.4"
-  },
-  "dependencies": {}
+  }
 }

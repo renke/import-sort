@@ -1,6 +1,6 @@
 {
   "name": "import-sort-style-module",
-  "version": "2.4.0",
+  "version": "3.0.0",
   "description": "An import-sort style that groups and sorts by module",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -19,11 +19,10 @@
     "@types/mocha": "^2.2.41",
     "@types/node": "^7.0.31",
     "chai": "^4.0.2",
-    "import-sort-style": "^2.3.0",
+    "import-sort-style": "^3.0.0",
     "mocha": "^3.4.2",
     "ts-node": "^3.0.6",
     "tslint": "^5.4.3",
     "typescript": "^2.3.4"
-  },
-  "dependencies": {}
+  }
 }
