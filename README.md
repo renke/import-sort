@@ -8,7 +8,15 @@ imports. Both JavaScript and TypeScript files are supported.
 There are multiple ways to actually sort your imports. Just pick the one that
 suits you most.
 
-## atom-import-sort
+## Visual Studio Code (vsc-sort-imports)
+
+Sort your imports directy from within [Visual Studio Code](https://code.visualstudio.com/).
+
+See [sort-imports](https://marketplace.visualstudio.com/items?itemName=peterjuras.sort-imports) in the Visual Studio Marketplace for more details.
+
+This extension is developed by [Peter Juras](https://github.com/peterjuras). Thanks you very much!
+
+## Atom (atom-import-sort)
 
 Sort your imports directly from within [Atom](https://atom.io/). Go to [package](https://atom.io/packages/atom-import-sort) or install it directly with `apm install atom-import-sort`. The plugin can sort imports in both JavaScript and TypeScript.
 
@@ -16,7 +24,7 @@ After you installed the package you can sort your imports using the <kbd>Ctrl</k
 
 The package also offers a "sort on save" option to automatically sort your imports whenever you save a JavaScript or TypeScript file. It's disabled by default.
 
-## import-sort-cli
+## Command Line (import-sort-cli)
 
 Sort your imports from the command line. Useful to sort all your files in bulk or from a script in your `package.json`.
 
@@ -37,7 +45,7 @@ Options:
   --help, -h       Show help                                           [boolean]
 ```
 
-## import-sort
+## Node.js (import-sort)
 
 Sort your imports via [Node.js](https://nodejs.org/). For more information take a look at the code of the `import-sort-cli` package.
 
