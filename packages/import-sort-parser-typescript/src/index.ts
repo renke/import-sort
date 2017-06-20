@@ -132,13 +132,29 @@ function parseImportDeclaration(
             name = element.propertyName.text;
           }
 
-          imported.namedMembers.push({name, alias});
+          imported.namedMembers.push({
+            name: fixMultipleUnderscore(name),
+            alias: fixMultipleUnderscore(alias),
+          });
         }
       }
     }
   }
 
   return imported;
+}
+
+// This hack circumvents a bug (?) in the TypeScript parser where a named
+// binding's name or alias that consists only of underscores contains an
+// additional underscore. We just remove the superfluous underscore here.
+//
+// See https://github.com/renke/import-sort/issues/18 for more details.
+function fixMultipleUnderscore(name) {
+  if (name.match(/^_{2,}$/)) {
+    return name.substring(1);
+  }
+
+  return name;
 }
 
 // Taken from https://github.com/fkling/astexplorer/blob/master/src/parsers/js/typescript.js#L68
