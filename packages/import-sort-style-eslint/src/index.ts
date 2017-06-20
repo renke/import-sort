@@ -17,6 +17,7 @@ export default function(styleApi: IStyleAPI, file?: string): Array<IStyleItem> {
   } = styleApi;
 
   let useLowerCase = false;
+  let memberSortSyntaxOrder = ["none", "all", "multiple", "single"];
 
   if (file) {
     try {
@@ -24,6 +25,12 @@ export default function(styleApi: IStyleAPI, file?: string): Array<IStyleItem> {
       const eslintConfig = eslintCLI.getConfigForFile(resolve(file));
 
       useLowerCase = _.get(eslintConfig, "rules.sort-imports[1].ignoreCase", false);
+
+      const newMemberSortSyntaxOrder: string[] = _.get(eslintConfig, "rules.sort-imports[1].memberSyntaxSortOrder", []);
+
+      if (_.difference(memberSortSyntaxOrder, newMemberSortSyntaxOrder).length === 0) {
+        memberSortSyntaxOrder = newMemberSortSyntaxOrder;
+      }
     } catch (e) {
       // Just use defaults in this case
     }
@@ -37,20 +44,27 @@ export default function(styleApi: IStyleAPI, file?: string): Array<IStyleItem> {
     }
   };
 
+  const styleItemByType = {
+    "none": {match: hasNoMember},
+    "all": {match: hasOnlyNamespaceMember, sort: member(eslintSort)},
+    "multiple": {match: hasMultipleMembers, sort: member(eslintSort), sortNamedMembers: alias(eslintSort)},
+    "single": {match: hasSingleMember, sort: member(eslintSort)},
+  };
+
   return [
     // none (don't sort them, because side-effects may need a particular ordering)
-    {match: hasNoMember},
+    styleItemByType[memberSortSyntaxOrder[0]],
     {separator: true},
 
     // all
-    {match: hasOnlyNamespaceMember, sort: member(eslintSort)},
+    styleItemByType[memberSortSyntaxOrder[1]],
     {separator: true},
 
     // multiple
-    {match: hasMultipleMembers, sort: member(eslintSort), sortNamedMembers: alias(eslintSort)},
+    styleItemByType[memberSortSyntaxOrder[2]],
     {separator: true},
 
     // single
-    {match: hasSingleMember, sort: member(eslintSort)},
+    styleItemByType[memberSortSyntaxOrder[3]],
   ];
 }

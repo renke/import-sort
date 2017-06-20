@@ -1,13 +1,14 @@
 {
+  "parser": "babel-eslint",
+
   "parserOptions": {
-      "ecmaVersion": 6,
       "sourceType": "module",
-      "ecmaFeatures": {
-          "modules": true
-      }
   },
+
   "rules": {
-    "sort-imports": [2, {ignoreCase: true}],
-    "quotes": [2, "double"]
+    "sort-imports": [2, {
+      ignoreCase: true,
+      "memberSyntaxSortOrder": ["single", "all", "none", "multiple"]
+    }],
   }
 }
