@@ -1,6 +1,6 @@
 {
   "name": "import-sort-cli",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Sort ES2015 (aka ES6) imports from the command line.",
   "main": "lib/index.js",
   "bin": {
@@ -34,7 +34,7 @@
     "diff": "^3.2.0",
     "file": "^0.2.2",
     "import-sort": "^3.0.0",
-    "import-sort-config": "^3.0.0",
+    "import-sort-config": "^3.1.0",
     "import-sort-parser": "^3.0.0",
     "import-sort-style": "^3.0.0",
     "mkdirp": "^0.5.1",
