@@ -3,8 +3,9 @@ import * as minimatch from "minimatch";
 
 import {readFileSync} from "fs";
 
-import resolve = require("resolve-from");
 import findRoot = require("find-root");
+
+const resolve = require("resolve-from").silent;
 
 export interface IConfigByGlobs {
   [globs: string]: IConfig;
