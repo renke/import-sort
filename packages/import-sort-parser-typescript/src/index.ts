@@ -190,17 +190,19 @@ export function formatImport(code: string, imported: IImport): string {
   }
 
   return originalImportCode.replace(/\{[\s\S]*\}/g, namedMembersString => {
-      const useMultipleLines = namedMembersString.indexOf("\n") !== -1;
+    const useMultipleLines = namedMembersString.indexOf("\n") !== -1;
 
-      let prefix: string | undefined;
+    let prefix: string | undefined;
 
-      if (useMultipleLines) {
-          prefix = namedMembersString.split("\n")[1].match(/^\s*/)![0];
-      }
+    if (useMultipleLines) {
+      prefix = namedMembersString.split("\n")[1].match(/^\s*/)![0];
+    }
 
-      let useSpaces = namedMembersString.charAt(1) === " ";
+    let useSpaces = namedMembersString.charAt(1) === " ";
 
-      return formatNamedMembers(namedMembers, useMultipleLines, useSpaces, prefix);
+    let userTrailingComma = namedMembersString.replace("}","").trim().endsWith(",");
+
+    return formatNamedMembers(namedMembers, useMultipleLines, useSpaces, userTrailingComma, prefix);
   });
 }
 
@@ -208,25 +210,30 @@ function formatNamedMembers(
   namedMembers: Array<NamedMember>,
   useMultipleLines: boolean,
   useSpaces: boolean,
+  useTrailingComma: boolean,
   prefix: string | undefined,
 ): string {
   if (useMultipleLines) {
-    return "{\n" + namedMembers.map(({name, alias}) => {
-      if (name === alias) {
-        return `${prefix}${name},\n`;
-      }
+    return "{\n" + namedMembers.map(({name, alias}, index) => {
+        const lastImport = index === namedMembers.length - 1;
+        const comma = !useTrailingComma && lastImport ? "" : ",";
 
-      return `${prefix}${name} as ${alias},\n`;
-    }).join("") + "}";
+        if (name === alias) {
+          return `${prefix}${name}${comma}\n`;
+        }
+
+        return `${prefix}${name} as ${alias}${comma}\n`;
+      }).join("") + "}";
   } else {
     const space = useSpaces ? " " : "";
+    const comma = useTrailingComma ? "," : "";
 
     return "{" + space + namedMembers.map(({name, alias}) => {
-      if (name === alias) {
-        return `${name}`;
-      }
+        if (name === alias) {
+          return `${name}`;
+        }
 
-      return `${name} as ${alias}`;
-    }).join(", ") + space + "}";
+        return `${name} as ${alias}`;
+      }).join(", ") + comma + space + "}";
   }
 }

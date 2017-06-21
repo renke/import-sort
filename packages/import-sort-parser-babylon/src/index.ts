@@ -127,7 +127,9 @@ export function formatImport(code: string, imported: IImport): string {
 
       let useSpaces = namedMembersString.charAt(1) === " ";
 
-      return formatNamedMembers(namedMembers, useMultipleLines, useSpaces, prefix);
+      let userTrailingComma = namedMembersString.replace("}","").trim().endsWith(",");
+
+      return formatNamedMembers(namedMembers, useMultipleLines, useSpaces, userTrailingComma, prefix);
   });
 }
 
@@ -135,18 +137,23 @@ function formatNamedMembers(
   namedMembers: Array<NamedMember>,
   useMultipleLines: boolean,
   useSpaces: boolean,
+  useTrailingComma: boolean,
   prefix: string | undefined,
 ): string {
   if (useMultipleLines) {
-    return "{\n" + namedMembers.map(({name, alias}) => {
+    return "{\n" + namedMembers.map(({name, alias}, index) => {
+      const lastImport = index === namedMembers.length - 1;
+      const comma = !useTrailingComma && lastImport ? "" : ",";
+
       if (name === alias) {
-        return `${prefix}${name},\n`;
+        return `${prefix}${name}${comma}\n`;
       }
 
-      return `${prefix}${name} as ${alias},\n`;
+      return `${prefix}${name} as ${alias}${comma}\n`;
     }).join("") + "}";
   } else {
     const space = useSpaces ? " " : "";
+    const comma = useTrailingComma ? "," : "";
 
     return "{" + space + namedMembers.map(({name, alias}) => {
       if (name === alias) {
@@ -154,6 +161,6 @@ function formatNamedMembers(
       }
 
       return `${name} as ${alias}`;
-    }).join(", ") + space + "}";
+    }).join(", ") + comma + space + "}";
   }
 }
