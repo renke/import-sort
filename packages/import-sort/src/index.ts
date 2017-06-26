@@ -28,7 +28,11 @@ export default function importSort(
   }
 
   if (typeof rawStyle === "string") {
-    style = require(rawStyle).default;
+    style = require(rawStyle);
+
+    if (style.default) {
+      style = style.default;
+    } 
   } else {
     style = rawStyle as IStyle;
   }
