@@ -1,6 +1,6 @@
 {
   "name": "import-sort",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "Sort ES2015 (aka ES6) imports programmatically.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
