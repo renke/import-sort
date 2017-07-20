@@ -8,6 +8,12 @@ import {
 import {parse} from "babylon";
 import traverse from "babel-traverse";
 
+declare module "babel-types" {
+  interface ImportDeclaration {
+    importKind: "value" | "type"
+  }
+}
+
 // TODO: Mocha currently doesn't pick up the declaration in index.d.ts
 const findLineColumn = require("find-line-column");
 
@@ -82,7 +88,7 @@ export function parseImports(code: string): Array<IImport> {
 
         moduleName: node.source.value,
 
-        type: "import",
+        type: node.importKind === "type" ? "import-type" : "import",
         namedMembers: [],
       };
 
