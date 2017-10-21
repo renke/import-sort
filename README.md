@@ -24,6 +24,10 @@ After you installed the package you can sort your imports using the <kbd>Ctrl</k
 
 The package also offers a "sort on save" option to automatically sort your imports whenever you save a JavaScript or TypeScript file. It's disabled by default.
 
+## Vim (vim-sort-imports)
+
+Sort your imports directy from within Vim. See [vim-sort-imports](https://github.com/ruanyl/vim-sort-imports) for more details about the configuration.
+
 ## Command Line (import-sort-cli)
 
 Sort your imports from the command line. Useful to sort all your files in bulk or from a script in your `package.json`.
