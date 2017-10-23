@@ -14,6 +14,7 @@ export interface IConfigByGlobs {
 export interface IConfig {
   parser?: string;
   style?: string;
+  custom?: any;
 }
 
 export interface IResolvedConfig {
@@ -102,6 +103,10 @@ function mergeConfigs(rawConfigs: Array<IConfig | undefined>): IConfig | undefin
 
     if (currentConfig.style) {
       config.style = currentConfig.style;
+    }
+
+    if (currentConfig.custom) {
+      config.custom = currentConfig.custom;
     }
 
     return config!;
