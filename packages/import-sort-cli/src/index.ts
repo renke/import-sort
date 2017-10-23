@@ -78,8 +78,7 @@ try {
   }
 
 } catch (e) {
-  console.error(`Failed to read file or directory '${fileOrDirectory}'`);
-  process.exit(-1);
+  bail(`Failed to read file or directory '${fileOrDirectory}'`);
 }
 
 if (file) {
@@ -103,26 +102,26 @@ if (file) {
 
   if (argv.overwrite) {
     writeFileSync(file, sortedCode, {encoding: "utf-8"});
-    process.exit(1);
+    process.exit(0);
   }
 
   if (argv.write) {
     writeFileSync(argv.write, sortedCode, {encoding: "utf-8"});
-    process.exit(1);
+    process.exit(0);
   }
 
   if (argv.diff) {
     process.stdout.write(createPatch(file, unsortedCode, sortedCode, "", ""));
-    process.exit(1);
+    process.exit(0);
   }
 
   if (argv.status) {
-    process.exit(changes.length > 0 ? 1 : 0);
+    process.exit(0);
   }
 
   // Default case for a file is printing the changed code to stdout
   process.stdout.write(sortedCode);
-  process.exit(1);
+  process.exit(0);
 }
 
 if (directory) {
@@ -183,7 +182,7 @@ if (directory) {
     });
   }
 
-  process.exit(unsortedFiles.length);
+  process.exit(0);
 }
 
 function getAndCheckConfig(extension: string, fileDirectory: string): IResolvedConfig {
