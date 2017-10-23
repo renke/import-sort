@@ -17,10 +17,6 @@ yargs
       throw new Error("No file or directory was specified");
     }
 
-    if (argv._.length > 1) {
-      throw new Error("Only one file or directory can be specified");
-    }
-
     return true;
   })
   // Write and overwrite cannot be combined
@@ -61,28 +57,33 @@ The exit code is the number of affected files or -1 if something failed.
 
 const argv = yargs.argv;
 
-const fileOrDirectory: string = argv._[0];
-let file: string | undefined;
-let directory: string | undefined;
+const files: string[] = [];
+const directories: string[] = [];
 
-try {
-  const rawFileOrDirectory = realpathSync(fileOrDirectory);
-  const stats = lstatSync(rawFileOrDirectory);
+for(let argument of argv._) {
+  const fileOrDirectory: string = argument;
 
-  if (stats.isFile()) {
-    file = rawFileOrDirectory;
-  } else if (stats.isDirectory()) {
-    directory = rawFileOrDirectory;
-  } else {
-    bail(`'${rawFileOrDirectory}' is not a file or directory`);
+  try {
+    const rawFileOrDirectory = realpathSync(fileOrDirectory);
+    const stats = lstatSync(rawFileOrDirectory);
+
+    if (stats.isFile()) {
+      files.push(rawFileOrDirectory);
+    } else if (stats.isDirectory()) {
+      directories.push(rawFileOrDirectory);
+    } else {
+      bail(`'${rawFileOrDirectory}' is not a file or directory`);
+    }
+
+  } catch (e) {
+    console.error(`Failed to read file or directory '${fileOrDirectory}'`);
+    process.exit(-1);
   }
-
-} catch (e) {
-  console.error(`Failed to read file or directory '${fileOrDirectory}'`);
-  process.exit(-1);
 }
 
-if (file) {
+const prunedFiles: string[] = pruneFilesFromRequiredDirectories(directories, files);
+
+for (let file of prunedFiles) {
   const config = getAndCheckConfig(extname(file), dirname(file));
 
   const unsortedCode = readFileSync(file).toString("utf8");
@@ -92,7 +93,7 @@ if (file) {
   try {
     sortResult = sortImports(unsortedCode, config.parser!, config.style!, file);
   } catch (e) {
-    bail(`Failed to parse '${fileOrDirectory}'`);
+    bail(`Failed to parse '${file}'`);
   }
 
   const {code: sortedCode, changes} = sortResult!;
@@ -125,7 +126,7 @@ if (file) {
   process.exit(1);
 }
 
-if (directory) {
+for (let directory of directories) {
   const unsortedFiles: Array<string> = [];
 
   walkSync(directory, (baseDirectory, directories, fileNames) => {
@@ -184,6 +185,20 @@ if (directory) {
   }
 
   process.exit(unsortedFiles.length);
+}
+
+function pruneFilesFromRequiredDirectories(directories: string[], files: string[]): string[] {
+  let prunedFiles = files;
+  for (let directory of directories) {
+    for (let i = 0; i < prunedFiles.length;) {
+      if (prunedFiles[i].indexOf(directory) !== -1) {
+        prunedFiles = prunedFiles.splice(i, 1);
+      } else {
+        i++;
+      }
+    }
+  }
+  return prunedFiles;
 }
 
 function getAndCheckConfig(extension: string, fileDirectory: string): IResolvedConfig {
