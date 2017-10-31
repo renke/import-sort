@@ -34,8 +34,8 @@ export const DEFAULT_CONFIGS: IConfigByGlobs = {
   },
 };
 
-export function getConfig(extension: string, directory?: string): IResolvedConfig | undefined {
-  const defaultConfig = getConfigForExtension(DEFAULT_CONFIGS, extension);
+export function getConfig(extension: string, directory?: string, defaultSettings = DEFAULT_CONFIGS): IResolvedConfig | undefined {
+  const defaultConfig = getConfigForExtension(defaultSettings, extension);
   let packageConfig: IConfig | undefined;
 
   if (directory) {
