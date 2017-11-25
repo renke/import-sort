@@ -5,10 +5,11 @@
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
+    "prepublish": "npm run build",
     "build": "tsc -p src",
-    "watch:build": "tsc -p src -w",
-    "test": "mocha --compilers ts:ts-node/register,tsx:ts-node/register --recursive test",
-    "watch:test": "mocha -w --compilers ts:ts-node/register,tsx:ts-node/register --recursive test"
+    "build:watch": "tsc -p src -w",
+    "test": "mocha --require ts-node/register --recursive \"test/**/*.ts\"",
+    "test:watch": "mocha -w --require ts-node/register --recursive \"test/**/*.ts\""
   },
   "author": "Renke Grunwald <renke@renke.org> (https://github.com/renke)",
   "repository": "renke/import-sort",
@@ -16,15 +17,16 @@
   "devDependencies": {
     "@types/chai": "^4.0.0",
     "@types/mocha": "^2.2.41",
-    "@types/node": "^7.0.31",
+    "@types/node": "^8",
     "chai": "^4.0.2",
+    "eslint": "^4.11.0",
     "import-sort-parser-babylon": "^3.2.0",
     "import-sort-parser-typescript": "^3.2.0",
     "import-sort-style-eslint": "^3.0.0",
-    "mocha": "^3.4.2",
-    "ts-node": "^3.0.6",
+    "mocha": "^4",
+    "ts-node": "^3.3.0",
     "tslint": "^5.4.3",
-    "typescript": "^2.3.4"
+    "typescript": "^2.6.1"
   },
   "dependencies": {
     "import-sort-parser": "^3.0.0",

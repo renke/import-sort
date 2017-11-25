@@ -7,9 +7,9 @@
   "scripts": {
     "prepublish": "npm run build",
     "build": "tsc -p src",
-    "watch:build": "tsc -p src -w",
-    "test": "mocha --compilers ts:ts-node/register,tsx:ts-node/register --recursive test",
-    "watch:test": "mocha -w --compilers ts:ts-node/register,tsx:ts-node/register --recursive test"
+    "build:watch": "tsc -p src -w",
+    "test": "mocha --require ts-node/register --recursive \"test/**/*.ts\"",
+    "test:watch": "mocha -w --require ts-node/register --recursive \"test/**/*.ts\""
   },
   "author": "Renke Grunwald <renke@renke.org> (https://github.com/renke)",
   "repository": "renke/import-sort",
@@ -18,10 +18,10 @@
     "@types/chai": "^4.0.0",
     "@types/lodash": "^4.14.66",
     "@types/mocha": "^2.2.41",
-    "@types/node": "^7.0.31",
+    "@types/node": "^8",
     "chai": "^4.0.2",
     "import-sort-style": "^3.0.0",
-    "mocha": "^3.4.2",
+    "mocha": "^4",
     "ts-node": "^3.0.6",
     "tslint": "^5.4.3",
     "typescript": "^2.3.4"

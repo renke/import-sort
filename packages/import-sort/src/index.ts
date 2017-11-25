@@ -30,9 +30,9 @@ export default function importSort(
   if (typeof rawStyle === "string") {
     style = require(rawStyle);
 
-    if (style.default) {
-      style = style.default;
-    } 
+    if ((style as any).default) {
+      style = (style as any).default;
+    }
   } else {
     style = rawStyle as IStyle;
   }
