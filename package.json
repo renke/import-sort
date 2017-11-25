@@ -1,5 +1,12 @@
 {
   "devDependencies": {
-    "lerna": "^2.5.1"
+    "@types/chai": "^4.0.5",
+    "@types/mocha": "^2.2.44",
+    "@types/node": "^8.0.53",
+    "chai": "^4.1.2",
+    "lerna": "^2.5.1",
+    "mocha": "^4.0.1",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.6.1"
   }
 }
