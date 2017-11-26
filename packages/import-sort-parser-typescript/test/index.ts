@@ -211,7 +211,7 @@ import {
 import {
   a,
   b,
-  c,
+  c
 } from "xyz"
 `.trim();
 
@@ -244,7 +244,7 @@ c
 import {
   a,
   b,
-  c,
+  c
 } from "xyz"
 `.trim();
 
@@ -277,7 +277,7 @@ c
 import {
     a,
     b,
-    c,
+    c
 } from "xyz"
 `.trim();
 

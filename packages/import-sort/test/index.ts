@@ -240,7 +240,7 @@ import {a,
 import {
   a,
   b,
-  c,
+  c
 } from "a";
 `.trim() + "\n";
 
@@ -723,7 +723,7 @@ import {
 import {
   a,
   b,
-  c,
+  c
 } from "x";
 `.trim() + "\n";
 
