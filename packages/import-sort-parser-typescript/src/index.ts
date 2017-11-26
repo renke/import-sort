@@ -179,9 +179,9 @@ function getComments(
       }
     }
   }
-};
+}
 
-export function formatImport(code: string, imported: IImport): string {
+export function formatImport(code: string, imported: IImport, eol = "\n"): string {
   const originalImportCode = code.substring(imported.start, imported.end);
   const {namedMembers} = imported;
 
@@ -190,19 +190,19 @@ export function formatImport(code: string, imported: IImport): string {
   }
 
   return originalImportCode.replace(/\{[\s\S]*\}/g, namedMembersString => {
-    const useMultipleLines = namedMembersString.indexOf("\n") !== -1;
+    const useMultipleLines = namedMembersString.indexOf(eol) !== -1;
 
     let prefix: string | undefined;
 
     if (useMultipleLines) {
-      prefix = namedMembersString.split("\n")[1].match(/^\s*/)![0];
+      prefix = namedMembersString.split(eol)[1].match(/^\s*/)![0];
     }
 
     let useSpaces = namedMembersString.charAt(1) === " ";
 
     let userTrailingComma = namedMembersString.replace("}","").trim().endsWith(",");
 
-    return formatNamedMembers(namedMembers, useMultipleLines, useSpaces, userTrailingComma, prefix);
+    return formatNamedMembers(namedMembers, useMultipleLines, useSpaces, userTrailingComma, prefix, eol);
   });
 }
 
@@ -212,28 +212,29 @@ function formatNamedMembers(
   useSpaces: boolean,
   useTrailingComma: boolean,
   prefix: string | undefined,
+  eol = "\n",
 ): string {
   if (useMultipleLines) {
-    return "{\n" + namedMembers.map(({name, alias}, index) => {
-        const lastImport = index === namedMembers.length - 1;
-        const comma = !useTrailingComma && lastImport ? "" : ",";
+    return "{" + eol + namedMembers.map(({name, alias}, index) => {
+      const lastImport = index === namedMembers.length - 1;
+      const comma = !useTrailingComma && lastImport ? "" : ",";
 
-        if (name === alias) {
-          return `${prefix}${name}${comma}\n`;
-        }
+      if (name === alias) {
+        return `${prefix}${name}${comma}` + eol;
+      }
 
-        return `${prefix}${name} as ${alias}${comma}\n`;
-      }).join("") + "}";
+      return `${prefix}${name} as ${alias}${comma}` + eol;
+    }).join("") + "}";
   } else {
     const space = useSpaces ? " " : "";
     const comma = useTrailingComma ? "," : "";
 
     return "{" + space + namedMembers.map(({name, alias}) => {
-        if (name === alias) {
-          return `${name}`;
-        }
+      if (name === alias) {
+        return `${name}`;
+      }
 
-        return `${name} as ${alias}`;
-      }).join(", ") + comma + space + "}";
+      return `${name} as ${alias}`;
+    }).join(", ") + comma + space + "}";
   }
 }

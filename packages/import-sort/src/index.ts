@@ -1,5 +1,6 @@
 import {IImport, IParser, NamedMember} from "import-sort-parser";
 import {INamedMemberSorterFunction, ISorterFunction, IStyle} from "import-sort-style";
+import * as detectNewline from "detect-newline";
 
 import StyleAPI from "./style/StyleAPI";
 
@@ -50,6 +51,8 @@ export function sortImports(code: string, parser: IParser, style: IStyle, file?:
   if (imports.length === 0) {
     return {code, changes: []};
   }
+
+  const eol = detectNewline.graceful(code);
 
   const changes: Array<ICodeChange> = [];
 
@@ -108,14 +111,14 @@ export function sortImports(code: string, parser: IParser, style: IStyle, file?:
 
   buckets.forEach((bucket, index) => {
     if (bucket.length > 0 && separator) {
-      importsCode += "\n";
+      importsCode += eol;
       separator = false;
     }
 
     bucket.forEach(imported => {
       // const sortedImport = sortNamedMembers(imported, items[index].sortNamedMembers);
-      const importString = parser.formatImport(code, imported);
-      importsCode += importString + "\n";
+      const importString = parser.formatImport(code, imported, eol);
+      importsCode += importString + eol;
     });
 
     // Add separator but only when at least one import was already added
@@ -161,11 +164,11 @@ export function sortImports(code: string, parser: IParser, style: IStyle, file?:
     beforeChange = {
       start: start - match.length,
       end: start,
-      code: "\n\n",
+      code: eol + eol,
       note: "before-collapse",
     };
 
-    return "\n\n";
+    return eol + eol;
   });
 
   // Collapse all whitespace into a single new line
@@ -173,11 +176,11 @@ export function sortImports(code: string, parser: IParser, style: IStyle, file?:
     afterChange = {
       start,
       end: start + match.length,
-      code: "\n",
+      code: eol,
       note: "after-collapse",
     };
 
-    return "\n";
+    return eol;
   });
 
   // Remove all whitespace at the beginning of the code

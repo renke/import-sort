@@ -1,6 +1,6 @@
 export interface IParser {
     parseImports(code: string): Array<IImport>;
-    formatImport(code: string, imported: IImport): string;
+    formatImport(code: string, imported: IImport, eol?: string): string;
 }
 
 export interface IImport {

@@ -29,6 +29,7 @@
     "typescript": "^2.6.1"
   },
   "dependencies": {
+    "detect-newline": "^2.1.0",
     "import-sort-parser": "^3.0.0",
     "import-sort-style": "^3.0.0",
     "is-builtin-module": "^1.0.0"
