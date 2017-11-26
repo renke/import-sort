@@ -82,6 +82,14 @@ In general, every comment that is directly above the import (no blank line betwe
 
 That means that things like `// eslint-disable line` and `// eslint-disable-next-line` are finally supported.
 
+For copyright headers and compiler pragmas (like `@flow`) a blank line should be added after the comment.
+
+```js
+// @flow
+
+import foo from "bar"
+````
+
 # Using a different style or parser
 
 Styles (and parsers) can be configured on a per-project basis including support for different types of files (currently JavaScript and TypeScript).
