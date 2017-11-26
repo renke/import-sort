@@ -17,7 +17,7 @@ export interface ICodeChange {
 }
 
 export default function importSort(
-  code: string, rawParser: string | IParser, rawStyle: string | IStyle, file?: string
+  code: string, rawParser: string | IParser, rawStyle: string | IStyle, file?: string, options?: any
 ): ISortResult {
   let parser: IParser | undefined;
   let style: IStyle;
@@ -38,11 +38,13 @@ export default function importSort(
     style = rawStyle as IStyle;
   }
 
-  return sortImports(code, parser!, style, file);
+  return sortImports(code, parser!, style, file, options);
 }
 
-export function sortImports(code: string, parser: IParser, style: IStyle, file?: string): ISortResult {
-  const items = addFallback(style, file)(StyleAPI);
+export function sortImports(
+  code: string, parser: IParser, style: IStyle, file?: string, options?: any
+): ISortResult {
+  const items = addFallback(style, file, options)(StyleAPI);
 
   const buckets: Array<Array<IImport>> = items.map(() => []);
 
@@ -283,13 +285,13 @@ export function applyChanges(code: string, changes: Array<ICodeChange>): string 
   return changedCode;
 }
 
-function addFallback(style: IStyle, file?: string): IStyle {
+function addFallback(style: IStyle, file?: string, options?: any): IStyle {
   return styleApi => {
     const items = [
       {separator: true},
       {match: styleApi.always},
     ];
 
-    return style(styleApi, file).concat(items);
+    return style(styleApi, file, options).concat(items);
   };
 }

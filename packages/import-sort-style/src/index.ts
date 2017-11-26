@@ -85,5 +85,5 @@ export interface IStyleItem {
 }
 
 export interface IStyle {
-  (styleApi: IStyleAPI, file?: string): Array<IStyleItem>;
+  (styleApi: IStyleAPI, file?: string, options?: any): Array<IStyleItem>;
 }
