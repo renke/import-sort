@@ -172,8 +172,10 @@ function unicode(first: string, second: string): number {
 }
 
 function dotSegmentCount(firstImport: IImport, secondImport: IImport): number {
-  const firstCount = (firstImport.moduleName.match(/\./g) || []).length;
-  const secondCount = (secondImport.moduleName.match(/\./g) || []).length;
+  const regex = /\.+(?=\/)/g;
+
+  const firstCount = (firstImport.moduleName.match(regex) || []).join("").length;
+  const secondCount = (secondImport.moduleName.match(regex) || []).join("").length;
 
   if (firstCount > secondCount) {
     return -1;
