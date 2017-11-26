@@ -82,7 +82,7 @@ export function parseImports(code: string): Array<IImport> {
 
         moduleName: node.source.value,
 
-        type: "import",
+        type: (node as any).importKind === "type" ? "import-type" : "import",
         namedMembers: [],
       };
 
