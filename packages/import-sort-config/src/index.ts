@@ -1,5 +1,6 @@
 import * as assign from "core-js/library/fn/object/assign";
 import * as minimatch from "minimatch";
+import * as cosmiconfig from "cosmiconfig";
 
 import {readFileSync} from "fs";
 
@@ -39,7 +40,7 @@ export function getConfig(extension: string, directory?: string): IResolvedConfi
   let packageConfig: IConfig | undefined;
 
   if (directory) {
-    packageConfig = getConfigFromPackage(directory, extension);
+    packageConfig = getConfigFromDirectory(directory, extension);
   }
 
   const actualConfig = mergeConfigs([defaultConfig, packageConfig]);
@@ -48,11 +49,13 @@ export function getConfig(extension: string, directory?: string): IResolvedConfi
     return;
   }
 
-  return resolveConfig(actualConfig, directory);
+  const resolvedConfig = resolveConfig(actualConfig, directory);
+
+  return resolvedConfig
 }
 
-function getConfigFromPackage(directory: string, extension: string): IConfig | undefined {
-  const packageConfigs = getConfigsFromPackage(directory);
+function getConfigFromDirectory(directory: string, extension: string): IConfig | undefined {
+  const packageConfigs = getAllConfigsFromDirectory(directory);
 
   if (!packageConfigs) {
     return;
@@ -74,9 +77,21 @@ function getConfigForExtension(configs: IConfigByGlobs, extension: string): ICon
   return mergeConfigs(foundConfigs);
 }
 
-function getConfigsFromPackage(directory: string): IConfigByGlobs | undefined {
+function getAllConfigsFromDirectory(directory: string): IConfigByGlobs | undefined {
+  const configsLoader = cosmiconfig("importsort", {
+    sync: true,
+    packageProp: "importSort",
+    rcExtensions: true,
+  });
+
   try {
-    return JSON.parse(readFileSync(`${findRoot(directory)}/package.json`, "utf-8")).importSort;
+    const configsResult = configsLoader.load(directory);
+
+    if (!configsResult) {
+      return;
+    }
+
+    return configsResult.config;
   } catch (e) {
     return;
   }

@@ -17,15 +17,5 @@
     "import-sort-style-renke": "^3.0.0",
     "tslint": "^5.4.3",
     "typescript": "^2.3.4"
-  },
-  "importSort": {
-    ".js": {
-      "parser": "babylon",
-      "style": "eslint"
-    },
-    ".ts": {
-      "parser": "typescript",
-      "style": "module"
-    }
   }
 }
