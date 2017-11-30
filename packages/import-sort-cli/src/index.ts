@@ -17,10 +17,6 @@ yargs
       throw new Error("No file or directory was specified");
     }
 
-    if (argv._.length > 1) {
-      throw new Error("Only one file or directory can be specified");
-    }
-
     return true;
   })
   // Write and overwrite cannot be combined
@@ -34,9 +30,7 @@ yargs
   .usage(
 `
 Usage: import-sort [OPTION] [FILE]
-       import-sort [OPTION] [DIRECTORY]
-       
-The exit code is the number of affected files or -1 if something failed.          
+       import-sort [OPTION] [DIRECTORY]          
 `.trim())
 
   .describe("overwrite", "Sort files in-place")
@@ -52,37 +46,38 @@ The exit code is the number of affected files or -1 if something failed.
   .boolean("diff")
   .alias("diff", "d")
 
-  .describe("status", "Only set the exit code")
-  .boolean("status")
-  .alias("status", "s")
-
   .help()
   .alias("help", "h");
 
 const argv = yargs.argv;
 
-const fileOrDirectory: string = argv._[0];
-let file: string | undefined;
-let directory: string | undefined;
+const paths = argv._;
 
-try {
-  const rawFileOrDirectory = realpathSync(fileOrDirectory);
-  const stats = lstatSync(rawFileOrDirectory);
+// We do things differently when only one file or directory is specified
+const onlyOnePath = paths.length === 1;
 
-  if (stats.isFile()) {
-    file = rawFileOrDirectory;
-  } else if (stats.isDirectory()) {
-    directory = rawFileOrDirectory;
-  } else {
-    bail(`'${rawFileOrDirectory}' is not a file or directory`);
+for (const path of paths) {
+  try {
+    const realPath = realpathSync(path);
+    const pathStats = lstatSync(realPath);
+
+    if (pathStats.isFile()) {
+      try {
+        sortFile(realPath, onlyOnePath)
+      } catch (e) {
+        bailIf(onlyOnePath, e.message);
+      }
+    } else if (pathStats.isDirectory()) {
+      sortDirectory(realPath);
+    } else {
+      bailIf(onlyOnePath, `'${realPath}' is not a file or directory`);
+    }
+  } catch (e) {
+    bailIf(onlyOnePath, `Failed to read file or directory '${path}'`);
   }
-
-} catch (e) {
-  console.error(`Failed to read file or directory '${fileOrDirectory}'`);
-  process.exit(-1);
 }
 
-if (file) {
+function sortFile(file: string, printSortedCode: boolean) {
   const config = getAndCheckConfig(extname(file), dirname(file));
 
   const unsortedCode = readFileSync(file).toString("utf8");
@@ -93,47 +88,49 @@ if (file) {
     const {parser, style, config: rawConfig} = config;
     sortResult = sortImports(unsortedCode, parser!, style!, file, rawConfig.options);
   } catch (e) {
-    bail(`Failed to parse '${fileOrDirectory}'`);
+    throw new Error(`Failed to parse '${file}'`);
   }
 
   const {code: sortedCode, changes} = sortResult!;
 
   if (changes.length === 0) {
-    process.exit(0);
+    return false;
   }
 
   if (argv.overwrite) {
     writeFileSync(file, sortedCode, {encoding: "utf-8"});
-    process.exit(1);
+    return true;
   }
 
   if (argv.write) {
     writeFileSync(argv.write, sortedCode, {encoding: "utf-8"});
-    process.exit(1);
+    return true;
   }
 
   if (argv.diff) {
     process.stdout.write(createPatch(file, unsortedCode, sortedCode, "", ""));
-    process.exit(1);
+    return true;
   }
 
-  if (argv.status) {
-    process.exit(changes.length > 0 ? 1 : 0);
+  if (printSortedCode) {
+    process.stdout.write(sortedCode);
+    return true;
   }
 
-  // Default case for a file is printing the changed code to stdout
-  process.stdout.write(sortedCode);
-  process.exit(1);
+  // Print file name to stdout
+  console.log(file);
+
+  return true;
 }
 
-if (directory) {
-  const unsortedFiles: Array<string> = [];
-
+function sortDirectory(directory: string) {
   walkSync(directory, (baseDirectory, directories, fileNames) => {
     fileNames.forEach(fileName => {
-      const config = getConfig(extname(fileName), baseDirectory);
+      let config: IResolvedConfig;
 
-      if (!config || !config!.parser || !config!.style) {
+      try {
+        config = getAndCheckConfig(extname(fileName), baseDirectory);
+      } catch (e) {
         return;
       }
 
@@ -164,8 +161,6 @@ if (directory) {
         return;
       }
 
-      unsortedFiles.push(file);
-
       if (argv.overwrite) {
         writeFileSync(file, sortedCode, {encoding: "utf-8"});
         return;
@@ -175,35 +170,29 @@ if (directory) {
         process.stdout.write(createPatch(file, unsortedCode, sortedCode, "", ""));
         return;
       }
-    });
-  });
 
-  // Unless the status option is used, the list of unsorted files is printed
-  if (!argv.status) {
-    unsortedFiles.forEach(file => {
+      // Print file name to stdout
       console.log(file);
     });
-  }
-
-  process.exit(unsortedFiles.length);
+  });
 }
 
 function getAndCheckConfig(extension: string, fileDirectory: string): IResolvedConfig {
   const resolvedConfig = getConfig(extension, fileDirectory);
 
-  bailIf(!resolvedConfig, `No configuration found for file type ${extension}`);
+  throwIf(!resolvedConfig, `No configuration found for file type ${extension}`);
 
   const rawParser = resolvedConfig!.config.parser;
   const rawStyle = resolvedConfig!.config.style;
 
-  bailIf(!rawParser, `No parser defined for file type ${extension}`);
-  bailIf(!rawStyle, `No style defined for file type ${extension}`);
+  throwIf(!rawParser, `No parser defined for file type ${extension}`);
+  throwIf(!rawStyle, `No style defined for file type ${extension}`);
 
   const parser = resolvedConfig!.parser;
   const style = resolvedConfig!.style;
 
-  bailIf(!parser, `Parser "${rawParser}" could not be resolved`);
-  bailIf(!style, `Style "${rawStyle}" could not be resolved`);
+  throwIf(!parser, `Parser "${rawParser}" could not be resolved`);
+  throwIf(!style, `Style "${rawStyle}" could not be resolved`);
 
   return resolvedConfig!;
 }
@@ -216,5 +205,11 @@ function bail(message: string)  {
 function bailIf(condition: boolean, message: string) {
   if (condition) {
     bail(message);
+  }
+}
+
+function throwIf(condition: boolean, message: string) {
+  if (condition) {
+    throw new Error(message);
   }
 }

@@ -1,6 +1,6 @@
 import * as assign from "core-js/library/fn/object/assign";
-import * as minimatch from "minimatch";
 import * as cosmiconfig from "cosmiconfig";
+import * as minimatch from "minimatch";
 
 import {readFileSync} from "fs";
 
