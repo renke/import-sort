@@ -31,8 +31,10 @@
     "typescript": "^2.3.4"
   },
   "dependencies": {
+    "@types/globby": "^6.1.0",
     "diff": "^3.2.0",
     "file": "^0.2.2",
+    "globby": "^7.1.1",
     "import-sort": "^3.3.0",
     "import-sort-config": "^3.2.0",
     "import-sort-parser": "^3.0.0",

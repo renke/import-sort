@@ -1,180 +1,110 @@
 #!/usr/bin/env node
 
-import * as mkdirp from "mkdirp";
 import * as yargs from "yargs";
-
-import {IResolvedConfig, getConfig} from "import-sort-config";
-import {basename, dirname, extname, join} from "path";
-import {lstatSync, readFileSync, realpathSync, writeFileSync} from "fs";
-import sortImports, {ISortResult} from "import-sort";
-
-import {createPatch} from "diff";
+import {getConfig, IResolvedConfig} from "import-sort-config";
 import {walkSync} from "file";
+import * as globby from "globby";
+import * as path from "path";
+import {dirname, extname} from "path";
+import sortImports, {ISortResult} from "import-sort";
+import {readFileSync, writeFileSync} from "fs";
 
 yargs
-  .check(argv => {
-    if (argv._.length === 0) {
-      throw new Error("No file or directory was specified");
-    }
-
-    return true;
-  })
-  // Write and overwrite cannot be combined
-  .check(argv => {
-    if (argv.write && argv.overwrite) {
-      throw new Error("The write and overwrite option cannot be combined");
-    }
-
-    return true;
-  })
   .usage(
 `
-Usage: import-sort [OPTION] [FILE]
-       import-sort [OPTION] [DIRECTORY]          
+Usage: import-sort [OPTION]... [FILE/GLOB]...
+
 `.trim())
+  .describe("list-different", "Print the names of files that are not sorted.")
+  .boolean("list-different")
+  .alias("list-different", "l")
 
-  .describe("overwrite", "Sort files in-place")
-  .boolean("overwrite")
-  .alias("overwrite", "o")
+  .describe("write", "Edit files in-place.")
+  .boolean("write")
 
-  .describe("write", "Sort and write files to specified location")
-  .string("write")
-  .requiresArg("write")
-  .alias("write", "w")
+  .describe("with-node-modules", "Process files inside 'node_modules' directory..")
+  .boolean("with-node-modules")
 
-  .describe("diff", "Print unified diffs of changes")
-  .boolean("diff")
-  .alias("diff", "d")
+  .version(require("../package.json").version)
+  .alias("version", "v")
 
   .help()
   .alias("help", "h");
 
 const argv = yargs.argv;
 
-const paths = argv._;
+let filePatterns = argv._;
 
-// We do things differently when only one file or directory is specified
-const onlyOnePath = paths.length === 1;
+const listDifferent = argv["list-different"];
+const writeFiles = argv.write;
+const ignoreNodeModules = !argv["with-node-modules"];
 
-for (const path of paths) {
-  try {
-    const realPath = realpathSync(path);
-    const pathStats = lstatSync(realPath);
-
-    if (pathStats.isFile()) {
-      try {
-        sortFile(realPath, onlyOnePath)
-      } catch (e) {
-        bailIf(onlyOnePath, e.message);
-      }
-    } else if (pathStats.isDirectory()) {
-      sortDirectory(realPath);
-    } else {
-      bailIf(onlyOnePath, `'${realPath}' is not a file or directory`);
-    }
-  } catch (e) {
-    bailIf(onlyOnePath, `Failed to read file or directory '${path}'`);
-  }
+if (filePatterns.length === 0) {
+  yargs.showHelp();
+  process.exit(1);
 }
 
-function sortFile(file: string, printSortedCode: boolean) {
-  const config = getAndCheckConfig(extname(file), dirname(file));
+if (ignoreNodeModules) {
+  filePatterns = filePatterns.concat(["!**/node_modules/**", "!./node_modules/**"]);
+}
 
-  const unsortedCode = readFileSync(file).toString("utf8");
+let filePaths;
 
+try {
+  filePaths = globby
+    .sync(filePatterns, {dot: true, expandDirectories: false})
+    .map(filePath => path.relative(process.cwd(), filePath));
+} catch (e) {
+  console.error("Invalid file patterns");
+  process.exit(2);
+}
+
+if (filePaths.length === 0) {
+  console.error(`No files found for the given patterns: ${filePatterns.join(", ")}`);
+  process.exit(2);
+}
+
+for (const filePath of filePaths) {
+  let config;
+
+  try {
+    config = getAndCheckConfig(extname(filePath), dirname(filePath));
+  } catch (e) {
+    handleFilePathError(filePath, e);
+    continue;
+  }
+
+  const unsortedCode = readFileSync(filePath).toString("utf8");
+
+  const {parser, style, options} = config;
   let sortResult: ISortResult | undefined;
 
   try {
-    const {parser, style, config: rawConfig} = config;
-    sortResult = sortImports(unsortedCode, parser!, style!, file, rawConfig.options);
+    sortResult = sortImports(unsortedCode, parser!, style!, filePath, options);
   } catch (e) {
-    throw new Error(`Failed to parse '${file}'`);
+    handleFilePathError(filePath, e);
+    continue;
   }
 
   const {code: sortedCode, changes} = sortResult!;
 
   if (changes.length === 0) {
-    return false;
+    if (listDifferent) {
+      process.exitCode = 1;
+    }
   }
 
-  if (argv.overwrite) {
-    writeFileSync(file, sortedCode, {encoding: "utf-8"});
-    return true;
+  if (writeFiles) {
+    writeFileSync(filePath, sortedCode, {encoding: "utf-8"});
   }
 
-  if (argv.write) {
-    writeFileSync(argv.write, sortedCode, {encoding: "utf-8"});
-    return true;
+  if (listDifferent) {
+    console.log(filePath);
   }
 
-  if (argv.diff) {
-    process.stdout.write(createPatch(file, unsortedCode, sortedCode, "", ""));
-    return true;
-  }
-
-  if (printSortedCode) {
+  if (!writeFiles && !listDifferent) {
     process.stdout.write(sortedCode);
-    return true;
   }
-
-  // Print file name to stdout
-  console.log(file);
-
-  return true;
-}
-
-function sortDirectory(directory: string) {
-  walkSync(directory, (baseDirectory, directories, fileNames) => {
-    fileNames.forEach(fileName => {
-      let config: IResolvedConfig;
-
-      try {
-        config = getAndCheckConfig(extname(fileName), baseDirectory);
-      } catch (e) {
-        return;
-      }
-
-      const file = join(baseDirectory, fileName);
-
-      const unsortedCode = readFileSync(file).toString("utf8");
-
-      let sortResult: ISortResult | undefined;
-
-      try {
-        const {parser, style, config: rawConfig} = config;
-        sortResult = sortImports(unsortedCode, parser!, style!, file, rawConfig.options);
-      } catch (e) {
-        return;
-      }
-
-      const {code: sortedCode, changes} = sortResult!;
-
-      if (argv.write) {
-        const targetDirectory = join(argv.write, realpathSync(baseDirectory).replace(directory!, "").replace("/", ""));
-        const targetFile = join(targetDirectory, basename(file));
-
-        mkdirp.sync(targetDirectory);
-        writeFileSync(targetFile, sortedCode, {encoding: "utf-8"});
-      }
-
-      if (changes.length === 0) {
-        return;
-      }
-
-      if (argv.overwrite) {
-        writeFileSync(file, sortedCode, {encoding: "utf-8"});
-        return;
-      }
-
-      if (argv.diff) {
-        process.stdout.write(createPatch(file, unsortedCode, sortedCode, "", ""));
-        return;
-      }
-
-      // Print file name to stdout
-      console.log(file);
-    });
-  });
 }
 
 function getAndCheckConfig(extension: string, fileDirectory: string): IResolvedConfig {
@@ -197,15 +127,10 @@ function getAndCheckConfig(extension: string, fileDirectory: string): IResolvedC
   return resolvedConfig!;
 }
 
-function bail(message: string)  {
-  console.error(message);
-  process.exit(-1);
-}
-
-function bailIf(condition: boolean, message: string) {
-  if (condition) {
-    bail(message);
-  }
+function handleFilePathError(filePath, e) {
+  console.error(`${filePath}:`);
+  console.error(e.toString());
+  process.exitCode = 2;
 }
 
 function throwIf(condition: boolean, message: string) {

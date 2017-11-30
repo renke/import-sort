@@ -2,10 +2,6 @@ import * as assign from "core-js/library/fn/object/assign";
 import * as cosmiconfig from "cosmiconfig";
 import * as minimatch from "minimatch";
 
-import {readFileSync} from "fs";
-
-import findRoot = require("find-root");
-
 const resolve = require("resolve-from").silent;
 
 export interface IConfigByGlobs {
