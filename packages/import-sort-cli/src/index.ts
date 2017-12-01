@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
-import * as yargs from "yargs";
-import {getConfig, IResolvedConfig} from "import-sort-config";
-import {walkSync} from "file";
-import * as globby from "globby";
+import {readFileSync, writeFileSync} from "fs";
 import * as path from "path";
 import {dirname, extname} from "path";
+
+import {walkSync} from "file";
+import * as globby from "globby";
 import sortImports, {ISortResult} from "import-sort";
-import {readFileSync, writeFileSync} from "fs";
+import {IResolvedConfig, getConfig} from "import-sort-config";
+import * as yargs from "yargs";
 
 yargs
   .usage(
@@ -89,9 +90,7 @@ for (const filePath of filePaths) {
   const {code: sortedCode, changes} = sortResult!;
 
   if (changes.length === 0) {
-    if (listDifferent) {
-      process.exitCode = 1;
-    }
+    continue;
   }
 
   if (writeFiles) {
@@ -99,6 +98,7 @@ for (const filePath of filePaths) {
   }
 
   if (listDifferent) {
+    process.exitCode = 1;
     console.log(filePath);
   }
 
