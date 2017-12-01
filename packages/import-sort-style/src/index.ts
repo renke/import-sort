@@ -35,10 +35,13 @@ export interface IStyleAPI {
   isNodeModule: IMatcherFunction;
   isRelativeModule: IMatcherFunction;
   isAbsoluteModule: IMatcherFunction;
+  isScopedModule: IMatcherFunction;
 
   startsWithUpperCase: IPredicateFunction;
   startsWithLowerCase: IPredicateFunction;
   startsWithAlphanumeric: IPredicateFunction;
+
+  startsWith(...prefixes: string[]): IPredicateFunction
 
   // reverse: (sorter: ISorterFunction) => ISorterFunction;
   naturally: IComparatorFunction;

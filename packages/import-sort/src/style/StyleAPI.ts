@@ -140,6 +140,10 @@ function isAbsoluteModule(imported: IImport): boolean {
   return !isRelativeModule(imported);
 }
 
+function isScopedModule(imported: IImport): boolean {
+  return imported.moduleName.startsWith("@");
+}
+
 function startsWithUpperCase(text: string): boolean {
   let start = text.charAt(0);
   return text.charAt(0) === start.toUpperCase();
@@ -152,6 +156,12 @@ function startsWithLowerCase(text: string): boolean {
 
 function startsWithAlphanumeric(text: string): boolean {
   return !!text.match(/^[A-Za-z0-9]/);
+}
+
+function startsWith(...prefixes: string[]) {
+  return text => {
+    return prefixes.some(prefix => text.startsWith(prefix));
+  };
 }
 
 function naturally(first: string, second: string): number {
@@ -217,10 +227,13 @@ const StyleAPI: IStyleAPI = {
   isNodeModule,
   isRelativeModule,
   isAbsoluteModule,
+  isScopedModule,
 
   startsWithUpperCase,
   startsWithLowerCase,
   startsWithAlphanumeric,
+
+  startsWith,
 
   naturally,
   unicode,
