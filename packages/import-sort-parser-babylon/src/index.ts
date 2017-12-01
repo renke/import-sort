@@ -1,12 +1,11 @@
-import {IImport, NamedMember} from "import-sort-parser";
+import traverse from "babel-traverse";
 import {
   isImportDefaultSpecifier,
   isImportNamespaceSpecifier,
   isImportSpecifier,
 } from "babel-types";
-
 import {parse} from "babylon";
-import traverse from "babel-traverse";
+import {IImport, NamedMember} from "import-sort-parser";
 
 // TODO: Mocha currently doesn't pick up the declaration in index.d.ts
 const findLineColumn = require("find-line-column");

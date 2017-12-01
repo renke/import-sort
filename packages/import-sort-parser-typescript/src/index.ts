@@ -1,7 +1,6 @@
 import * as startsWith from "core-js/library/fn/string/starts-with";
-import * as typescript from "typescript";
-
 import {IImport, ImportType, NamedMember} from "import-sort-parser";
+import * as typescript from "typescript";
 
 export function parseImports(code: string): Array<IImport> {
   const host: typescript.CompilerHost = {

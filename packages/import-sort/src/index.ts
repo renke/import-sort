@@ -1,5 +1,4 @@
 import * as detectNewline from "detect-newline";
-
 import {IImport, IParser, NamedMember} from "import-sort-parser";
 import {INamedMemberSorterFunction, ISorterFunction, IStyle} from "import-sort-style";
 

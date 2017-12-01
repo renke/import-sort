@@ -1,10 +1,10 @@
 import "atom";
 
-import {allowUnsafeEval, allowUnsafeNewFunction} from "loophole";
 import {dirname, extname} from "path";
-import sortImports, {ICodeChange} from "import-sort";
 
+import sortImports, {ICodeChange} from "import-sort";
 import {getConfig} from "import-sort-config";
+import {allowUnsafeEval, allowUnsafeNewFunction} from "loophole";
 
 // tslint:disable-next-line
 const CompositeDisposable = require("atom").CompositeDisposable;

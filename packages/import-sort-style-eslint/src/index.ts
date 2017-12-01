@@ -1,6 +1,7 @@
-import {IStyleAPI, IStyleItem} from "import-sort-style";
-import {CLIEngine} from "eslint";
 import {resolve} from "path";
+
+import {CLIEngine} from "eslint";
+import {IStyleAPI, IStyleItem} from "import-sort-style";
 import * as _ from "lodash";
 
 export default function(styleApi: IStyleAPI, file?: string): Array<IStyleItem> {

@@ -1,3 +1,4 @@
+import {IImport} from "import-sort-parser";
 import {
   IComparatorFunction,
   IMatcherFunction,
@@ -6,8 +7,6 @@ import {
   ISorterFunction,
   IStyleAPI,
 } from "import-sort-style";
-
-import {IImport} from "import-sort-parser";
 
 import isNodeModulePredicate = require("is-builtin-module");
 
