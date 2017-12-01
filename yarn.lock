@@ -786,9 +786,9 @@ import-sort-parser@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/import-sort-parser/-/import-sort-parser-3.0.0.tgz#9e7543087188b065ded909b40caae440d3c7a2a6"
 
-import-sort-style-renke@^3.0.0:
+import-sort-style-module@^3.0.0:
   version "3.0.0"
-  resolved "https://registry.yarnpkg.com/import-sort-style-renke/-/import-sort-style-renke-3.0.0.tgz#54d1a1846b061d367e37e8f9320e67fc38add860"
+  resolved "https://registry.yarnpkg.com/import-sort-style-module/-/import-sort-style-module-3.0.0.tgz#fd7996754f582c2b5407cd31c13a88c433b20dd8"
 
 import-sort-style@^3.0.0:
   version "3.0.0"
