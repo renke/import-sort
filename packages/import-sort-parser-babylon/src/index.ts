@@ -33,8 +33,11 @@ export function parseImports(code: string): Array<IImport> {
     ImportDeclaration(path) {
       const node = path.node;
 
-      let start = node.start;
-      let end = node.end;
+      const importStart = node.start;
+      const importEnd = node.end;
+
+      let start = importStart;
+      let end = importEnd;
 
       if (node.leadingComments) {
         const comments = node.leadingComments;
@@ -79,6 +82,9 @@ export function parseImports(code: string): Array<IImport> {
         start,
         end,
 
+        importStart,
+        importEnd,
+
         moduleName: node.source.value,
 
         type: (node as any).importKind === "type" ? "import-type" : "import",
@@ -108,28 +114,36 @@ export function parseImports(code: string): Array<IImport> {
 }
 
 export function formatImport(code: string, imported: IImport, eol = "\n"): string {
-  const originalImportCode = code.substring(imported.start, imported.end);
+  const importStart = imported.importStart || imported.start;
+  const importEnd = imported.importEnd || imported.end;
+
+  const importCode = code.substring(importStart, importEnd);
+
   const {namedMembers} = imported;
 
   if (namedMembers.length === 0) {
-    return originalImportCode;
+    return code.substring(imported.start, imported.end);
   }
 
-  return originalImportCode.replace(/\{[\s\S]*\}/g, namedMembersString => {
-      const useMultipleLines = namedMembersString.indexOf(eol) !== -1;
+  const newImportCode = importCode.replace(/\{[\s\S]*\}/g, namedMembersString => {
+    const useMultipleLines = namedMembersString.indexOf(eol) !== -1;
 
-      let prefix: string | undefined;
+    let prefix: string | undefined;
 
-      if (useMultipleLines) {
-          prefix = namedMembersString.split(eol)[1].match(/^\s*/)![0];
-      }
+    if (useMultipleLines) {
+      prefix = namedMembersString.split(eol)[1].match(/^\s*/)![0];
+    }
 
-      let useSpaces = namedMembersString.charAt(1) === " ";
+    let useSpaces = namedMembersString.charAt(1) === " ";
 
-      let userTrailingComma = namedMembersString.replace("}","").trim().endsWith(",");
+    let userTrailingComma = namedMembersString.replace("}","").trim().endsWith(",");
 
-      return formatNamedMembers(namedMembers, useMultipleLines, useSpaces, userTrailingComma, prefix, eol);
+    return formatNamedMembers(namedMembers, useMultipleLines, useSpaces, userTrailingComma, prefix, eol);
   });
+
+  return code.substring(imported.start, importStart)
+    + newImportCode
+    + code.substring(importEnd, importEnd + (imported.end - importEnd));
 }
 
 function formatNamedMembers(

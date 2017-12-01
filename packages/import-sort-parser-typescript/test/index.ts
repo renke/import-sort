@@ -158,7 +158,7 @@ import "b";
 });
 
 describe("formatImport", () => {
-  it("should not change one-line imports", () => {
+  it("CR+LF, named members, typescriptshould not change one-line imports", () => {
     const actual =
 `
 import {a, b, c} from "xyz"

@@ -7,6 +7,9 @@ export interface IImport {
   start: number;
   end: number;
 
+  importStart?: number;
+  importEnd?: number;
+
   type: ImportType;
 
   moduleName: string;

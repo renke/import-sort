@@ -16,6 +16,30 @@ const ONE_BUCKET_NATURAL_NAMED_MEMBERS_STYLE: IStyle = (styleApi: IStyleAPI): Ar
   return items;
 };
 
+describe("Error with comments (issue #35)", () => {
+  it("should not swallow parts of the leading comments (babylon)", () => {
+     const code = `
+// NativeModules.TTRNBridge = {log:()=>{}};NativeModules.TTRNDeviceInfo = { model: 'iPhone', appVersion: '6.3.0' };
+import { consoleKiller } from './src/utils';     
+`.trim() + "\n";
+
+    const result = sortImports(code, parserBabylon, ONE_BUCKET_NATURAL_NAMED_MEMBERS_STYLE);
+
+    assert.equal(code, result.code);
+  });
+
+  it("should not swallow parts of the leading comments (typescript)", () => {
+    const code = `
+// NativeModules.TTRNBridge = {log:()=>{}};NativeModules.TTRNDeviceInfo = { model: 'iPhone', appVersion: '6.3.0' };
+import { consoleKiller } from './src/utils';     
+`.trim() + "\n";
+
+    const result = sortImports(code, parserTypescript, ONE_BUCKET_NATURAL_NAMED_MEMBERS_STYLE);
+
+    assert.equal(code, result.code);
+  });
+});
+
 describe("Respect line ending (issue #37)", () => {
   it("CR+LF", () => {
     const code = `import b from "b"\r\nimport a from "a"\r\n`;

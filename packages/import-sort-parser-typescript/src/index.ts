@@ -52,8 +52,11 @@ export function parseImports(code: string): Array<IImport> {
 function parseImportDeclaration(
   code: string, sourceFile: typescript.SourceFile, importDeclaration: typescript.ImportDeclaration
 ): IImport {
-  let start = importDeclaration.pos + importDeclaration.getLeadingTriviaWidth();
-  let end = importDeclaration.end;
+  const importStart = importDeclaration.pos + importDeclaration.getLeadingTriviaWidth();
+  const importEnd = importDeclaration.end;
+
+  let start = importStart;
+  let end = importEnd;
 
   const leadingComments = getComments(sourceFile, importDeclaration, false);
   const trailingComments = getComments(sourceFile, importDeclaration, true);
@@ -100,6 +103,8 @@ function parseImportDeclaration(
   const imported: IImport = {
     start,
     end,
+    importStart,
+    importEnd,
     type,
     moduleName,
     namedMembers: [],
@@ -181,14 +186,18 @@ function getComments(
 }
 
 export function formatImport(code: string, imported: IImport, eol = "\n"): string {
-  const originalImportCode = code.substring(imported.start, imported.end);
+  const importStart = imported.importStart || imported.start;
+  const importEnd = imported.importEnd || imported.end;
+
+  const importCode = code.substring(importStart, importEnd);
+
   const {namedMembers} = imported;
 
   if (namedMembers.length === 0) {
-    return originalImportCode;
+    return code.substring(imported.start, imported.end);
   }
 
-  return originalImportCode.replace(/\{[\s\S]*\}/g, namedMembersString => {
+  const newImportCode = importCode.replace(/\{[\s\S]*\}/g, namedMembersString => {
     const useMultipleLines = namedMembersString.indexOf(eol) !== -1;
 
     let prefix: string | undefined;
@@ -203,6 +212,10 @@ export function formatImport(code: string, imported: IImport, eol = "\n"): strin
 
     return formatNamedMembers(namedMembers, useMultipleLines, useSpaces, userTrailingComma, prefix, eol);
   });
+
+  return code.substring(imported.start, importStart)
+    + newImportCode
+    + code.substring(importEnd, importEnd + (imported.end - importEnd));
 }
 
 function formatNamedMembers(
