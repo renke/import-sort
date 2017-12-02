@@ -8,7 +8,7 @@
   },
 
   "lint-staged": {
-    "*.ts": ["prettier --write", "import-sort --write", "git add"],
+    "*.ts": ["import-sort --write", "prettier --write", "git add"],
     "*.{json,md}": ["prettier --write", "git add"]
   },
 
