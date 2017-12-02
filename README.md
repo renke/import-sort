@@ -8,6 +8,11 @@ imports. Both JavaScript and TypeScript files are supported.
 There are multiple ways to actually sort your imports. Just pick the one that
 suits you most.
 
+* Visual Studio Code
+* Atom
+* Vim
+* Command Line
+
 ## Visual Studio Code (vsc-sort-imports)
 
 Sort your imports directy from within [Visual Studio Code](https://code.visualstudio.com/).
