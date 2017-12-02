@@ -34,19 +34,17 @@ Sort your imports from the command line. Useful to sort all your files in bulk o
 
 Install it with `npm install --save-dev import-sort-cli import-sort-parser-babylon import-sort-style-eslint`.
 
+*ATTENTION*: Since version 4 `--write` modifies file in-place. The old `--overwrite` flag was removed. The CLI now behaves closer to [prettier's](https://github.com/prettier/prettier) CLI. Also, the exit code is now 0 even when unsorted were sorted (unless `--list-different` is used.)
 
 ```
-Usage: import-sort [OPTION] [FILE]
-       import-sort [OPTION] [DIRECTORY]
-       
-The exit code is the number of affected files or -1 if something failed.       
+Usage: import-sort [OPTION]... [FILE/GLOB]...
 
 Options:
-  --overwrite, -o  Sort files in-place                                 [boolean]
-  --write, -w      Sort and write files to specified location           [string]
-  --diff, -d       Print unified diffs of changes                      [boolean]
-  --status, -s     Only set the exit code                              [boolean]
-  --help, -h       Show help                                           [boolean]
+  --list-different, -l  Print the names of files that are not sorted.  [boolean]
+  --write               Edit files in-place.                           [boolean]
+  --with-node-modules   Process files inside 'node_modules' directory..[boolean]
+  --version, -v         Show version number                            [boolean]
+  --help, -h            Show help                                      [boolean]
 ```
 
 ## Node.js (import-sort)
@@ -110,6 +108,8 @@ Just add the following to your `package.json` and adapt it to your liking:
 ```
 
 The keys are a list of file extensions that map to the parser and style that should be used for files that have any of the listed file extensions.
+
+Instead of putting your configuration into your `package.json` you can also use a `.importsortrc` file written in JSON. For more details see [cosmiconfig](https://github.com/davidtheclark/cosmiconfig) which is used internally by `import-sort`.
 
 By default, `import-sort` comes with these styles:
 
