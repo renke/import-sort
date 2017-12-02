@@ -18,6 +18,7 @@
     "@types/chai": "^4.0.0",
     "@types/mocha": "^2.2.41",
     "@types/node": "^8",
+    "@types/resolve": "^0.0.4",
     "chai": "^4.0.2",
     "eslint": "^4.11.0",
     "import-sort-parser-babylon": "^4.0.0",
@@ -32,6 +33,7 @@
     "detect-newline": "^2.1.0",
     "import-sort-parser": "^4.0.0",
     "import-sort-style": "^4.0.0",
-    "is-builtin-module": "^1.0.0"
+    "is-builtin-module": "^1.0.0",
+    "resolve": "^1.5.0"
   }
 }

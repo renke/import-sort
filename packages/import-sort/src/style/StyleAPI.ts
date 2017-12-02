@@ -8,7 +8,10 @@ import {
   IStyleAPI,
 } from "import-sort-style";
 
+import * as resolve from "resolve";
+
 import isNodeModulePredicate = require("is-builtin-module");
+import {dirname} from "path";
 
 function member(predicate: IPredicateFunction): IMatcherFunction;
 function member(comparator: IComparatorFunction): ISorterFunction;
@@ -140,6 +143,18 @@ function isAbsoluteModule(imported: IImport): boolean {
   return !isRelativeModule(imported);
 }
 
+function isInstalledModule(baseFile: string): IMatcherFunction {
+  return (imported: IImport) => {
+    try {
+      const resolvePath = resolve.sync(imported.moduleName, {basedir: dirname(baseFile)});
+      console.log(resolvePath);
+      return resolvePath.includes("node_modules");
+    } catch (e) {
+      return false;
+    }
+  }
+}
+
 function isScopedModule(imported: IImport): boolean {
   return imported.moduleName.startsWith("@");
 }
@@ -228,6 +243,7 @@ const StyleAPI: IStyleAPI = {
   isRelativeModule,
   isAbsoluteModule,
   isScopedModule,
+  isInstalledModule,
 
   startsWithUpperCase,
   startsWithLowerCase,

@@ -81,4 +81,24 @@ describe("StyleAPI", () => {
     const imported: IImport = stubImport({moduleName: "foo/bar"});
     assert.isFalse(StyleAPI.moduleName(StyleAPI.startsWith("baz"))(imported));
   });
+
+  it("should match installed modules", () => {
+    const imported: IImport = stubImport({moduleName: "typescript"});
+    assert.isTrue(StyleAPI.isInstalledModule(__filename)(imported))
+  });
+
+  it("should match relative modules as non-installed modules", () => {
+    const imported: IImport = stubImport({moduleName: `./${__filename}`});
+    assert.isFalse(StyleAPI.isInstalledModule(__filename)(imported))
+  });
+
+  it("should match relative non-resolvable modules as non-installed modules", () => {
+    const imported: IImport = stubImport({moduleName: `./foo`});
+    assert.isFalse(StyleAPI.isInstalledModule(__filename)(imported))
+  });
+
+  it("should match absolute non-resolvable modules as non-installed modules", () => {
+    const imported: IImport = stubImport({moduleName: `foo`});
+    assert.isFalse(StyleAPI.isInstalledModule(__filename)(imported))
+  });
 });

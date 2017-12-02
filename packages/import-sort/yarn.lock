@@ -10,9 +10,15 @@
   version "2.2.44"
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-2.2.44.tgz#1d4a798e53f35212fd5ad4d04050620171cd5b5e"
 
-"@types/node@^8":
+"@types/node@*", "@types/node@^8":
   version "8.0.53"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.53.tgz#396b35af826fa66aad472c8cb7b8d5e277f4e6d8"
+
+"@types/resolve@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@types/resolve/-/resolve-0.0.4.tgz#9b586d65a947dea88c4bc24da0b905fe9520a0d5"
+  dependencies:
+    "@types/node" "*"
 
 acorn-jsx@^3.0.0:
   version "3.0.1"
@@ -515,36 +521,36 @@ ignore@^3.3.3:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.7.tgz#612289bfb3c220e186a58118618d5be8c1bab021"
 
-import-sort-parser-babylon@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/import-sort-parser-babylon/-/import-sort-parser-babylon-3.2.0.tgz#9a7ed2cc9ce6d8cb58415e514a288b075dfacff9"
+import-sort-parser-babylon@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/import-sort-parser-babylon/-/import-sort-parser-babylon-4.0.0.tgz#a0ce8bcabed65a622f5122bdeadf8b705832890f"
   dependencies:
     babel-traverse "^6.25.0"
     babel-types "^6.25.0"
     babylon "^6.17.3"
     find-line-column "^0.5.2"
 
-import-sort-parser-typescript@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/import-sort-parser-typescript/-/import-sort-parser-typescript-3.2.0.tgz#e0d116ddbc1933263975c1dc965f1a2ba55b53a3"
+import-sort-parser-typescript@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/import-sort-parser-typescript/-/import-sort-parser-typescript-4.0.0.tgz#d8f71abe46768418811f1c62be9d2c2734fe942b"
   dependencies:
     core-js "^2.4.1"
     typescript "^2.3.4"
 
-import-sort-parser@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/import-sort-parser/-/import-sort-parser-3.0.0.tgz#9e7543087188b065ded909b40caae440d3c7a2a6"
+import-sort-parser@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/import-sort-parser/-/import-sort-parser-4.0.0.tgz#60ee98bdee153534af05fad0c4c460c1a08f9b98"
 
-import-sort-style-eslint@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/import-sort-style-eslint/-/import-sort-style-eslint-3.0.0.tgz#1976952e3e49d3538e843c438328b8d13d2104ac"
+import-sort-style-eslint@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/import-sort-style-eslint/-/import-sort-style-eslint-4.0.0.tgz#d36250c6eed78e46e196ad5dc80cd5660dea68aa"
   dependencies:
     eslint "^4.0.0"
     lodash "^4.17.4"
 
-import-sort-style@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/import-sort-style/-/import-sort-style-3.0.0.tgz#2210b9db54259055429f9b86235e7670e85509d7"
+import-sort-style@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/import-sort-style/-/import-sort-style-4.0.0.tgz#784cba28e12e71616db3d48a6c2d4d31b7dedfed"
 
 imurmurhash@^0.1.4:
   version "0.1.4"
@@ -840,7 +846,7 @@ resolve-from@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/resolve-from/-/resolve-from-1.0.1.tgz#26cbfe935d1aeeeabb29bc3fe5aeb01e93d44226"
 
-resolve@^1.3.2:
+resolve@^1.3.2, resolve@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.5.0.tgz#1f09acce796c9a762579f31b2c1cc4c3cddf9f36"
   dependencies:
