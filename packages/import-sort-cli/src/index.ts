@@ -52,7 +52,8 @@ if (ignoreNodeModules) {
 let filePaths;
 
 try {
-  filePaths = globby
+  // TODO: Globby typings probably not up-to-date here.
+  filePaths = (globby as any)
     .sync(filePatterns, {dot: true, expandDirectories: false})
     .map(filePath => path.relative(process.cwd(), filePath));
 } catch (e) {
@@ -77,11 +78,11 @@ for (const filePath of filePaths) {
 
   const unsortedCode = readFileSync(filePath).toString("utf8");
 
-  const {parser, style, options} = config;
+  const {parser, style, config: rawConfig} = config;
   let sortResult: ISortResult | undefined;
 
   try {
-    sortResult = sortImports(unsortedCode, parser!, style!, filePath, options);
+    sortResult = sortImports(unsortedCode, parser!, style!, filePath, rawConfig.options);
   } catch (e) {
     handleFilePathError(filePath, e);
     continue;

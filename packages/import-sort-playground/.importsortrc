@@ -1,7 +1,12 @@
 {
   ".js": {
     "parser": "babylon",
-    "style": "renke"
+    "style": "renke",  
+    "options": {
+      alias: [
+        "components", "reducers", "actions", "selectors"
+      ]
+    }
   },
 
   ".ts": {
