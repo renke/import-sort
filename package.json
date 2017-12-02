@@ -1,14 +1,29 @@
 {
+  "scripts": {
+    "precommit": "lint-staged",
+    "test":
+      "mocha --require ts-node/register --recursive \"packages/*/test/**/*.ts\"",
+    "test:watch":
+      "mocha -w --require ts-node/register --recursive \"packages/*/test/**/*.ts\""
+  },
+
+  "lint-staged": {
+    "*.ts": ["prettier --write", "import-sort --write", "git add"],
+    "*.json": ["prettier --write", "git add"]
+  },
+
   "devDependencies": {
     "@types/chai": "^4.0.5",
     "@types/mocha": "^2.2.44",
     "@types/node": "^8.0.53",
     "chai": "^4.1.2",
-    "import-sort": "^3.3.0",
-    "import-sort-cli": "^3.3.0",
+    "husky": "^0.14.3",
+    "import-sort": "^4.1.0",
+    "import-sort-cli": "^4.1.0",
     "import-sort-parser-typescript": "^3.2.0",
-    "import-sort-style-module": "^3.0.0",
+    "import-sort-style-module": "^4.1.0",
     "lerna": "^2.5.1",
+    "lint-staged": "^6.0.0",
     "mocha": "^4.0.1",
     "ts-node": "^3.3.0",
     "typescript": "^2.6.1"
