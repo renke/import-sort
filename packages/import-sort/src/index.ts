@@ -44,7 +44,7 @@ export default function importSort(
 export function sortImports(
   code: string, parser: IParser, style: IStyle, file?: string, options?: any
 ): ISortResult {
-  const items = addFallback(style, file, options)(StyleAPI);
+  const items = addFallback(style, file, options || {})(StyleAPI);
 
   const buckets: Array<Array<IImport>> = items.map(() => []);
 

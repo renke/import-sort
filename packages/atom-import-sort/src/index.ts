@@ -115,7 +115,7 @@ export class Plugin {
         return;
       }
 
-      const {parser, style} = sortConfig;
+      const {parser, style, options} = sortConfig;
 
       if (!parser || !style) {
         if (!parser && !notifyErrors) {
@@ -136,7 +136,7 @@ export class Plugin {
 
       allowUnsafeNewFunction(() => {
         allowUnsafeEval(() => {
-          changes = sortImports(unsorted, parser!, style!, path).changes;
+          changes = sortImports(unsorted, parser!, style!, path, options).changes;
         });
       });
 
