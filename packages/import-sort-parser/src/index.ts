@@ -1,6 +1,6 @@
 export interface IParser {
-    parseImports(code: string): Array<IImport>;
-    formatImport(code: string, imported: IImport, eol?: string): string;
+  parseImports(code: string): Array<IImport>;
+  formatImport(code: string, imported: IImport, eol?: string): string;
 }
 
 export interface IImport {
@@ -22,6 +22,6 @@ export interface IImport {
 export type ImportType = "import" | "require" | "import-equals" | "import-type";
 
 export type NamedMember = {
-  name: string,
-  alias: string,
-}
+  name: string;
+  alias: string;
+};

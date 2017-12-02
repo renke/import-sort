@@ -12,10 +12,11 @@ import * as yargs from "yargs";
 
 yargs
   .usage(
-`
+    `
 Usage: import-sort [OPTION]... [FILE/GLOB]...
 
-`.trim())
+`.trim(),
+  )
   .describe("list-different", "Print the names of files that are not sorted.")
   .boolean("list-different")
   .alias("list-different", "l")
@@ -23,7 +24,10 @@ Usage: import-sort [OPTION]... [FILE/GLOB]...
   .describe("write", "Edit files in-place.")
   .boolean("write")
 
-  .describe("with-node-modules", "Process files inside 'node_modules' directory..")
+  .describe(
+    "with-node-modules",
+    "Process files inside 'node_modules' directory..",
+  )
   .boolean("with-node-modules")
 
   .version(require("../package.json").version)
@@ -46,7 +50,10 @@ if (filePatterns.length === 0) {
 }
 
 if (ignoreNodeModules) {
-  filePatterns = filePatterns.concat(["!**/node_modules/**", "!./node_modules/**"]);
+  filePatterns = filePatterns.concat([
+    "!**/node_modules/**",
+    "!./node_modules/**",
+  ]);
 }
 
 let filePaths;
@@ -62,7 +69,9 @@ try {
 }
 
 if (filePaths.length === 0) {
-  console.error(`No files found for the given patterns: ${filePatterns.join(", ")}`);
+  console.error(
+    `No files found for the given patterns: ${filePatterns.join(", ")}`,
+  );
   process.exit(2);
 }
 
@@ -82,7 +91,13 @@ for (const filePath of filePaths) {
   let sortResult: ISortResult | undefined;
 
   try {
-    sortResult = sortImports(unsortedCode, parser!, style!, filePath, rawConfig.options);
+    sortResult = sortImports(
+      unsortedCode,
+      parser!,
+      style!,
+      filePath,
+      rawConfig.options,
+    );
   } catch (e) {
     handleFilePathError(filePath, e);
     continue;
@@ -108,7 +123,10 @@ for (const filePath of filePaths) {
   }
 }
 
-function getAndCheckConfig(extension: string, fileDirectory: string): IResolvedConfig {
+function getAndCheckConfig(
+  extension: string,
+  fileDirectory: string,
+): IResolvedConfig {
   const resolvedConfig = getConfig(extension, fileDirectory);
 
   throwIf(!resolvedConfig, `No configuration found for file type ${extension}`);

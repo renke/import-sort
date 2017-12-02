@@ -19,7 +19,7 @@ export interface IResolvedConfig {
 
   parser?: string;
   style?: string;
-};
+}
 
 export const DEFAULT_CONFIGS: IConfigByGlobs = {
   ".js, .jsx, .es6, .es": {
@@ -32,7 +32,11 @@ export const DEFAULT_CONFIGS: IConfigByGlobs = {
   },
 };
 
-export function getConfig(extension: string, directory?: string, defaultConfigs = DEFAULT_CONFIGS): IResolvedConfig | undefined {
+export function getConfig(
+  extension: string,
+  directory?: string,
+  defaultConfigs = DEFAULT_CONFIGS,
+): IResolvedConfig | undefined {
   const defaultConfig = getConfigForExtension(defaultConfigs, extension);
   let packageConfig: IConfig | undefined;
 
@@ -48,10 +52,13 @@ export function getConfig(extension: string, directory?: string, defaultConfigs 
 
   const resolvedConfig = resolveConfig(actualConfig, directory);
 
-  return resolvedConfig
+  return resolvedConfig;
 }
 
-function getConfigFromDirectory(directory: string, extension: string): IConfig | undefined {
+function getConfigFromDirectory(
+  directory: string,
+  extension: string,
+): IConfig | undefined {
   const packageConfigs = getAllConfigsFromDirectory(directory);
 
   if (!packageConfigs) {
@@ -61,20 +68,27 @@ function getConfigFromDirectory(directory: string, extension: string): IConfig |
   return getConfigForExtension(packageConfigs, extension);
 }
 
-function getConfigForExtension(configs: IConfigByGlobs, extension: string): IConfig | undefined {
-  const foundConfigs: Array<IConfig | undefined> = Object.keys(configs).map(joinedGlobs => {
-    const globs = joinedGlobs.split(",").map(rawGlob => rawGlob.trim());
-    const config = configs[joinedGlobs];
+function getConfigForExtension(
+  configs: IConfigByGlobs,
+  extension: string,
+): IConfig | undefined {
+  const foundConfigs: Array<IConfig | undefined> = Object.keys(configs).map(
+    joinedGlobs => {
+      const globs = joinedGlobs.split(",").map(rawGlob => rawGlob.trim());
+      const config = configs[joinedGlobs];
 
-    if (globs.some(glob => minimatch(extension, glob))) {
-      return config;
-    }
-  });
+      if (globs.some(glob => minimatch(extension, glob))) {
+        return config;
+      }
+    },
+  );
 
   return mergeConfigs(foundConfigs);
 }
 
-function getAllConfigsFromDirectory(directory: string): IConfigByGlobs | undefined {
+function getAllConfigsFromDirectory(
+  directory: string,
+): IConfigByGlobs | undefined {
   const configsLoader = cosmiconfig("importsort", {
     sync: true,
     packageProp: "importSort",
@@ -94,7 +108,9 @@ function getAllConfigsFromDirectory(directory: string): IConfigByGlobs | undefin
   }
 }
 
-function mergeConfigs(rawConfigs: Array<IConfig | undefined>): IConfig | undefined {
+function mergeConfigs(
+  rawConfigs: Array<IConfig | undefined>,
+): IConfig | undefined {
   const configs = rawConfigs.filter(rawConfig => !!rawConfig) as Array<IConfig>;
 
   if (configs.length === 0) {

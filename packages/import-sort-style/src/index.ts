@@ -36,13 +36,13 @@ export interface IStyleAPI {
   isRelativeModule: IMatcherFunction;
   isAbsoluteModule: IMatcherFunction;
   isScopedModule: IMatcherFunction;
-  isInstalledModule(baseFile: string): IMatcherFunction
+  isInstalledModule(baseFile: string): IMatcherFunction;
 
   startsWithUpperCase: IPredicateFunction;
   startsWithLowerCase: IPredicateFunction;
   startsWithAlphanumeric: IPredicateFunction;
 
-  startsWith(...prefixes: string[]): IPredicateFunction
+  startsWith(...prefixes: string[]): IPredicateFunction;
 
   // reverse: (sorter: ISorterFunction) => ISorterFunction;
   naturally: IComparatorFunction;
@@ -83,7 +83,9 @@ export interface IStyleItem {
   match?: IMatcherFunction;
 
   sort?: ISorterFunction | Array<ISorterFunction>;
-  sortNamedMembers?: INamedMemberSorterFunction | Array<INamedMemberSorterFunction>;
+  sortNamedMembers?:
+    | INamedMemberSorterFunction
+    | Array<INamedMemberSorterFunction>;
 
   separator?: boolean;
 }

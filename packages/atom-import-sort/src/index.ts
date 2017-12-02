@@ -16,20 +16,24 @@ export class Plugin {
   public config = {
     sortOnSave: {
       title: "Sort on save",
-      description: "Automatically sort your Javascript files when you save them.",
+      description:
+        "Automatically sort your Javascript files when you save them.",
       type: "boolean",
       default: false,
     },
   };
 
   public activate(state) {
-    (atom.config as any).observe("atom-import-sort.sortOnSave", (sortOnSave: boolean) => {
-      if (sortOnSave) {
-        this.observeEditors();
-      } else {
-        this.unobserveEditors();
-      }
-    });
+    (atom.config as any).observe(
+      "atom-import-sort.sortOnSave",
+      (sortOnSave: boolean) => {
+        if (sortOnSave) {
+          this.observeEditors();
+        } else {
+          this.unobserveEditors();
+        }
+      },
+    );
 
     // tslint:disable-next-line
     atom.commands.add(
@@ -47,11 +51,15 @@ export class Plugin {
     if (!this.editorObserverDisposable) {
       this.bufferWillSaveDisposables = new CompositeDisposable();
 
-      this.editorObserverDisposable = atom.workspace.observeTextEditors(editor => {
-        this.bufferWillSaveDisposables.add(editor.getBuffer().onWillSave(() => {
-          this.sortEditor(editor, true);
-        }));
-      });
+      this.editorObserverDisposable = atom.workspace.observeTextEditors(
+        editor => {
+          this.bufferWillSaveDisposables.add(
+            editor.getBuffer().onWillSave(() => {
+              this.sortEditor(editor, true);
+            }),
+          );
+        },
+      );
     }
   }
 
@@ -109,7 +117,9 @@ export class Plugin {
 
       if (!sortConfig) {
         if (!notifyErrors) {
-          atom.notifications.addWarning(`No configuration found for this file type`);
+          atom.notifications.addWarning(
+            `No configuration found for this file type`,
+          );
         }
 
         return;
@@ -119,11 +129,15 @@ export class Plugin {
 
       if (!parser || !style) {
         if (!parser && !notifyErrors) {
-            atom.notifications.addWarning(`Parser '${sortConfig.config.parser}' not found`);
+          atom.notifications.addWarning(
+            `Parser '${sortConfig.config.parser}' not found`,
+          );
         }
 
         if (!style && !notifyErrors) {
-          atom.notifications.addWarning(`Style '${sortConfig.config.style}' not found`);
+          atom.notifications.addWarning(
+            `Style '${sortConfig.config.style}' not found`,
+          );
         }
 
         return;
@@ -136,7 +150,13 @@ export class Plugin {
 
       allowUnsafeNewFunction(() => {
         allowUnsafeEval(() => {
-          changes = sortImports(unsorted, parser!, style!, path, rawConfig.options).changes;
+          changes = sortImports(
+            unsorted,
+            parser!,
+            style!,
+            path,
+            rawConfig.options,
+          ).changes;
         });
       });
 
@@ -152,7 +172,9 @@ export class Plugin {
       editor.setCursorBufferPosition(cursor);
     } catch (e) {
       if (!notifyErrors) {
-        atom.notifications.addWarning(`Failed to sort imports:\n${e.toString()}`);
+        atom.notifications.addWarning(
+          `Failed to sort imports:\n${e.toString()}`,
+        );
       }
     }
   }

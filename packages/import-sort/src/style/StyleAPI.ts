@@ -1,3 +1,5 @@
+import {dirname} from "path";
+
 import {IImport} from "import-sort-parser";
 import {
   IComparatorFunction,
@@ -7,28 +9,37 @@ import {
   ISorterFunction,
   IStyleAPI,
 } from "import-sort-style";
-
 import * as resolve from "resolve";
 
 import isNodeModulePredicate = require("is-builtin-module");
-import {dirname} from "path";
 
 function member(predicate: IPredicateFunction): IMatcherFunction;
 function member(comparator: IComparatorFunction): ISorterFunction;
-function member(predicateOrComparator: IPredicateFunction | IComparatorFunction): IMatcherFunction | ISorterFunction {
+function member(
+  predicateOrComparator: IPredicateFunction | IComparatorFunction,
+): IMatcherFunction | ISorterFunction {
   if ((predicateOrComparator as Function).length === 1) {
     const predicate = predicateOrComparator as IPredicateFunction;
 
     return (imported: IImport): boolean => {
-      const member = imported.defaultMember || imported.namespaceMember || imported.namedMembers[0].alias;
+      const member =
+        imported.defaultMember ||
+        imported.namespaceMember ||
+        imported.namedMembers[0].alias;
       return predicate(member);
     };
   } else {
     const comparator = predicateOrComparator as IComparatorFunction;
 
     return (firstImport: IImport, secondImport: IImport): number => {
-      const first = firstImport.defaultMember || firstImport.namespaceMember || firstImport.namedMembers[0].alias;
-      const second = secondImport.defaultMember || secondImport.namespaceMember || secondImport.namedMembers[0].alias;
+      const first =
+        firstImport.defaultMember ||
+        firstImport.namespaceMember ||
+        firstImport.namedMembers[0].alias;
+      const second =
+        secondImport.defaultMember ||
+        secondImport.namespaceMember ||
+        secondImport.namedMembers[0].alias;
 
       return comparator(first, second);
     };
@@ -37,7 +48,9 @@ function member(predicateOrComparator: IPredicateFunction | IComparatorFunction)
 
 function moduleName(predicate: IPredicateFunction): IMatcherFunction;
 function moduleName(comparator: IComparatorFunction): ISorterFunction;
-function moduleName(predicateOrComparator: IPredicateFunction | IComparatorFunction): IMatcherFunction | ISorterFunction {
+function moduleName(
+  predicateOrComparator: IPredicateFunction | IComparatorFunction,
+): IMatcherFunction | ISorterFunction {
   if ((predicateOrComparator as Function).length === 1) {
     const predicate = predicateOrComparator as IPredicateFunction;
 
@@ -92,7 +105,11 @@ function or(...matchers: Array<IMatcherFunction>): IMatcherFunction {
 }
 
 function hasMember(imported: IImport): boolean {
-  return hasDefaultMember(imported) || hasNamespaceMember(imported) || hasNamedMembers(imported);
+  return (
+    hasDefaultMember(imported) ||
+    hasNamespaceMember(imported) ||
+    hasNamedMembers(imported)
+  );
 }
 
 function hasNoMember(imported: IImport): boolean {
@@ -112,23 +129,43 @@ function hasNamedMembers(imported: IImport): boolean {
 }
 
 function hasOnlyDefaultMember(imported: IImport): boolean {
-  return hasDefaultMember(imported) && !hasNamespaceMember(imported) && !hasNamedMembers(imported);
+  return (
+    hasDefaultMember(imported) &&
+    !hasNamespaceMember(imported) &&
+    !hasNamedMembers(imported)
+  );
 }
 
 function hasOnlyNamespaceMember(imported: IImport): boolean {
-  return !hasDefaultMember(imported) && hasNamespaceMember(imported) && !hasNamedMembers(imported);
+  return (
+    !hasDefaultMember(imported) &&
+    hasNamespaceMember(imported) &&
+    !hasNamedMembers(imported)
+  );
 }
 
 function hasOnlyNamedMembers(imported: IImport): boolean {
-    return !hasDefaultMember(imported) && !hasNamespaceMember(imported) && hasNamedMembers(imported);
+  return (
+    !hasDefaultMember(imported) &&
+    !hasNamespaceMember(imported) &&
+    hasNamedMembers(imported)
+  );
 }
 
 function hasMultipleMembers(imported): boolean {
-  return (imported.namedMembers.length + (imported.defaultMember ? 1 : 0) + (imported.namespaceMember ? 1 : 0)) > 1;
-};
+  return (
+    imported.namedMembers.length +
+      (imported.defaultMember ? 1 : 0) +
+      (imported.namespaceMember ? 1 : 0) >
+    1
+  );
+}
 
 function hasSingleMember(imported): boolean {
-  return (imported.namedMembers.length + (imported.defaultMember ? 1 : 0)) === 1 && !hasNamespaceMember(imported);
+  return (
+    imported.namedMembers.length + (imported.defaultMember ? 1 : 0) === 1 &&
+    !hasNamespaceMember(imported)
+  );
 }
 
 function isNodeModule(imported: IImport): boolean {
@@ -146,13 +183,15 @@ function isAbsoluteModule(imported: IImport): boolean {
 function isInstalledModule(baseFile: string): IMatcherFunction {
   return (imported: IImport) => {
     try {
-      const resolvePath = resolve.sync(imported.moduleName, {basedir: dirname(baseFile)});
+      const resolvePath = resolve.sync(imported.moduleName, {
+        basedir: dirname(baseFile),
+      });
       console.log(resolvePath);
       return resolvePath.includes("node_modules");
     } catch (e) {
       return false;
     }
-  }
+  };
 }
 
 function isScopedModule(imported: IImport): boolean {
@@ -198,8 +237,10 @@ function unicode(first: string, second: string): number {
 function dotSegmentCount(firstImport: IImport, secondImport: IImport): number {
   const regex = /\.+(?=\/)/g;
 
-  const firstCount = (firstImport.moduleName.match(regex) || []).join("").length;
-  const secondCount = (secondImport.moduleName.match(regex) || []).join("").length;
+  const firstCount = (firstImport.moduleName.match(regex) || []).join("")
+    .length;
+  const secondCount = (secondImport.moduleName.match(regex) || []).join("")
+    .length;
 
   if (firstCount > secondCount) {
     return -1;

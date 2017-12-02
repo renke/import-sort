@@ -24,16 +24,28 @@ export default function(styleApi: IStyleAPI): Array<IStyleItem> {
     {separator: true},
 
     // import … from "fs";
-    {match: isNodeModule, sort: moduleName(naturally), sortNamedMembers: alias(unicode)},
+    {
+      match: isNodeModule,
+      sort: moduleName(naturally),
+      sortNamedMembers: alias(unicode),
+    },
     {separator: true},
 
     // import … from "foo";
-    {match: isAbsoluteModule, sort: moduleName(naturally), sortNamedMembers: alias(unicode)},
+    {
+      match: isAbsoluteModule,
+      sort: moduleName(naturally),
+      sortNamedMembers: alias(unicode),
+    },
     {separator: true},
 
     // import … from "./foo";
     // import … from "../foo";
-    {match: isRelativeModule, sort: [dotSegmentCount, moduleName(naturally)], sortNamedMembers: alias(unicode)},
+    {
+      match: isRelativeModule,
+      sort: [dotSegmentCount, moduleName(naturally)],
+      sortNamedMembers: alias(unicode),
+    },
     {separator: true},
   ];
 }

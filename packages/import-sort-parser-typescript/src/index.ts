@@ -8,7 +8,12 @@ export function parseImports(code: string): Array<IImport> {
     readFile: () => "",
 
     getSourceFile: () => {
-      return typescript.createSourceFile("", code, typescript.ScriptTarget.Latest, true);
+      return typescript.createSourceFile(
+        "",
+        code,
+        typescript.ScriptTarget.Latest,
+        true,
+      );
     },
 
     getDefaultLibFileName: () => "lib.d.ts",
@@ -20,39 +25,52 @@ export function parseImports(code: string): Array<IImport> {
     getNewLine: () => typescript.sys.newLine,
   };
 
-  const program = typescript.createProgram(["foo.ts"], {
-    noResolve: true,
-    target: typescript.ScriptTarget.Latest,
-    experimentalDecorators: true,
-    experimentalAsyncFunctions: true,
-  }, host);
+  const program = typescript.createProgram(
+    ["foo.ts"],
+    {
+      noResolve: true,
+      target: typescript.ScriptTarget.Latest,
+      experimentalDecorators: true,
+      experimentalAsyncFunctions: true,
+    },
+    host,
+  );
 
   const sourceFile = program.getSourceFile("foo.ts");
 
   const imports: Array<IImport> = [];
 
   typescript.forEachChild(sourceFile, node => {
-      switch (node.kind) {
-        case typescript.SyntaxKind.ImportDeclaration: {
-          imports.push(parseImportDeclaration(code, sourceFile, node as typescript.ImportDeclaration));
-          break;
-        }
-        case typescript.SyntaxKind.ImportEqualsDeclaration: {
-          break;
-        }
-        default: {
-          break;
-        }
+    switch (node.kind) {
+      case typescript.SyntaxKind.ImportDeclaration: {
+        imports.push(
+          parseImportDeclaration(
+            code,
+            sourceFile,
+            node as typescript.ImportDeclaration,
+          ),
+        );
+        break;
       }
+      case typescript.SyntaxKind.ImportEqualsDeclaration: {
+        break;
+      }
+      default: {
+        break;
+      }
+    }
   });
 
   return imports;
 }
 
 function parseImportDeclaration(
-  code: string, sourceFile: typescript.SourceFile, importDeclaration: typescript.ImportDeclaration
+  code: string,
+  sourceFile: typescript.SourceFile,
+  importDeclaration: typescript.ImportDeclaration,
 ): IImport {
-  const importStart = importDeclaration.pos + importDeclaration.getLeadingTriviaWidth();
+  const importStart =
+    importDeclaration.pos + importDeclaration.getLeadingTriviaWidth();
   const importEnd = importDeclaration.end;
 
   let start = importStart;
@@ -68,7 +86,12 @@ function parseImportDeclaration(
     let previous: number | undefined;
 
     while (comments[current] && comments[current].end + 1 === start) {
-      if (startsWith(code.substring(comments[current].pos, comments[current].end), "#!")) {
+      if (
+        startsWith(
+          code.substring(comments[current].pos, comments[current].end),
+          "#!",
+        )
+      ) {
         break;
       }
 
@@ -98,7 +121,9 @@ function parseImportDeclaration(
 
   let type: ImportType = "import";
 
-  let moduleName = importDeclaration.moduleSpecifier.getText().replace(/["']/g, "");
+  let moduleName = importDeclaration.moduleSpecifier
+    .getText()
+    .replace(/["']/g, "");
 
   const imported: IImport = {
     start,
@@ -119,7 +144,7 @@ function parseImportDeclaration(
 
     const namedBindings = importClause.namedBindings;
 
-    if (namedBindings)  {
+    if (namedBindings) {
       if (namedBindings.kind === typescript.SyntaxKind.NamespaceImport) {
         const namespaceImport = namedBindings as typescript.NamespaceImport;
         imported.namespaceMember = namespaceImport.name.text;
@@ -163,17 +188,25 @@ function fixMultipleUnderscore(name) {
 
 // Taken from https://github.com/fkling/astexplorer/blob/master/src/parsers/js/typescript.js#L68
 function getComments(
-  sourceFile: typescript.SourceFile, node: typescript.Node, isTrailing: boolean
+  sourceFile: typescript.SourceFile,
+  node: typescript.Node,
+  isTrailing: boolean,
 ): Array<typescript.CommentRange> | undefined {
   if (node.parent) {
     const nodePos = isTrailing ? node.end : node.pos;
     const parentPos = isTrailing ? node.parent.end : node.parent.pos;
 
-    if (node.parent.kind === typescript.SyntaxKind.SourceFile || nodePos !== parentPos) {
+    if (
+      node.parent.kind === typescript.SyntaxKind.SourceFile ||
+      nodePos !== parentPos
+    ) {
       let comments: Array<typescript.CommentRange> | undefined;
 
       if (isTrailing) {
-        comments = typescript.getTrailingCommentRanges(sourceFile.text, nodePos);
+        comments = typescript.getTrailingCommentRanges(
+          sourceFile.text,
+          nodePos,
+        );
       } else {
         comments = typescript.getLeadingCommentRanges(sourceFile.text, nodePos);
       }
@@ -185,7 +218,11 @@ function getComments(
   }
 }
 
-export function formatImport(code: string, imported: IImport, eol = "\n"): string {
+export function formatImport(
+  code: string,
+  imported: IImport,
+  eol = "\n",
+): string {
   const importStart = imported.importStart || imported.start;
   const importEnd = imported.importEnd || imported.end;
 
@@ -197,25 +234,40 @@ export function formatImport(code: string, imported: IImport, eol = "\n"): strin
     return code.substring(imported.start, imported.end);
   }
 
-  const newImportCode = importCode.replace(/\{[\s\S]*\}/g, namedMembersString => {
-    const useMultipleLines = namedMembersString.indexOf(eol) !== -1;
+  const newImportCode = importCode.replace(
+    /\{[\s\S]*\}/g,
+    namedMembersString => {
+      const useMultipleLines = namedMembersString.indexOf(eol) !== -1;
 
-    let prefix: string | undefined;
+      let prefix: string | undefined;
 
-    if (useMultipleLines) {
-      prefix = namedMembersString.split(eol)[1].match(/^\s*/)![0];
-    }
+      if (useMultipleLines) {
+        prefix = namedMembersString.split(eol)[1].match(/^\s*/)![0];
+      }
 
-    let useSpaces = namedMembersString.charAt(1) === " ";
+      let useSpaces = namedMembersString.charAt(1) === " ";
 
-    let userTrailingComma = namedMembersString.replace("}","").trim().endsWith(",");
+      let userTrailingComma = namedMembersString
+        .replace("}", "")
+        .trim()
+        .endsWith(",");
 
-    return formatNamedMembers(namedMembers, useMultipleLines, useSpaces, userTrailingComma, prefix, eol);
-  });
+      return formatNamedMembers(
+        namedMembers,
+        useMultipleLines,
+        useSpaces,
+        userTrailingComma,
+        prefix,
+        eol,
+      );
+    },
+  );
 
-  return code.substring(imported.start, importStart)
-    + newImportCode
-    + code.substring(importEnd, importEnd + (imported.end - importEnd));
+  return (
+    code.substring(imported.start, importStart) +
+    newImportCode +
+    code.substring(importEnd, importEnd + (imported.end - importEnd))
+  );
 }
 
 function formatNamedMembers(
@@ -227,26 +279,42 @@ function formatNamedMembers(
   eol = "\n",
 ): string {
   if (useMultipleLines) {
-    return "{" + eol + namedMembers.map(({name, alias}, index) => {
-      const lastImport = index === namedMembers.length - 1;
-      const comma = !useTrailingComma && lastImport ? "" : ",";
+    return (
+      "{" +
+      eol +
+      namedMembers
+        .map(({name, alias}, index) => {
+          const lastImport = index === namedMembers.length - 1;
+          const comma = !useTrailingComma && lastImport ? "" : ",";
 
-      if (name === alias) {
-        return `${prefix}${name}${comma}` + eol;
-      }
+          if (name === alias) {
+            return `${prefix}${name}${comma}` + eol;
+          }
 
-      return `${prefix}${name} as ${alias}${comma}` + eol;
-    }).join("") + "}";
+          return `${prefix}${name} as ${alias}${comma}` + eol;
+        })
+        .join("") +
+      "}"
+    );
   } else {
     const space = useSpaces ? " " : "";
     const comma = useTrailingComma ? "," : "";
 
-    return "{" + space + namedMembers.map(({name, alias}) => {
-      if (name === alias) {
-        return `${name}`;
-      }
+    return (
+      "{" +
+      space +
+      namedMembers
+        .map(({name, alias}) => {
+          if (name === alias) {
+            return `${name}`;
+          }
 
-      return `${name} as ${alias}`;
-    }).join(", ") + comma + space + "}";
+          return `${name} as ${alias}`;
+        })
+        .join(", ") +
+      comma +
+      space +
+      "}"
+    );
   }
 }

@@ -1,6 +1,10 @@
 import * as detectNewline from "detect-newline";
 import {IImport, IParser, NamedMember} from "import-sort-parser";
-import {INamedMemberSorterFunction, ISorterFunction, IStyle} from "import-sort-style";
+import {
+  INamedMemberSorterFunction,
+  ISorterFunction,
+  IStyle,
+} from "import-sort-style";
 
 import StyleAPI from "./style/StyleAPI";
 
@@ -17,7 +21,11 @@ export interface ICodeChange {
 }
 
 export default function importSort(
-  code: string, rawParser: string | IParser, rawStyle: string | IStyle, file?: string, options?: any
+  code: string,
+  rawParser: string | IParser,
+  rawStyle: string | IStyle,
+  file?: string,
+  options?: any,
 ): ISortResult {
   let parser: IParser | undefined;
   let style: IStyle;
@@ -42,7 +50,11 @@ export default function importSort(
 }
 
 export function sortImports(
-  code: string, parser: IParser, style: IStyle, file?: string, options?: any
+  code: string,
+  parser: IParser,
+  style: IStyle,
+  file?: string,
+  options?: any,
 ): ISortResult {
   const items = addFallback(style, file, options || {})(StyleAPI);
 
@@ -92,15 +104,15 @@ export function sortImports(
     }
 
     const multiSort = (first: IImport, second: IImport): number => {
-        let sorterIndex = 0;
-        let comparison = 0;
+      let sorterIndex = 0;
+      let comparison = 0;
 
-        while (comparison === 0 && sorters[sorterIndex]) {
-          comparison = sorters[sorterIndex](first, second);
-          sorterIndex++;
-        }
+      while (comparison === 0 && sorters[sorterIndex]) {
+        comparison = sorters[sorterIndex](first, second);
+        sorterIndex++;
+      }
 
-        return comparison;
+      return comparison;
     };
 
     bucket.sort(multiSort);
@@ -132,22 +144,27 @@ export function sortImports(
   let sortedCode = code;
 
   // Remove imports
-  imports.slice().reverse().forEach(imported => {
-    let importEnd = imported.end;
+  imports
+    .slice()
+    .reverse()
+    .forEach(imported => {
+      let importEnd = imported.end;
 
-    if (sortedCode.charAt(imported.end).match(/\s/)) {
-      importEnd++;
-    }
+      if (sortedCode.charAt(imported.end).match(/\s/)) {
+        importEnd++;
+      }
 
-    changes.push({
-      start: imported.start,
-      end: importEnd,
-      code: "",
-      note: "import-remove",
+      changes.push({
+        start: imported.start,
+        end: importEnd,
+        code: "",
+        note: "import-remove",
+      });
+
+      sortedCode =
+        sortedCode.slice(0, imported.start) +
+        sortedCode.slice(importEnd, code.length);
     });
-
-    sortedCode = sortedCode.slice(0, imported.start) + sortedCode.slice(importEnd, code.length);
-  });
 
   const start = imports[0].start;
 
@@ -237,7 +254,8 @@ export function sortImports(
 }
 
 function sortNamedMembers(
-  imported: IImport, rawSort?: INamedMemberSorterFunction | Array<INamedMemberSorterFunction>
+  imported: IImport,
+  rawSort?: INamedMemberSorterFunction | Array<INamedMemberSorterFunction>,
 ): IImport {
   const sort = rawSort;
 
@@ -258,15 +276,15 @@ function sortNamedMembers(
   }
 
   const multiSort = (first: NamedMember, second: NamedMember): number => {
-      let sorterIndex = 0;
-      let comparison = 0;
+    let sorterIndex = 0;
+    let comparison = 0;
 
-      while (comparison === 0 && sorters[sorterIndex]) {
-        comparison = sorters[sorterIndex](first, second);
-        sorterIndex++;
-      }
+    while (comparison === 0 && sorters[sorterIndex]) {
+      comparison = sorters[sorterIndex](first, second);
+      sorterIndex++;
+    }
 
-      return comparison;
+    return comparison;
   };
 
   const sortedImport = Object.assign({}, imported);
@@ -275,11 +293,17 @@ function sortNamedMembers(
   return sortedImport;
 }
 
-export function applyChanges(code: string, changes: Array<ICodeChange>): string {
+export function applyChanges(
+  code: string,
+  changes: Array<ICodeChange>,
+): string {
   let changedCode = code;
 
   for (const change of changes) {
-    changedCode = changedCode.slice(0, change.start) + change.code + changedCode.slice(change.end, changedCode.length);
+    changedCode =
+      changedCode.slice(0, change.start) +
+      change.code +
+      changedCode.slice(change.end, changedCode.length);
   }
 
   return changedCode;
@@ -287,10 +311,7 @@ export function applyChanges(code: string, changes: Array<ICodeChange>): string 
 
 function addFallback(style: IStyle, file?: string, options?: any): IStyle {
   return styleApi => {
-    const items = [
-      {separator: true},
-      {match: styleApi.always},
-    ];
+    const items = [{separator: true}, {match: styleApi.always}];
 
     return style(styleApi, file, options).concat(items);
   };
