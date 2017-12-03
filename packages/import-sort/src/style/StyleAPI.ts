@@ -186,7 +186,7 @@ function isInstalledModule(baseFile: string): IMatcherFunction {
       const resolvePath = resolve.sync(imported.moduleName, {
         basedir: dirname(baseFile),
       });
-      console.log(resolvePath);
+
       return resolvePath.includes("node_modules");
     } catch (e) {
       return false;

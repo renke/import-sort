@@ -10,21 +10,36 @@ import {IImport, NamedMember} from "import-sort-parser";
 // TODO: Mocha currently doesn't pick up the declaration in index.d.ts
 const findLineColumn = require("find-line-column");
 
+const BABYLON_PLUGINS = [
+  "jsx",
+  "flow",
+  "typescript",
+  "doExpressions",
+  "objectRestSpread",
+  "decorators",
+  "decorators2",
+  "classProperties",
+  "classPrivateProperties",
+  "classPrivateMethods",
+  "exportExtensions",
+  "asyncGenerators",
+  "functionBind",
+  "functionSent",
+  "dynamicImport",
+  "numericSeparator",
+  "optionalChaining",
+  "importMeta",
+  "bigInt",
+  "optionalCatchBinding",
+  "throwExpressions",
+  "pipelineOperator",
+  "nullishCoalescingOperator",
+];
+
 export function parseImports(code: string): Array<IImport> {
-  const parsed = parse(code, {
+  const parsed = (parse as any)(code, {
     sourceType: "module",
-    plugins: [
-      "jsx",
-      "flow",
-      "doExpressions",
-      "objectRestSpread",
-      "decorators",
-      "classProperties",
-      "exportExtensions",
-      "asyncGenerators",
-      "functionBind",
-      "functionSent",
-    ],
+    plugins: BABYLON_PLUGINS,
   });
 
   const imports: Array<IImport> = [];
