@@ -1,6 +1,6 @@
 {
   "name": "import-sort-config",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "description": "Parser for the import-sort config key.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -9,7 +9,8 @@
     "build": "tsc -p src",
     "build:watch": "tsc -p src -w",
     "test": "mocha --require ts-node/register --recursive \"test/**/*.ts\"",
-    "test:watch": "mocha -w --require ts-node/register --recursive \"test/**/*.ts\""
+    "test:watch":
+      "mocha -w --require ts-node/register --recursive \"test/**/*.ts\""
   },
   "author": "Renke Grunwald <renke@renke.org> (https://github.com/renke)",
   "repository": "renke/import-sort",
@@ -21,10 +22,10 @@
     "@types/node": "^8",
     "@types/resolve-from": "^0.0.18",
     "chai": "^4.0.2",
-    "import-sort-parser": "^4.0.0",
-    "import-sort-parser-babylon": "^4.0.0",
-    "import-sort-parser-typescript": "^4.0.0",
-    "import-sort-style-eslint": "^4.1.0",
+    "import-sort-parser": "^4.2.0",
+    "import-sort-parser-babylon": "^4.2.0",
+    "import-sort-parser-typescript": "^4.2.0",
+    "import-sort-style-eslint": "^4.2.0",
     "mocha": "^4",
     "ts-node": "^3.0.6",
     "tslint": "^5.4.3",

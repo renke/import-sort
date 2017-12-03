@@ -1,6 +1,6 @@
 {
   "name": "import-sort-cli",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "description": "Sort ES2015 (aka ES6) imports from the command line.",
   "main": "lib/index.js",
   "bin": {
@@ -12,7 +12,8 @@
     "build": "tsc -p src",
     "build:watch": "tsc -p src -w",
     "test": "mocha --require ts-node/register --recursive \"test/**/*.ts\"",
-    "test:watch": "mocha -w --require ts-node/register --recursive \"test/**/*.ts\""
+    "test:watch":
+      "mocha -w --require ts-node/register --recursive \"test/**/*.ts\""
   },
   "author": "Renke Grunwald <renke@renke.org> (https://github.com/renke)",
   "repository": "renke/import-sort",
@@ -35,10 +36,10 @@
     "diff": "^3.2.0",
     "file": "^0.2.2",
     "globby": "^7.1.1",
-    "import-sort": "^4.1.0",
-    "import-sort-config": "^4.1.0",
-    "import-sort-parser": "^4.0.0",
-    "import-sort-style": "^4.1.0",
+    "import-sort": "^4.2.0",
+    "import-sort-config": "^4.2.0",
+    "import-sort-parser": "^4.2.0",
+    "import-sort-style": "^4.2.0",
     "mkdirp": "^0.5.1",
     "yargs": "^8.0.2"
   }

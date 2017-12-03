@@ -1,6 +1,6 @@
 {
   "name": "import-sort",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "description": "Sort ES2015 (aka ES6) imports programmatically.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -9,7 +9,8 @@
     "build": "tsc -p src",
     "build:watch": "tsc -p src -w",
     "test": "mocha --require ts-node/register --recursive \"test/**/*.ts\"",
-    "test:watch": "mocha -w --require ts-node/register --recursive \"test/**/*.ts\""
+    "test:watch":
+      "mocha -w --require ts-node/register --recursive \"test/**/*.ts\""
   },
   "author": "Renke Grunwald <renke@renke.org> (https://github.com/renke)",
   "repository": "renke/import-sort",
@@ -21,9 +22,9 @@
     "@types/resolve": "^0.0.4",
     "chai": "^4.0.2",
     "eslint": "^4.11.0",
-    "import-sort-parser-babylon": "^4.0.0",
-    "import-sort-parser-typescript": "^4.0.0",
-    "import-sort-style-eslint": "^4.1.0",
+    "import-sort-parser-babylon": "^4.2.0",
+    "import-sort-parser-typescript": "^4.2.0",
+    "import-sort-style-eslint": "^4.2.0",
     "mocha": "^4",
     "ts-node": "^3.3.0",
     "tslint": "^5.4.3",
@@ -31,8 +32,8 @@
   },
   "dependencies": {
     "detect-newline": "^2.1.0",
-    "import-sort-parser": "^4.0.0",
-    "import-sort-style": "^4.1.0",
+    "import-sort-parser": "^4.2.0",
+    "import-sort-style": "^4.2.0",
     "is-builtin-module": "^1.0.0",
     "resolve": "^1.5.0"
   }
