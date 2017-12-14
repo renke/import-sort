@@ -113,9 +113,12 @@ export function parseImports(code: string): Array<IImport> {
       if (node.specifiers) {
         node.specifiers.forEach(specifier => {
           if (isImportSpecifier(specifier)) {
+            const type =
+              (specifier as any).importKind === "type" ? {type: true} : {};
             imported.namedMembers!.push({
               name: specifier.imported.name,
               alias: specifier.local.name,
+              ...type,
             });
           } else if (isImportDefaultSpecifier(specifier)) {
             imported.defaultMember = specifier.local.name;
@@ -197,15 +200,16 @@ function formatNamedMembers(
       "{" +
       eol +
       namedMembers
-        .map(({name, alias}, index) => {
+        .map(({name, alias, type}, index) => {
           const lastImport = index === namedMembers.length - 1;
           const comma = !useTrailingComma && lastImport ? "" : ",";
+          const typeModifier = type ? "type " : "";
 
           if (name === alias) {
-            return `${prefix}${name}${comma}` + eol;
+            return `${prefix}${typeModifier}${name}${comma}` + eol;
           }
 
-          return `${prefix}${name} as ${alias}${comma}` + eol;
+          return `${prefix}${typeModifier}${name} as ${alias}${comma}` + eol;
         })
         .join("") +
       "}"
@@ -218,12 +222,14 @@ function formatNamedMembers(
       "{" +
       space +
       namedMembers
-        .map(({name, alias}) => {
+        .map(({name, alias, type}) => {
+          const typeModifier = type ? "type " : "";
+
           if (name === alias) {
-            return `${name}`;
+            return `${typeModifier}${name}`;
           }
 
-          return `${name} as ${alias}`;
+          return `${typeModifier}${name} as ${alias}`;
         })
         .join(", ") +
       comma +

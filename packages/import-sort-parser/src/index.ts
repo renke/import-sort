@@ -24,4 +24,5 @@ export type ImportType = "import" | "require" | "import-equals" | "import-type";
 export type NamedMember = {
   name: string;
   alias: string;
+  type?: boolean;
 };
