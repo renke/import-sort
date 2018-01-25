@@ -175,10 +175,6 @@ concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
 
-core-js@^2.4.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.1.tgz#ae6874dc66937789b80754ff5428df66819ca50b"
-
 cross-spawn@^5.0.1:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
@@ -247,10 +243,6 @@ execa@^0.7.0:
 file@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/file/-/file-0.2.2.tgz#c3dfd8f8cf3535ae455c2b423c2e52635d76b4d3"
-
-find-root@^1.0.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/find-root/-/find-root-1.1.0.tgz#abcfc8ba76f708c42a97b3d685b7e9450bfb9ce4"
 
 find-up@^2.0.0:
   version "2.1.0"
@@ -331,31 +323,6 @@ hosted-git-info@^2.1.4:
 ignore@^3.3.5:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.7.tgz#612289bfb3c220e186a58118618d5be8c1bab021"
-
-import-sort-config@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/import-sort-config/-/import-sort-config-3.2.0.tgz#ab3a76b17c7ec6b0bfaf42db212e52014d7594c3"
-  dependencies:
-    core-js "^2.4.1"
-    find-root "^1.0.0"
-    minimatch "^3.0.4"
-    resolve-from "^3.0.0"
-
-import-sort-parser@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/import-sort-parser/-/import-sort-parser-3.0.0.tgz#9e7543087188b065ded909b40caae440d3c7a2a6"
-
-import-sort-style@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/import-sort-style/-/import-sort-style-3.0.0.tgz#2210b9db54259055429f9b86235e7670e85509d7"
-
-import-sort@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/import-sort/-/import-sort-3.3.0.tgz#b86436eab8087b1ac1f102f156d1e5e2c657b5e6"
-  dependencies:
-    import-sort-parser "^3.0.0"
-    import-sort-style "^3.0.0"
-    is-builtin-module "^1.0.0"
 
 inflight@^1.0.4:
   version "1.0.6"
@@ -609,10 +576,6 @@ require-directory@^2.1.1:
 require-main-filename@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/require-main-filename/-/require-main-filename-1.0.1.tgz#97f717b69d48784f5f526a6c5aa8ffdda055a4d1"
-
-resolve-from@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/resolve-from/-/resolve-from-3.0.0.tgz#b22c7af7d9d6881bc8b6e653335eebcb0a188748"
 
 resolve@^1.3.2:
   version "1.5.0"
