@@ -97,7 +97,6 @@ function getAllConfigsFromDirectory(
 
   try {
     const configsResult = configsLoader.load(directory);
-
     if (!configsResult) {
       return;
     }
@@ -157,27 +156,17 @@ function resolveConfig(config: IConfig, directory?: string): IResolvedConfig {
 }
 
 function resolveParser(module: string, directory?: string) {
-  if (module.indexOf(".") === 0) {
-    return resolveModule(module, directory);
-  }
-
-  if (module.indexOf("import-sort-parser") === 0) {
-    return resolveModule(module, directory);
-  }
-
-  return resolveModule(`import-sort-parser-${module}`, directory);
+  return (
+    resolveModule(`import-sort-parser-${module}`, directory) ||
+    resolveModule(module, directory)
+  );
 }
 
 function resolveStyle(module: string, directory?: string) {
-  if (module.indexOf(".") === 0) {
-    return resolveModule(module, directory);
-  }
-
-  if (module.indexOf("import-sort-style-") === 0) {
-    return resolveModule(module, directory);
-  }
-
-  return resolveModule(`import-sort-style-${module}`, directory);
+  return (
+    resolveModule(`import-sort-style-${module}`, directory) ||
+    resolveModule(module, directory)
+  );
 }
 
 function resolveModule(module: string, directory?: string): string | undefined {
