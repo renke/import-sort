@@ -1,9 +1,9 @@
-import traverse from "babel-traverse";
+import traverse from "@babel/traverse";
 import {
   isImportDefaultSpecifier,
   isImportNamespaceSpecifier,
   isImportSpecifier,
-} from "babel-types";
+} from "@babel/types";
 import {parse} from "babylon";
 import {IImport, NamedMember} from "import-sort-parser";
 
@@ -13,15 +13,14 @@ const findLineColumn = require("find-line-column");
 const BABYLON_PLUGINS = [
   "jsx",
   "flow",
-  "typescript",
   "doExpressions",
   "objectRestSpread",
-  "decorators",
   "decorators2",
   "classProperties",
   "classPrivateProperties",
   "classPrivateMethods",
-  "exportExtensions",
+  "exportDefaultFrom",
+  "exportNamespaceFrom",
   "asyncGenerators",
   "functionBind",
   "functionSent",
@@ -36,10 +35,11 @@ const BABYLON_PLUGINS = [
   "nullishCoalescingOperator",
 ];
 
-export function parseImports(code: string): Array<IImport> {
+export function parseImports(code: string, options?: any): Array<IImport> {
   const parsed = (parse as any)(code, {
     sourceType: "module",
     plugins: BABYLON_PLUGINS,
+    ...options,
   });
 
   const imports: Array<IImport> = [];

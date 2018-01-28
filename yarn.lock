@@ -900,23 +900,23 @@ ignore@^3.3.5:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.7.tgz#612289bfb3c220e186a58118618d5be8c1bab021"
 
 import-sort-cli@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/import-sort-cli/-/import-sort-cli-4.1.0.tgz#ca00806f76be78c6c7bcb668071dd83bd47d471d"
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/import-sort-cli/-/import-sort-cli-4.2.0.tgz#72cef9aebba839d4a760e461d88c7dcd96a96e17"
   dependencies:
     "@types/globby" "^6.1.0"
     diff "^3.2.0"
     file "^0.2.2"
     globby "^7.1.1"
-    import-sort "^4.1.0"
-    import-sort-config "^4.1.0"
-    import-sort-parser "^4.0.0"
-    import-sort-style "^4.1.0"
+    import-sort "^4.2.0"
+    import-sort-config "^4.2.0"
+    import-sort-parser "^4.2.0"
+    import-sort-style "^4.2.0"
     mkdirp "^0.5.1"
     yargs "^8.0.2"
 
-import-sort-config@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/import-sort-config/-/import-sort-config-4.1.0.tgz#23a0c34b50ec129761bceb8eb2a5b51edb620030"
+import-sort-config@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/import-sort-config/-/import-sort-config-4.2.0.tgz#d0b3d9278dddde22052fb7a9de53941a8f59a9fa"
   dependencies:
     core-js "^2.4.1"
     cosmiconfig "^3.1.0"
@@ -931,25 +931,25 @@ import-sort-parser-typescript@^3.2.0:
     core-js "^2.4.1"
     typescript "^2.3.4"
 
-import-sort-parser@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/import-sort-parser/-/import-sort-parser-4.0.0.tgz#60ee98bdee153534af05fad0c4c460c1a08f9b98"
+import-sort-parser@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/import-sort-parser/-/import-sort-parser-4.2.0.tgz#c8263e2c015e77a554e51b319e0006da488d2937"
 
 import-sort-style-module@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/import-sort-style-module/-/import-sort-style-module-4.1.0.tgz#f972c9f06cf3b9740c7d354a8098210b70fecc87"
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/import-sort-style-module/-/import-sort-style-module-4.2.0.tgz#96707b36395e87cf31229cf806887c6fe69d2d77"
 
-import-sort-style@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/import-sort-style/-/import-sort-style-4.1.0.tgz#3c9b95e1e4a05920ac4bf886c12244dcb14ccbfe"
+import-sort-style@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/import-sort-style/-/import-sort-style-4.2.0.tgz#ab9194424495045b6ab5fe0b51215efe25c4afb8"
 
-import-sort@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/import-sort/-/import-sort-4.1.0.tgz#ec90e77e01cc06c082f59d12562b78d3c47c47dc"
+import-sort@^4.1.0, import-sort@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/import-sort/-/import-sort-4.2.0.tgz#4a4daab500ef766cebfac6a9e66a5a143a8bf520"
   dependencies:
     detect-newline "^2.1.0"
-    import-sort-parser "^4.0.0"
-    import-sort-style "^4.1.0"
+    import-sort-parser "^4.2.0"
+    import-sort-style "^4.2.0"
     is-builtin-module "^1.0.0"
     resolve "^1.5.0"
 
@@ -1694,6 +1694,10 @@ pinkie@^2.0.0:
 prepend-http@^1.0.1:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-1.0.4.tgz#d4f4562b0ce3696e41ac52d0e002e57a635dc6dc"
+
+prettier@^1.10.2:
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.10.2.tgz#1af8356d1842276a99a5b5529c82dd9e9ad3cc93"
 
 pretty-format@^21.2.1:
   version "21.2.1"

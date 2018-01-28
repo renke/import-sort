@@ -6,12 +6,10 @@
     "test:watch":
       "mocha -w --require ts-node/register --recursive \"packages/*/test/**/*.ts\""
   },
-
   "lint-staged": {
     "*.ts": ["import-sort --write", "prettier --write", "git add"],
     "*.{json,md}": ["prettier --write", "git add"]
   },
-
   "devDependencies": {
     "@types/chai": "^4.0.5",
     "@types/mocha": "^2.2.44",
@@ -22,6 +20,7 @@
     "import-sort-cli": "^4.1.0",
     "import-sort-parser-typescript": "^3.2.0",
     "import-sort-style-module": "^4.1.0",
+    "prettier": "^1.10.2",
     "lerna": "^2.5.1",
     "lint-staged": "^6.0.0",
     "mocha": "^4.0.1",

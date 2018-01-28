@@ -6,6 +6,20 @@ import {IImport} from "import-sort-parser";
 import {formatImport, parseImports} from "../src";
 
 describe("parseImports", () => {
+  it("should handle all sorts of code", () => {
+    const actual = `
+import { a, b, c } from "xyz"
+
+const foo = (s: string) => {}
+
+@foo
+class Foo {}
+
+let b = <><div>foo</div><>
+`.trim();
+    assert.doesNotThrow(() => parseImports(actual));
+  });
+
   it("should return imports", () => {
     const imports = parseImports(
       `
