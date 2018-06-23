@@ -1,10 +1,10 @@
-import traverse from "babel-traverse";
+import {parse} from "@babel/parser";
+import traverse from "@babel/traverse";
 import {
   isImportDefaultSpecifier,
   isImportNamespaceSpecifier,
   isImportSpecifier,
-} from "babel-types";
-import {parse} from "babylon";
+} from "@babel/types";
 import {IImport, NamedMember} from "import-sort-parser";
 
 // TODO: Mocha currently doesn't pick up the declaration in index.d.ts
@@ -13,15 +13,15 @@ const findLineColumn = require("find-line-column");
 const BABYLON_PLUGINS = [
   "jsx",
   "flow",
-  "typescript",
+  "flowComments",
   "doExpressions",
   "objectRestSpread",
   "decorators",
-  "decorators2",
   "classProperties",
   "classPrivateProperties",
   "classPrivateMethods",
-  "exportExtensions",
+  "exportDefaultFrom",
+  "exportNamespaceFrom",
   "asyncGenerators",
   "functionBind",
   "functionSent",
@@ -36,11 +36,19 @@ const BABYLON_PLUGINS = [
   "nullishCoalescingOperator",
 ];
 
+const BABYLON_OPTIONS = {
+  allowImportExportEverywhere: true,
+  allowAwaitOutsideFunction: true,
+  allowReturnOutsideFunction: true,
+  allowSuperOutsideMethod: true,
+
+  sourceType: "module",
+
+  plugins: BABYLON_PLUGINS,
+};
+
 export function parseImports(code: string): Array<IImport> {
-  const parsed = (parse as any)(code, {
-    sourceType: "module",
-    plugins: BABYLON_PLUGINS,
-  });
+  const parsed = (parse as any)(code, BABYLON_OPTIONS);
 
   const imports: Array<IImport> = [];
 

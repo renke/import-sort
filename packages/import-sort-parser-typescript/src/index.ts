@@ -38,6 +38,10 @@ export function parseImports(code: string): Array<IImport> {
 
   const sourceFile = program.getSourceFile("foo.ts");
 
+  if (!sourceFile) {
+    throw new Error("Source file not found. This should not happen.");
+  }
+
   const imports: Array<IImport> = [];
 
   typescript.forEachChild(sourceFile, node => {
