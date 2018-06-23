@@ -9,33 +9,32 @@
     "build": "tsc -p src",
     "build:watch": "tsc -p src -w",
     "test": "mocha --require ts-node/register --recursive \"test/**/*.ts\"",
-    "test:watch":
-      "mocha -w --require ts-node/register --recursive \"test/**/*.ts\""
+    "test:watch": "mocha -w --require ts-node/register --recursive \"test/**/*.ts\""
   },
   "author": "Renke Grunwald <renke@renke.org> (https://github.com/renke)",
   "repository": "renke/import-sort",
   "license": "ISC",
   "devDependencies": {
-    "@types/chai": "^4.0.0",
-    "@types/minimatch": "^3",
-    "@types/mocha": "^2.2.41",
-    "@types/node": "^8",
+    "@types/chai": "^4.1.4",
+    "@types/minimatch": "^3.0.3",
+    "@types/mocha": "^5.2.3",
+    "@types/node": "^10.3.5",
     "@types/resolve-from": "^0.0.18",
     "chai": "^4.0.2",
     "import-sort-parser": "^4.2.0",
     "import-sort-parser-babylon": "^4.2.0",
     "import-sort-parser-typescript": "^4.2.0",
     "import-sort-style-eslint": "^4.2.0",
-    "mocha": "^4",
-    "ts-node": "^3.0.6",
-    "tslint": "^5.4.3",
-    "typescript": "^2.3.4"
+    "mocha": "^5.2.0",
+    "ts-node": "^7.0.0",
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.2"
   },
   "dependencies": {
-    "core-js": "^2.4.1",
-    "cosmiconfig": "^3.1.0",
+    "core-js": "^2.5.7",
+    "cosmiconfig": "^5.0.5",
     "find-root": "^1.0.0",
     "minimatch": "^3.0.4",
-    "resolve-from": "^3.0.0"
+    "resolve-from": "^4.0.0"
   }
 }

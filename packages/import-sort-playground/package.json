@@ -8,14 +8,14 @@
   "repository": "renke/import-sort",
   "license": "ISC",
   "dependencies": {
-    "babel-eslint": "^8",
-    "eslint": "^4.0.0",
+    "babel-eslint": "^8.2.5",
+    "eslint": "^5.0.0",
     "import-sort-parser-babylon": "^4.2.0",
     "import-sort-parser-typescript": "^4.2.0",
     "import-sort-style-eslint": "^4.2.0",
     "import-sort-style-module": "^4.2.0",
     "import-sort-style-renke": "^4.2.0",
-    "tslint": "^5.4.3",
-    "typescript": "^2.3.4"
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.2"
   }
 }

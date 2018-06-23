@@ -9,21 +9,20 @@
     "build": "tsc -p src",
     "build:watch": "tsc -p src -w",
     "test": "mocha --require ts-node/register --recursive \"test/**/*.ts\"",
-    "test:watch":
-      "mocha -w --require ts-node/register --recursive \"test/**/*.ts\""
+    "test:watch": "mocha -w --require ts-node/register --recursive \"test/**/*.ts\""
   },
   "author": "Renke Grunwald <renke@renke.org> (https://github.com/renke)",
   "repository": "renke/import-sort",
   "license": "ISC",
   "devDependencies": {
-    "@types/chai": "^4.0.0",
-    "@types/mocha": "^2.2.41",
-    "@types/node": "^8",
+    "@types/chai": "^4.1.4",
+    "@types/mocha": "^5.2.3",
+    "@types/node": "^10.3.5",
     "chai": "^4.0.2",
     "import-sort-style": "^4.2.0",
-    "mocha": "^4",
-    "ts-node": "^3.0.6",
-    "tslint": "^5.4.3",
-    "typescript": "^2.3.4"
+    "mocha": "^5.2.0",
+    "ts-node": "^7.0.0",
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.2"
   }
 }
