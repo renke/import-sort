@@ -2,6 +2,7 @@
 .vscode/
 *.iml
 lerna-debug.log
+yarn-error.log
 node_modules
 npm-debug.log
 packages/*/lib/
