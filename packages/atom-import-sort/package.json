@@ -1,10 +1,16 @@
 {
   "name": "atom-import-sort",
   "private": true,
-  "version": "4.2.0",
-  "description":
-    "Sort ES2015 (aka ES6) imports. Manually – or automatically when you save your JavaSript or TypeScript files.",
-  "keywords": ["es6", "eslint", "import-sort", "import", "sort", "typescript"],
+  "version": "5.0.0",
+  "description": "Sort ES2015 (aka ES6) imports. Manually – or automatically when you save your JavaSript or TypeScript files.",
+  "keywords": [
+    "es6",
+    "eslint",
+    "import-sort",
+    "import",
+    "sort",
+    "typescript"
+  ],
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
@@ -12,8 +18,7 @@
     "build": "tsc -p src",
     "build:watch": "tsc -p src -w",
     "test": "mocha --require ts-node/register --recursive \"test/**/*.ts\"",
-    "test:watch":
-      "mocha -w --require ts-node/register --recursive \"test/**/*.ts\""
+    "test:watch": "mocha -w --require ts-node/register --recursive \"test/**/*.ts\""
   },
   "author": "Renke Grunwald <renke@renke.org> (https://github.com/renke)",
   "repository": "renke/import-sort",
@@ -33,11 +38,11 @@
     "typescript": "^2.3.4"
   },
   "dependencies": {
-    "import-sort": "^4.2.0",
-    "import-sort-config": "^4.2.0",
-    "import-sort-parser-babylon": "^4.2.0",
-    "import-sort-parser-typescript": "^4.2.0",
-    "import-sort-style-eslint": "^4.2.0",
+    "import-sort": "^5.0.0",
+    "import-sort-config": "^5.0.0",
+    "import-sort-parser-babylon": "^5.0.0",
+    "import-sort-parser-typescript": "^5.0.0",
+    "import-sort-style-eslint": "^5.0.0",
     "loophole": "^1.1.0"
   }
 }

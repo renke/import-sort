@@ -1,6 +1,6 @@
 {
   "name": "import-sort",
-  "version": "4.2.0",
+  "version": "5.0.0",
   "description": "Sort ES2015 (aka ES6) imports programmatically.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -21,9 +21,9 @@
     "@types/resolve": "^0.0.8",
     "chai": "^4.0.2",
     "eslint": "^5.0.0",
-    "import-sort-parser-babylon": "^4.2.0",
-    "import-sort-parser-typescript": "^4.2.0",
-    "import-sort-style-eslint": "^4.2.0",
+    "import-sort-parser-babylon": "^5.0.0",
+    "import-sort-parser-typescript": "^5.0.0",
+    "import-sort-style-eslint": "^5.0.0",
     "mocha": "^5.2.0",
     "ts-node": "^7.0.0",
     "tslint": "^5.10.0",
@@ -31,8 +31,8 @@
   },
   "dependencies": {
     "detect-newline": "^2.1.0",
-    "import-sort-parser": "^4.2.0",
-    "import-sort-style": "^4.2.0",
+    "import-sort-parser": "^5.0.0",
+    "import-sort-style": "^5.0.0",
     "is-builtin-module": "^2.0.0",
     "resolve": "^1.8.1"
   }

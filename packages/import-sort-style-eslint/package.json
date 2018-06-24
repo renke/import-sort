@@ -1,6 +1,6 @@
 {
   "name": "import-sort-style-eslint",
-  "version": "4.2.0",
+  "version": "5.0.0",
   "description": "An import-sort style that is compatible with ESLint's sort-imports rule",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -20,7 +20,7 @@
     "@types/mocha": "^5.2.3",
     "@types/node": "^10.3.5",
     "chai": "^4.0.2",
-    "import-sort-style": "^4.2.0",
+    "import-sort-style": "^5.0.0",
     "mocha": "^5.2.0",
     "ts-node": "^7.0.0",
     "tslint": "^5.10.0",
