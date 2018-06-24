@@ -1,0 +1,11 @@
+{
+  "unprefixed": {
+    "parser": "some-parser"
+  },
+  "shorthand": {
+    "style": "test"
+  },
+  "relative": {
+    "style": "./local-style"
+  }
+}
