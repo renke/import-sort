@@ -8,10 +8,11 @@ imports. Both JavaScript and TypeScript files are supported.
 There are multiple ways to actually sort your imports. Just pick the one that
 suits you most.
 
-* Visual Studio Code
-* Atom
-* Vim
-* Command Line
+- Visual Studio Code
+- Atom
+- Vim
+- JetBrains IDEs (IntelliJ IDEA, WebStorm etc.)
+- Command Line
 
 ## Visual Studio Code (vsc-sort-imports)
 
@@ -47,13 +48,21 @@ Sort your imports directy from within Vim. See
 [vim-sort-imports](https://github.com/ruanyl/vim-sort-imports) for more details
 about the configuration.
 
+# JetBrains IDEs
+
+To use import-sort in any of the JetBrains IDEs follow the instructions regarding File Watcher in the
+[prettier documentation](https://prettier.io/docs/en/webstorm.html) and replace `prettier` with `import-sort`.
+
+Alternatively, just install the [File Watcher plugin](https://plugins.jetbrains.com/plugin/7177-file-watchers) and try
+to import the following
+[File Watcher configuration](https://gist.githubusercontent.com/renke/f08c6022a01a1465b025f83b82b3b028/raw/3eb3fd5f7dd6fc67f145c6a27ff1db6eb64c27bb/watchers.xml).
+
 ## Command Line (import-sort-cli)
 
 Sort your imports from the command line. Useful to sort all your files in bulk
 or from a script in your `package.json`.
 
-Install it with `npm install --save-dev import-sort-cli
-import-sort-parser-babylon import-sort-style-eslint`.
+Install it with `npm install --save-dev import-sort-cli import-sort-parser-babylon import-sort-style-eslint`.
 
 _ATTENTION_: Since version 4 `--write` modifies file in-place. The old
 `--overwrite` flag was removed. The CLI now behaves closer to
@@ -110,8 +119,7 @@ import foo from "bar";
 In general, every comment that is directly above the import (no blank line
 between them) or is on the same line is considered part of it.
 
-That means that things like `// eslint-disable line` and `//
-eslint-disable-next-line` are finally supported.
+That means that things like `// eslint-disable line` and `// eslint-disable-next-line` are finally supported.
 
 For copyright headers and compiler pragmas (like `@flow`) a blank line should be
 added after the comment.
@@ -152,14 +160,14 @@ internally by `import-sort`.
 
 By default, `import-sort` comes with these styles:
 
-* [`import-sort-style-eslint` (default)](packages/import-sort-style-eslint): A
+- [`import-sort-style-eslint` (default)](packages/import-sort-style-eslint): A
   style that that is compatible with [ESLint's](http://eslint.org/)
   [sort-imports](http://eslint.org/docs/rules/sort-imports) rule.
 
-* [`import-sort-style-module`](packages/import-sort-style-module): A style that
+- [`import-sort-style-module`](packages/import-sort-style-module): A style that
   groups and sorts by module.
 
-* [`import-sort-style-renke`](packages/import-sort-style-renke): Renke's
+- [`import-sort-style-renke`](packages/import-sort-style-renke): Renke's
   personal style.
 
 # Writing you own custom style
