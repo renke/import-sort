@@ -265,7 +265,7 @@ function sortNamedMembers(
 
   if (!Array.isArray(sort)) {
     const sortedImport = Object.assign({}, imported);
-    sortedImport.namedMembers.sort(sort as INamedMemberSorterFunction);
+    sortedImport.namedMembers = [...imported.namedMembers].sort(sort as INamedMemberSorterFunction);
     return sortedImport;
   }
 
@@ -288,7 +288,7 @@ function sortNamedMembers(
   };
 
   const sortedImport = Object.assign({}, imported);
-  sortedImport.namedMembers.sort(multiSort);
+  sortedImport.namedMembers = [...imported.namedMembers].sort(multiSort);
 
   return sortedImport;
 }
