@@ -59,8 +59,7 @@ if (ignoreNodeModules) {
 let filePaths;
 
 try {
-  // TODO: Globby typings probably not up-to-date here.
-  filePaths = (globby as any)
+  filePaths = globby
     .sync(filePatterns, {dot: true, expandDirectories: false})
     .map(filePath => path.relative(process.cwd(), filePath));
 } catch (e) {
@@ -105,15 +104,13 @@ for (const filePath of filePaths) {
 
   const {code: sortedCode, changes} = sortResult!;
 
-  if (changes.length === 0) {
-    continue;
-  }
+  const isDifferent = changes.length > 0;
 
-  if (writeFiles) {
+  if (writeFiles && isDifferent) {
     writeFileSync(filePath, sortedCode, {encoding: "utf-8"});
   }
 
-  if (listDifferent) {
+  if (listDifferent && isDifferent) {
     process.exitCode = 1;
     console.log(filePath);
   }
