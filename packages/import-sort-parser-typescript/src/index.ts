@@ -3,6 +3,11 @@ import {IImport, ImportType, NamedMember} from "import-sort-parser";
 import * as typescript from "typescript";
 
 export function parseImports(code: string): Array<IImport> {
+  const endTag = '</script>';
+  const endTagIndex = code.indexOf(endTag);
+  if (endTagIndex != -1) {
+    code = code.substring(0, endTagIndex);
+  }
   const host: typescript.CompilerHost = {
     fileExists: () => true,
     readFile: () => "",
