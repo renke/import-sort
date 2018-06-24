@@ -96,7 +96,8 @@ function getAllConfigsFromDirectory(
   });
 
   try {
-    const configsResult = configsLoader.load(directory);
+    const configsResult = configsLoader.searchSync(directory);
+
     if (!configsResult) {
       return;
     }
