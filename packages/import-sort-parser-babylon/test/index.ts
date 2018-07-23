@@ -380,4 +380,16 @@ import {
 
     assert.equal(formatImport(actual, imported), expected);
   });
+
+  it("should deal with export between decorator and class (issue #68)", () => {
+    const code = `
+import styles from './index.scss';
+
+@cssModule(styles)
+export class Sidebar extends React.Component {
+}
+    `.trim();
+
+    assert.doesNotThrow(() => parseImports(code));
+  });
 });

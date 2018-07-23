@@ -16,7 +16,7 @@ const BABYLON_PLUGINS = [
   "flowComments",
   "doExpressions",
   "objectRestSpread",
-  "decorators",
+  ["decorators", {decoratorsBeforeExport: true}],
   "classProperties",
   "classPrivateProperties",
   "classPrivateMethods",
