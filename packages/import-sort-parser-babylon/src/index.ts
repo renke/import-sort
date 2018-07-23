@@ -32,7 +32,7 @@ const BABYLON_PLUGINS = [
   "bigInt",
   "optionalCatchBinding",
   "throwExpressions",
-  "pipelineOperator",
+  ["pipelineOperator", {proposal: "minimal"}],
   "nullishCoalescingOperator",
 ];
 
