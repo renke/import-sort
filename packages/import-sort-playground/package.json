@@ -1,7 +1,7 @@
 {
   "name": "import-sort-playground",
   "private": true,
-  "version": "5.0.0",
+  "version": "5.1.0",
   "description": "",
   "main": "index.js",
   "author": "Renke Grunwald <renke@renke.org> (https://github.com/renke)",
@@ -10,7 +10,7 @@
   "dependencies": {
     "babel-eslint": "^8.2.5",
     "eslint": "^5.0.0",
-    "import-sort-parser-babylon": "^5.0.0",
+    "import-sort-parser-babylon": "^5.1.0",
     "import-sort-parser-typescript": "^5.0.0",
     "import-sort-style-eslint": "^5.0.0",
     "import-sort-style-module": "^5.0.0",

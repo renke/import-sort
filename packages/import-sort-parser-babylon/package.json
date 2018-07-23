@@ -1,6 +1,6 @@
 {
   "name": "import-sort-parser-babylon",
-  "version": "5.0.1",
+  "version": "5.1.0",
   "description": "An import-sort parser based on the JavaScript parser Babylon.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
