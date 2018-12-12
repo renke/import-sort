@@ -19,10 +19,11 @@ export interface IImport {
   namedMembers: Array<NamedMember>;
 }
 
-export type ImportType = "import" | "require" | "import-equals" | "import-type";
+export type ImportType = "import" | "require" | "import-equals" | "import-type" | "import-type-of";
 
 export type NamedMember = {
   name: string;
   alias: string;
   type?: boolean;
+  type_of?: boolean;
 };
