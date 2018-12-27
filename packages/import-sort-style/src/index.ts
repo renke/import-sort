@@ -38,6 +38,8 @@ export interface IStyleAPI {
   isScopedModule: IMatcherFunction;
   isInstalledModule(baseFile: string): IMatcherFunction;
 
+  isTypeImportType: IMatcherFunction;
+
   startsWithUpperCase: IPredicateFunction;
   startsWithLowerCase: IPredicateFunction;
   startsWithAlphanumeric: IPredicateFunction;
