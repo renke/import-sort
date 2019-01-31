@@ -1,7 +1,6 @@
 {
   "private": true,
   "scripts": {
-    "precommit": "lint-staged",
     "test": "mocha --require ts-node/register --recursive \"packages/*/test/**/*.ts\"",
     "test:watch": "mocha -w --require ts-node/register --recursive \"packages/*/test/**/*.ts\""
   },
@@ -38,5 +37,10 @@
     "ts-node": "^8.0.2",
     "tslint-config-prettier": "^1.17.0",
     "typescript": "^3.2.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
