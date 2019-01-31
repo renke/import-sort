@@ -5,6 +5,7 @@
     "target": "es6",
     "module": "commonjs",
     "strictNullChecks": true,
-    "declaration": true
+    "declaration": true,
+    "types": ["node"]
   }
 }

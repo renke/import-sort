@@ -1,9 +1,3 @@
 {
-    "compileOnSave": false,
-
-    "compilerOptions": {
-        "target": "es6",
-        "strictNullChecks": true,
-        "declaration": true
-    }
+  "extends": "../../tsconfig"
 }

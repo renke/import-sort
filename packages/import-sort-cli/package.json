@@ -17,6 +17,9 @@
   "author": "Renke Grunwald <renke@renke.org> (https://github.com/renke)",
   "repository": "renke/import-sort",
   "license": "ISC",
+  "files": [
+    "lib"
+  ],
   "devDependencies": {
     "@types/chai": "^4.1.4",
     "@types/diff": "^3.5.1",

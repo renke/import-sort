@@ -27,7 +27,7 @@
     "atom": ">=1.0.0 <2.0.0"
   },
   "devDependencies": {
-    "@types/atom": "^0.0.38",
+    "@types/atom": "^1.31.0",
     "@types/chai": "^4.0.0",
     "@types/mocha": "^2.2.41",
     "@types/node": "^7.0.31",

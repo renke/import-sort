@@ -2,9 +2,7 @@
 
 import {readFileSync, writeFileSync} from "fs";
 import * as path from "path";
-import {dirname, extname} from "path";
 
-import {walkSync} from "file";
 import * as globby from "globby";
 import sortImports, {ISortResult} from "import-sort";
 import {IResolvedConfig, getConfig} from "import-sort-config";
@@ -30,6 +28,7 @@ Usage: import-sort [OPTION]... [FILE/GLOB]...
   )
   .boolean("with-node-modules")
 
+  // tslint:disable-next-line:no-var-requires
   .version(require("../package.json").version)
   .alias("version", "v")
 
@@ -60,6 +59,7 @@ let filePaths;
 
 try {
   filePaths = globby
+    // @ts-ignore
     .sync(filePatterns, {dot: true, expandDirectories: false})
     .map(filePath => path.relative(process.cwd(), filePath));
 } catch (e) {
@@ -78,7 +78,7 @@ for (const filePath of filePaths) {
   let config;
 
   try {
-    config = getAndCheckConfig(extname(filePath), dirname(filePath));
+    config = getAndCheckConfig(path.extname(filePath), path.dirname(filePath));
   } catch (e) {
     handleFilePathError(filePath, e);
     continue;

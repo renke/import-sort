@@ -30,11 +30,8 @@ export default function importSort(
   let parser: IParser | undefined;
   let style: IStyle;
 
-  if (typeof rawParser === "string") {
-    parser = require(rawParser);
-  } else {
-    parser = rawParser as IParser;
-  }
+  parser =
+    typeof rawParser === "string" ? require(rawParser) : (rawParser as IParser);
 
   if (typeof rawStyle === "string") {
     style = require(rawStyle);
@@ -265,7 +262,9 @@ function sortNamedMembers(
 
   if (!Array.isArray(sort)) {
     const sortedImport = Object.assign({}, imported);
-    sortedImport.namedMembers = [...imported.namedMembers].sort(sort as INamedMemberSorterFunction);
+    sortedImport.namedMembers = [...imported.namedMembers].sort(
+      sort as INamedMemberSorterFunction,
+    );
     return sortedImport;
   }
 

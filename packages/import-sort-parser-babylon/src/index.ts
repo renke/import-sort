@@ -5,9 +5,11 @@ import {
   isImportNamespaceSpecifier,
   isImportSpecifier,
 } from "@babel/types";
+// tslint:disable-next-line:no-implicit-dependencies
 import {IImport, NamedMember} from "import-sort-parser";
 
 // TODO: Mocha currently doesn't pick up the declaration in index.d.ts
+// tslint:disable-next-line:no-var-requires
 const findLineColumn = require("find-line-column");
 
 const BABYLON_PLUGINS = [

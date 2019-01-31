@@ -1,10 +1,12 @@
 {
-  "extends": "tslint:latest",
+  "extends": ["tslint:latest", "tslint-config-prettier"],
   "rules": {
     "ordered-imports": false,
     "object-literal-sort-keys": false,
     "no-console": false,
     "no-unused-variable": [true, "react"],
-    "no-shadowed-variable": false
+    "array-type": false,
+    "prefer-const": false,
+    "interface-over-type-literal": false
   }
 }

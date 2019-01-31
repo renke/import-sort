@@ -1,5 +1,9 @@
+export interface IParseOptions {
+  filename?: string;
+}
+
 export interface IParser {
-  parseImports(code: string): Array<IImport>;
+  parseImports(code: string, options?: IParseOptions): Array<IImport>;
   formatImport(code: string, imported: IImport, eol?: string): string;
 }
 

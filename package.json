@@ -1,4 +1,5 @@
 {
+  "private": true,
   "scripts": {
     "precommit": "lint-staged",
     "test": "mocha --require ts-node/register --recursive \"packages/*/test/**/*.ts\"",
@@ -15,10 +16,15 @@
       "git add"
     ]
   },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
   "devDependencies": {
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.3",
-    "@types/node": "^10.3.5",
+    "@types/node": "^10.12.20",
     "chai": "^4.1.2",
     "husky": "^0.14.3",
     "import-sort": "^4.2.0",
@@ -30,6 +36,7 @@
     "mocha": "^5.2.0",
     "prettier": "^1.13.5",
     "ts-node": "^7.0.0",
+    "tslint-config-prettier": "^1.17.0",
     "typescript": "^2.9.2"
   }
 }

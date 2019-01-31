@@ -1,17 +1,14 @@
-import "atom";
-
 import {dirname, extname} from "path";
 
+// tslint:disable-next-line:no-implicit-dependencies
+import {CompositeDisposable, TextEditor} from "atom";
 import sortImports, {ICodeChange} from "import-sort";
 import {getConfig} from "import-sort-config";
 import {allowUnsafeEval, allowUnsafeNewFunction} from "loophole";
 
-// tslint:disable-next-line
-const CompositeDisposable = require("atom").CompositeDisposable;
-
 export class Plugin {
-  public bufferWillSaveDisposables?;
-  public editorObserverDisposable?;
+  public bufferWillSaveDisposables;
+  public editorObserverDisposable;
 
   public config = {
     sortOnSave: {
@@ -160,7 +157,7 @@ export class Plugin {
         });
       });
 
-      (editor as AtomCore.IEditor).transact(() => {
+      (editor as TextEditor).transact(() => {
         for (const change of changes) {
           const start = editor.buffer.positionForCharacterIndex(change.start);
           const end = editor.buffer.positionForCharacterIndex(change.end);
