@@ -3,9 +3,18 @@
 
   "compilerOptions": {
     "target": "es6",
-    "module": "commonjs",
-    "strictNullChecks": true,
+
     "declaration": true,
+    "declarationMap": true,
+
+    "module": "commonjs",
+    "moduleResolution": "node",
+
+    "strictNullChecks": true,
+
+    "baseUrl": "./packages",
+    "composite": true,
+
     "types": ["node"]
   }
 }

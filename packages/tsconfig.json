@@ -1,0 +1,15 @@
+{
+  "files": [],
+  "references": [
+    {"path": "import-sort"},
+    {"path": "import-sort-cli"},
+    {"path": "import-sort-config"},
+    {"path": "import-sort-parser"},
+    {"path": "import-sort-parser-babylon"},
+    {"path": "import-sort-parser-typescript"},
+    {"path": "import-sort-style"},
+    {"path": "import-sort-style-eslint"},
+    {"path": "import-sort-style-module"},
+    {"path": "import-sort-style-renke"}
+  ]
+}
