@@ -1,6 +1,6 @@
 workflow "ci" {
   on = "push"
-  resolves = ["GitHub Action for npm"]
+  resolves = ["test"]
 }
 
 action "branch ci" {
@@ -8,16 +8,23 @@ action "branch ci" {
   args = "branch ci"
 }
 
-action "build" {
+action "install" {
   uses = "actions/npm@3c8332795d5443adc712d30fa147db61fd520b5a"
   needs = ["branch ci"]
   runs = "yarn"
   args = "install"
 }
 
-action "GitHub Action for npm" {
+action "build" {
+  uses = "actions/npm@3c8332795d5443adc712d30fa147db61fd520b5a"
+  runs = "yarn"
+  args = "run build"
+  needs = ["install"]
+}
+
+action "test" {
   uses = "actions/npm@3c8332795d5443adc712d30fa147db61fd520b5a"
   needs = ["build"]
   runs = "yarn"
-  args = "run build"
+  args = "test"
 }
