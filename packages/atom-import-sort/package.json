@@ -29,13 +29,13 @@
   "devDependencies": {
     "@types/atom": "^1.31.0",
     "@types/chai": "^4.0.0",
-    "@types/mocha": "^2.2.41",
-    "@types/node": "^7.0.31",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.20",
     "chai": "^4.0.2",
-    "mocha": "^3.4.2",
-    "ts-node": "^3.0.6",
+    "mocha": "^5.2.0",
+    "ts-node": "^8.0.2",
     "tslint": "^5.4.3",
-    "typescript": "^2.3.4"
+    "typescript": "^3.2.4"
   },
   "dependencies": {
     "import-sort": "^5.2.0",

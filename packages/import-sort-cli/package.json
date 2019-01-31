@@ -22,27 +22,27 @@
   ],
   "devDependencies": {
     "@types/chai": "^4.1.4",
-    "@types/diff": "^3.5.1",
+    "@types/diff": "^4.0.0",
     "@types/globby": "^8.0.0",
     "@types/mkdirp": "^0.5.2",
     "@types/mocha": "^5.2.3",
     "@types/node": "^10.3.5",
-    "@types/yargs": "^11.0.0",
+    "@types/yargs": "^12.0.8",
     "chai": "^4.0.2",
     "mocha": "^5.2.0",
-    "ts-node": "^7.0.0",
+    "ts-node": "^8.0.2",
     "tslint": "^5.10.0",
-    "typescript": "^2.9.2"
+    "typescript": "^3.2.4"
   },
   "dependencies": {
-    "diff": "^3.5.0",
+    "diff": "^4.0.1",
     "file": "^0.2.2",
-    "globby": "^8.0.1",
+    "globby": "^9.0.0",
     "import-sort": "^5.2.0",
     "import-sort-config": "^5.2.0",
     "import-sort-parser": "^5.0.0",
     "import-sort-style": "^5.0.0",
     "mkdirp": "^0.5.1",
-    "yargs": "^11.0.0"
+    "yargs": "^12.0.5"
   }
 }

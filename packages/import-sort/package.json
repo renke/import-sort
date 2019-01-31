@@ -28,15 +28,15 @@
     "import-sort-parser-typescript": "^5.0.0",
     "import-sort-style-eslint": "^5.0.0",
     "mocha": "^5.2.0",
-    "ts-node": "^7.0.0",
+    "ts-node": "^8.0.2",
     "tslint": "^5.10.0",
-    "typescript": "^2.9.2"
+    "typescript": "^3.2.4"
   },
   "dependencies": {
     "detect-newline": "^2.1.0",
     "import-sort-parser": "^5.0.0",
     "import-sort-style": "^5.0.0",
-    "is-builtin-module": "^2.0.0",
+    "is-builtin-module": "^3.0.0",
     "resolve": "^1.8.1"
   }
 }

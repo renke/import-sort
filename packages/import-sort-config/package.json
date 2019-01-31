@@ -22,16 +22,16 @@
     "@types/minimatch": "^3.0.3",
     "@types/mocha": "^5.2.3",
     "@types/node": "^10.3.5",
-    "@types/resolve-from": "^0.0.18",
+    "@types/resolve-from": "^4.0.0",
     "chai": "^4.0.2",
     "import-sort-parser": "^5.0.0",
     "import-sort-parser-babylon": "^5.2.0",
     "import-sort-parser-typescript": "^5.0.0",
     "import-sort-style-eslint": "^5.0.0",
     "mocha": "^5.2.0",
-    "ts-node": "^7.0.0",
+    "ts-node": "^8.0.2",
     "tslint": "^5.10.0",
-    "typescript": "^2.9.2"
+    "typescript": "^3.2.4"
   },
   "dependencies": {
     "core-js": "^2.5.7",
