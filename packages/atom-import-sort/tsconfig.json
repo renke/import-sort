@@ -1,3 +1,18 @@
 {
-  "extends": "../../tsconfig"
+  "extends": "../tsconfig.settings.json",
+
+  "compilerOptions": {
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+
+  "include": ["src"],
+
+  "references": [
+    {"path": "../import-sort-parser"},
+    {"path": "../import-sort-config"},
+    {"path": "../import-sort-parser-babylon"},
+    {"path": "../import-sort-parser-typescript"},
+    {"path": "../import-sort-style-eslint"}
+  ]
 }
