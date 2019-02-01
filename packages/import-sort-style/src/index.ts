@@ -1,4 +1,4 @@
-import {IImport, NamedMember} from "import-sort-parser";
+import {IImport, NamedMember} from "import-sort-parser"; // tslint:disable-line
 
 export interface IStyleAPI {
   member: ISelectorFunction;

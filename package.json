@@ -3,6 +3,7 @@
   "scripts": {
     "build": "tsc -b packages",
     "build:watch": "tsc -b packages -w",
+    "clean:build": "lerna exec -- rimraf lib",
     "test": "mocha --require ts-node/register --recursive \"packages/*/test/**/*.ts\"",
     "test:watch": "mocha -w --require ts-node/register --recursive \"packages/*/test/**/*.ts\"",
     "lint": "lerna run lint"
