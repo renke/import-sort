@@ -4,9 +4,9 @@
     "ordered-imports": false,
     "object-literal-sort-keys": false,
     "no-console": false,
-    "no-unused-variable": [true, "react"],
     "array-type": false,
     "prefer-const": false,
-    "interface-over-type-literal": false
+    "interface-over-type-literal": false,
+    "no-implicit-dependencies": false
   }
 }

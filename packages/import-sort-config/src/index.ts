@@ -1,8 +1,6 @@
-import * as assign from "core-js/library/fn/object/assign";
 import * as cosmiconfig from "cosmiconfig";
 import * as minimatch from "minimatch";
-
-const resolve = require("resolve-from").silent;
+import {silent as resolve} from "resolve-from";
 
 export interface IConfigByGlobs {
   [globs: string]: IConfig;
@@ -122,7 +120,7 @@ function mergeConfigs(
       return previousConfig;
     }
 
-    const config = assign({}, previousConfig);
+    const config = {...previousConfig};
 
     if (currentConfig.parser) {
       config.parser = currentConfig.parser;
@@ -179,9 +177,9 @@ function resolveModule(module: string, directory?: string): string | undefined {
     }
   }
 
-  const path = resolve(__dirname, module);
+  const defaultPath = resolve(__dirname, module);
 
-  if (path) {
-    return path;
+  if (defaultPath) {
+    return defaultPath;
   }
 }

@@ -1,5 +1,4 @@
-import * as startsWith from "core-js/library/fn/string/starts-with";
-import {IImport, ImportType, NamedMember} from "import-sort-parser";
+import {IImport, ImportType, NamedMember} from "import-sort-parser"; // tslint:disable-line
 import * as typescript from "typescript";
 
 export function parseImports(code: string): Array<IImport> {
@@ -91,10 +90,9 @@ function parseImportDeclaration(
 
     while (comments[current] && comments[current].end + 1 === start) {
       if (
-        startsWith(
-          code.substring(comments[current].pos, comments[current].end),
-          "#!",
-        )
+        code
+          .substring(comments[current].pos, comments[current].end)
+          .startsWith("#!")
       ) {
         break;
       }

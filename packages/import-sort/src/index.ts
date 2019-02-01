@@ -261,11 +261,13 @@ function sortNamedMembers(
   }
 
   if (!Array.isArray(sort)) {
-    const sortedImport = Object.assign({}, imported);
-    sortedImport.namedMembers = [...imported.namedMembers].sort(
+    const singleSortedImport = {...imported};
+
+    singleSortedImport.namedMembers = [...imported.namedMembers].sort(
       sort as INamedMemberSorterFunction,
     );
-    return sortedImport;
+
+    return singleSortedImport;
   }
 
   const sorters = sort as Array<INamedMemberSorterFunction>;
@@ -286,7 +288,7 @@ function sortNamedMembers(
     return comparison;
   };
 
-  const sortedImport = Object.assign({}, imported);
+  const sortedImport = {...imported};
   sortedImport.namedMembers = [...imported.namedMembers].sort(multiSort);
 
   return sortedImport;

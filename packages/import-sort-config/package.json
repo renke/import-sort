@@ -35,7 +35,6 @@
     "typescript": "^3.2.4"
   },
   "dependencies": {
-    "core-js": "^2.5.7",
     "cosmiconfig": "^5.0.5",
     "find-root": "^1.0.0",
     "minimatch": "^3.0.4",

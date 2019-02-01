@@ -18,15 +18,16 @@ function member(comparator: IComparatorFunction): ISorterFunction;
 function member(
   predicateOrComparator: IPredicateFunction | IComparatorFunction,
 ): IMatcherFunction | ISorterFunction {
+  // tslint:disable-next-line
   if ((predicateOrComparator as Function).length === 1) {
     const predicate = predicateOrComparator as IPredicateFunction;
 
     return (imported: IImport): boolean => {
-      const member =
+      const importMember =
         imported.defaultMember ||
         imported.namespaceMember ||
         imported.namedMembers[0].alias;
-      return predicate(member);
+      return predicate(importMember);
     };
   } else {
     const comparator = predicateOrComparator as IComparatorFunction;
@@ -51,12 +52,13 @@ function moduleName(comparator: IComparatorFunction): ISorterFunction;
 function moduleName(
   predicateOrComparator: IPredicateFunction | IComparatorFunction,
 ): IMatcherFunction | ISorterFunction {
+  // tslint:disable-next-line
   if ((predicateOrComparator as Function).length === 1) {
     const predicate = predicateOrComparator as IPredicateFunction;
 
     return (imported: IImport): boolean => {
-      const member = imported.moduleName;
-      return predicate(member);
+      const importMember = imported.moduleName;
+      return predicate(importMember);
     };
   } else {
     const comparator = predicateOrComparator as IComparatorFunction;

@@ -29,7 +29,6 @@
     "tslint": "^5.10.0"
   },
   "dependencies": {
-    "core-js": "^2.5.7",
     "typescript": "^3.2.4"
   }
 }
