@@ -10,7 +10,7 @@
   },
   "lint-staged": {
     "*.ts": [
-      "import-sort --write",
+      "npx import-sort-cli --write",
       "prettier --write",
       "git add"
     ],
