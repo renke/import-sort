@@ -105,6 +105,8 @@ export function parseImports(code: string): Array<IImport> {
         }
       }
 
+      const importKind = (node as any).importKind;
+
       const imported: IImport = {
         start,
         end,
@@ -114,7 +116,7 @@ export function parseImports(code: string): Array<IImport> {
 
         moduleName: node.source.value,
 
-        type: (node as any).importKind === "type" ? "import-type" : "import",
+        type: importKind === "type" ? "import-type" : (importKind === "typeof" ?  "import-type-of" : "import"),
         namedMembers: [],
       };
 
@@ -123,10 +125,13 @@ export function parseImports(code: string): Array<IImport> {
           if (isImportSpecifier(specifier)) {
             const type =
               (specifier as any).importKind === "type" ? {type: true} : {};
+            const type_of =
+              (specifier as any).importKind === "typeof" ? {type_of: true} : {};
             imported.namedMembers!.push({
               name: specifier.imported.name,
               alias: specifier.local.name,
               ...type,
+              ...type_of,
             });
           } else if (isImportDefaultSpecifier(specifier)) {
             imported.defaultMember = specifier.local.name;
@@ -208,16 +213,17 @@ function formatNamedMembers(
       "{" +
       eol +
       namedMembers
-        .map(({name, alias, type}, index) => {
+        .map(({name, alias, type, type_of}, index) => {
           const lastImport = index === namedMembers.length - 1;
           const comma = !useTrailingComma && lastImport ? "" : ",";
           const typeModifier = type ? "type " : "";
+          const typeOfModifier = type_of ? "typeof " : "";
 
           if (name === alias) {
-            return `${prefix}${typeModifier}${name}${comma}` + eol;
+            return `${prefix}${typeModifier}${typeOfModifier}${name}${comma}` + eol;
           }
 
-          return `${prefix}${typeModifier}${name} as ${alias}${comma}` + eol;
+          return `${prefix}${typeModifier}${typeOfModifier}${name} as ${alias}${comma}` + eol;
         })
         .join("") +
       "}"
@@ -230,14 +236,14 @@ function formatNamedMembers(
       "{" +
       space +
       namedMembers
-        .map(({name, alias, type}) => {
+        .map(({name, alias, type, type_of}) => {
           const typeModifier = type ? "type " : "";
-
+          const typeOfModifier = type_of ? "typeof " : "";
           if (name === alias) {
-            return `${typeModifier}${name}`;
+            return `${typeModifier}${typeOfModifier}${name}`;
           }
 
-          return `${typeModifier}${name} as ${alias}`;
+          return `${typeModifier}${typeOfModifier}${name} as ${alias}`;
         })
         .join(", ") +
       comma +

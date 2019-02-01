@@ -84,6 +84,20 @@ import type p from 'q';
     assert.equal(imports[0].defaultMember, "p");
   });
 
+  it("should return default typeof import", () => {
+    const imports = parseImports(
+      `
+import typeof p from 'q';
+`.trim(),
+    );
+
+    assert.equal(imports[0].type, "import-type-of");
+    assert.equal(imports[0].start, 0);
+    assert.equal(imports[0].end, imports[0].end);
+    assert.equal(imports[0].moduleName, "q");
+    assert.equal(imports[0].defaultMember, "p");
+  });
+
   it("should include nearby comments", () => {
     const imports = parseImports(
       `
@@ -179,6 +193,16 @@ import {type a} from "x";
     );
 
     assert.equal(imports[0].namedMembers[0].type, true);
+  });
+
+  it("should include type information for named type imports", () => {
+    const imports = parseImports(
+      `
+import {typeof a} from "x";
+`.trim(),
+    );
+
+    assert.equal(imports[0].namedMembers[0].type_of, true);
   });
 });
 

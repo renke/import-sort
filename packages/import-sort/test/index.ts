@@ -736,3 +736,25 @@ import {
     assert.equal(applyChanges(code, changes), expected);
   });
 });
+
+describe("respect typeof (babylon, NO_BUCKET_STYLE)", () => {
+  it("should not remove typeof", () => {
+    const code =
+`
+import {typeof a} from "a";
+`.trim() + "\n";
+
+    const expected =
+`
+import {typeof a} from "a";
+`.trim() + "\n";
+
+    const result = sortImports(code, parser, NO_BUCKET_STYLE);
+
+    const actual = result.code;
+    const changes = result.changes;
+
+    assert.equal(actual, expected);
+    assert.equal(applyChanges(code, changes), expected);
+  });
+});
