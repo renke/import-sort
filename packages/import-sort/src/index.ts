@@ -57,7 +57,9 @@ export function sortImports(
 
   const buckets: Array<Array<IImport>> = items.map(() => []);
 
-  const imports = parser.parseImports(code);
+  const imports = parser.parseImports(code, {
+    file,
+  });
 
   if (imports.length === 0) {
     return {code, changes: []};

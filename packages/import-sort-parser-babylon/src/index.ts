@@ -1,4 +1,16 @@
-import {parse} from "@babel/parser";
+import {extname} from "path";
+import {ParseOptions} from "querystring";
+
+import {
+  loadOptions as babelLoadOptions,
+  loadPartialConfig as babelLoadPartialOptions,
+  parse as babelParse,
+} from "@babel/core";
+import {
+  ParserOptions,
+  ParserPlugin,
+  parse as babelParserParse,
+} from "@babel/parser";
 import traverse from "@babel/traverse";
 import {
   isImportDefaultSpecifier,
@@ -6,16 +18,16 @@ import {
   isImportSpecifier,
 } from "@babel/types";
 // tslint:disable-next-line:no-implicit-dependencies
-import {IImport, NamedMember} from "import-sort-parser";
+import {IImport, IParserOptions, NamedMember} from "import-sort-parser";
 
 // TODO: Mocha currently doesn't pick up the declaration in index.d.ts
 // tslint:disable-next-line:no-var-requires
 const findLineColumn = require("find-line-column");
 
-const BABYLON_PLUGINS = [
+const TYPESCRIPT_EXTENSIONS = [".ts", ".tsx"];
+
+const COMMON_PARSER_PLUGINS = [
   "jsx",
-  "flow",
-  "flowComments",
   "doExpressions",
   "objectRestSpread",
   ["decorators", {decoratorsBeforeExport: true}],
@@ -38,7 +50,9 @@ const BABYLON_PLUGINS = [
   "nullishCoalescingOperator",
 ];
 
-const BABYLON_OPTIONS = {
+const FLOW_PARSER_PLUGINS = ["flow", "flowComments", ...COMMON_PARSER_PLUGINS];
+
+const FLOW_PARSER_OPTIONS = {
   allowImportExportEverywhere: true,
   allowAwaitOutsideFunction: true,
   allowReturnOutsideFunction: true,
@@ -46,11 +60,44 @@ const BABYLON_OPTIONS = {
 
   sourceType: "module",
 
-  plugins: BABYLON_PLUGINS,
+  plugins: FLOW_PARSER_PLUGINS,
 };
 
-export function parseImports(code: string): Array<IImport> {
-  const parsed = (parse as any)(code, BABYLON_OPTIONS);
+const TYPESCRIPT_PARSER_PLUGINS = ["typescript", ...COMMON_PARSER_PLUGINS];
+
+const TYPESCRIPT_PARSER_OPTIONS = {
+  allowImportExportEverywhere: true,
+  allowAwaitOutsideFunction: true,
+  allowReturnOutsideFunction: true,
+  allowSuperOutsideMethod: true,
+
+  sourceType: "module",
+
+  plugins: TYPESCRIPT_PARSER_PLUGINS,
+};
+
+export function parseImports(
+  code: string,
+  options: IParserOptions = {},
+): Array<IImport> {
+  const babelPartialOptions = babelLoadPartialOptions({filename: options.file});
+
+  let parsed;
+
+  if (babelPartialOptions.hasFilesystemConfig()) {
+    // We always prefer .babelrc (or similar) if one was found
+    parsed = babelParse(code, babelLoadOptions({filename: options.file}));
+  } else {
+    const {file} = options;
+
+    const isTypeScript = file && TYPESCRIPT_EXTENSIONS.includes(extname(file));
+
+    const parserOptions = isTypeScript
+      ? TYPESCRIPT_PARSER_OPTIONS
+      : FLOW_PARSER_OPTIONS;
+
+    parsed = babelParserParse(code, parserOptions as any);
+  }
 
   const imports: Array<IImport> = [];
 

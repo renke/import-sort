@@ -70,20 +70,6 @@ import l, * as m from "o";
     assert.equal(imports[6].namespaceMember, "m");
   });
 
-  it("should return default type import", () => {
-    const imports = parseImports(
-      `
-import type p from 'q';
-`.trim(),
-    );
-
-    assert.equal(imports[0].type, "import-type");
-    assert.equal(imports[0].start, 0);
-    assert.equal(imports[0].end, imports[0].end);
-    assert.equal(imports[0].moduleName, "q");
-    assert.equal(imports[0].defaultMember, "p");
-  });
-
   it("should include nearby comments", () => {
     const imports = parseImports(
       `
