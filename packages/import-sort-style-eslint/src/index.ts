@@ -4,7 +4,7 @@ import {CLIEngine} from "eslint";
 import {IStyleAPI, IStyleItem} from "import-sort-style";
 import * as _ from "lodash";
 
-export default function(styleApi: IStyleAPI, file?: string): Array<IStyleItem> {
+export default function(styleApi: IStyleAPI, file?: string): IStyleItem[] {
   const {
     member,
     alias,
@@ -51,9 +51,9 @@ export default function(styleApi: IStyleAPI, file?: string): Array<IStyleItem> {
   const eslintSort = (first, second) => {
     if (useLowerCase) {
       return unicode(first.toLowerCase(), second.toLowerCase());
-    } else {
-      return unicode(first, second);
     }
+
+    return unicode(first, second);
   };
 
   const styleItemByType = {

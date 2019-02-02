@@ -47,7 +47,7 @@ describe("Error with comments (issue #35)", () => {
     const code =
       `
 // NativeModules.TTRNBridge = {log:()=>{}};NativeModules.TTRNDeviceInfo = { model: 'iPhone', appVersion: '6.3.0' };
-import { consoleKiller } from './src/utils';     
+import { consoleKiller } from './src/utils';
 `.trim() + "\n";
 
     const result = sortImports(
@@ -63,7 +63,7 @@ import { consoleKiller } from './src/utils';
     const code =
       `
 // NativeModules.TTRNBridge = {log:()=>{}};NativeModules.TTRNDeviceInfo = { model: 'iPhone', appVersion: '6.3.0' };
-import { consoleKiller } from './src/utils';     
+import { consoleKiller } from './src/utils';
 `.trim() + "\n";
 
     const result = sortImports(

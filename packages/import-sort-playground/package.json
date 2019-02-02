@@ -15,7 +15,15 @@
     "import-sort-style-eslint": "^5.0.0",
     "import-sort-style-module": "^5.0.0",
     "import-sort-style-renke": "^5.0.0",
-    "tslint": "^5.10.0",
     "typescript": "^3.2.4"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^1.2.0",
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.0",
+    "eslint-plugin-react": "^7.12.4"
   }
 }
