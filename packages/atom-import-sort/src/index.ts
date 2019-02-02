@@ -1,13 +1,14 @@
 import {dirname, extname} from "path";
 
-// tslint:disable-next-line:no-implicit-dependencies
-import {CompositeDisposable, TextEditor} from "atom";
+import {CompositeDisposable, TextEditor} from "atom"; // eslint-disable-line
 import sortImports, {ICodeChange} from "import-sort";
 import {getConfig} from "import-sort-config";
 import {allowUnsafeEval, allowUnsafeNewFunction} from "loophole";
 
+// eslint-disable-next-line
 export class Plugin {
   public bufferWillSaveDisposables;
+
   public editorObserverDisposable;
 
   public config = {
@@ -20,8 +21,8 @@ export class Plugin {
     },
   };
 
-  public activate(state) {
-    (atom.config as any).observe(
+  public activate() {
+    atom.config.observe(
       "atom-import-sort.sortOnSave",
       (sortOnSave: boolean) => {
         if (sortOnSave) {
@@ -69,6 +70,7 @@ export class Plugin {
     }
   }
 
+  // eslint-disable-next-line
   private sortEditor(editor, notifyErrors = false) {
     const scopeDescriptor = editor.getRootScopeDescriptor();
 
@@ -102,7 +104,7 @@ export class Plugin {
         extension = ".ts";
       }
 
-      directory = (atom.project as any).getPaths()[0];
+      [directory] = atom.project.getPaths();
     }
 
     if (!extension) {
@@ -143,17 +145,17 @@ export class Plugin {
       const cursor = editor.getCursorBufferPosition();
       const unsorted = editor.getText();
 
-      let changes: Array<ICodeChange>;
+      let changes: ICodeChange[];
 
       allowUnsafeNewFunction(() => {
         allowUnsafeEval(() => {
-          changes = sortImports(
+          ({changes} = sortImports(
             unsorted,
-            parser!,
-            style!,
+            parser,
+            style,
             path,
             rawConfig.options,
-          ).changes;
+          ));
         });
       });
 

@@ -35,7 +35,7 @@ Usage: import-sort [OPTION]... [FILE/GLOB]...
   .help()
   .alias("help", "h");
 
-const argv = yargs.argv;
+const {argv} = yargs;
 
 let filePatterns = argv._;
 
@@ -92,8 +92,8 @@ for (const filePath of filePaths) {
   try {
     sortResult = sortImports(
       unsortedCode,
-      parser!,
-      style!,
+      parser,
+      style,
       filePath,
       rawConfig.options,
     );
@@ -102,7 +102,7 @@ for (const filePath of filePaths) {
     continue;
   }
 
-  const {code: sortedCode, changes} = sortResult!;
+  const {code: sortedCode, changes} = sortResult;
 
   const isDifferent = changes.length > 0;
 
@@ -126,21 +126,22 @@ function getAndCheckConfig(
 ): IResolvedConfig {
   const resolvedConfig = getConfig(extension, fileDirectory);
 
-  throwIf(!resolvedConfig, `No configuration found for file type ${extension}`);
+  if (!resolvedConfig) {
+    throw new Error(`No configuration found for file type ${extension}`);
+  }
 
-  const rawParser = resolvedConfig!.config.parser;
-  const rawStyle = resolvedConfig!.config.style;
+  const rawParser = resolvedConfig.config.parser;
+  const rawStyle = resolvedConfig.config.style;
 
   throwIf(!rawParser, `No parser defined for file type ${extension}`);
   throwIf(!rawStyle, `No style defined for file type ${extension}`);
 
-  const parser = resolvedConfig!.parser;
-  const style = resolvedConfig!.style;
+  const {parser, style} = resolvedConfig;
 
   throwIf(!parser, `Parser "${rawParser}" could not be resolved`);
   throwIf(!style, `Style "${rawStyle}" could not be resolved`);
 
-  return resolvedConfig!;
+  return resolvedConfig;
 }
 
 function handleFilePathError(filePath, e) {

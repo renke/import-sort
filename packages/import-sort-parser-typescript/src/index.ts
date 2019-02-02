@@ -1,7 +1,7 @@
 import {IImport, ImportType, NamedMember} from "import-sort-parser"; // tslint:disable-line
 import * as typescript from "typescript";
 
-export function parseImports(code: string): Array<IImport> {
+export function parseImports(code: string): IImport[] {
   const host: typescript.CompilerHost = {
     fileExists: () => true,
     readFile: () => "",
@@ -41,7 +41,7 @@ export function parseImports(code: string): Array<IImport> {
     throw new Error("Source file not found. This should not happen.");
   }
 
-  const imports: Array<IImport> = [];
+  const imports: IImport[] = [];
 
   typescript.forEachChild(sourceFile, node => {
     switch (node.kind) {
@@ -99,7 +99,7 @@ function parseImportDeclaration(
 
       previous = current;
       start = comments[previous].pos;
-      current--;
+      current -= 1;
     }
   }
 
@@ -116,14 +116,14 @@ function parseImportDeclaration(
       // }
 
       previous = current;
-      end = comments[previous].end;
-      current++;
+      ({end} = comments[previous]);
+      current += 1;
     }
   }
 
-  let type: ImportType = "import";
+  const type: ImportType = "import";
 
-  let moduleName = importDeclaration.moduleSpecifier
+  const moduleName = importDeclaration.moduleSpecifier
     .getText()
     .replace(/["']/g, "");
 
@@ -137,14 +137,14 @@ function parseImportDeclaration(
     namedMembers: [],
   };
 
-  const importClause = importDeclaration.importClause;
+  const {importClause} = importDeclaration;
 
   if (importClause) {
     if (importClause.name) {
       imported.defaultMember = importClause.name.text;
     }
 
-    const namedBindings = importClause.namedBindings;
+    const {namedBindings} = importClause;
 
     if (namedBindings) {
       if (namedBindings.kind === typescript.SyntaxKind.NamespaceImport) {
@@ -193,7 +193,7 @@ function getComments(
   sourceFile: typescript.SourceFile,
   node: typescript.Node,
   isTrailing: boolean,
-): Array<typescript.CommentRange> | undefined {
+): typescript.CommentRange[] | undefined {
   if (node.parent) {
     const nodePos = isTrailing ? node.end : node.pos;
     const parentPos = isTrailing ? node.parent.end : node.parent.pos;
@@ -202,7 +202,7 @@ function getComments(
       node.parent.kind === typescript.SyntaxKind.SourceFile ||
       nodePos !== parentPos
     ) {
-      let comments: Array<typescript.CommentRange> | undefined;
+      let comments: typescript.CommentRange[] | undefined;
 
       if (isTrailing) {
         comments = typescript.getTrailingCommentRanges(
@@ -218,6 +218,8 @@ function getComments(
       }
     }
   }
+
+  return undefined;
 }
 
 export function formatImport(
@@ -244,12 +246,14 @@ export function formatImport(
       let prefix: string | undefined;
 
       if (useMultipleLines) {
-        prefix = namedMembersString.split(eol)[1].match(/^\s*/)![0];
+        [prefix] = namedMembersString
+          .split(eol)[1]
+          .match(/^\s*/) as RegExpMatchArray;
       }
 
-      let useSpaces = namedMembersString.charAt(1) === " ";
+      const useSpaces = namedMembersString.charAt(1) === " ";
 
-      let userTrailingComma = namedMembersString
+      const userTrailingComma = namedMembersString
         .replace("}", "")
         .trim()
         .endsWith(",");
@@ -273,7 +277,7 @@ export function formatImport(
 }
 
 function formatNamedMembers(
-  namedMembers: Array<NamedMember>,
+  namedMembers: NamedMember[],
   useMultipleLines: boolean,
   useSpaces: boolean,
   useTrailingComma: boolean,
@@ -298,25 +302,25 @@ function formatNamedMembers(
         .join("") +
       "}"
     );
-  } else {
-    const space = useSpaces ? " " : "";
-    const comma = useTrailingComma ? "," : "";
-
-    return (
-      "{" +
-      space +
-      namedMembers
-        .map(({name, alias}) => {
-          if (name === alias) {
-            return `${name}`;
-          }
-
-          return `${name} as ${alias}`;
-        })
-        .join(", ") +
-      comma +
-      space +
-      "}"
-    );
   }
+
+  const space = useSpaces ? " " : "";
+  const comma = useTrailingComma ? "," : "";
+
+  return (
+    "{" +
+    space +
+    namedMembers
+      .map(({name, alias}) => {
+        if (name === alias) {
+          return `${name}`;
+        }
+
+        return `${name} as ${alias}`;
+      })
+      .join(", ") +
+    comma +
+    space +
+    "}"
+  );
 }

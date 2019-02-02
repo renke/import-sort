@@ -1,6 +1,5 @@
 import {IImport, NamedMember} from "import-sort-parser";
 
-// tslint:disable: callable-types member-ordering
 export interface IStyleAPI {
   member: ISelectorFunction;
 
@@ -16,8 +15,8 @@ export interface IStyleAPI {
   always: IMatcherFunction;
   not: (matcher: IMatcherFunction) => IMatcherFunction;
 
-  and: (...matcher: Array<IMatcherFunction>) => IMatcherFunction;
-  or: (...matcher: Array<IMatcherFunction>) => IMatcherFunction;
+  and: (...matcher: IMatcherFunction[]) => IMatcherFunction;
+  or: (...matcher: IMatcherFunction[]) => IMatcherFunction;
 
   hasNoMember: IMatcherFunction;
   hasMember: IMatcherFunction;
@@ -83,14 +82,12 @@ export interface IComparatorFunction {
 export interface IStyleItem {
   match?: IMatcherFunction;
 
-  sort?: ISorterFunction | Array<ISorterFunction>;
-  sortNamedMembers?:
-    | INamedMemberSorterFunction
-    | Array<INamedMemberSorterFunction>;
+  sort?: ISorterFunction | ISorterFunction[];
+  sortNamedMembers?: INamedMemberSorterFunction | INamedMemberSorterFunction[];
 
   separator?: boolean;
 }
 
 export interface IStyle {
-  (styleApi: IStyleAPI, file?: string, options?: any): Array<IStyleItem>;
+  (styleApi: IStyleAPI, file?: string, options?: object): IStyleItem[];
 }

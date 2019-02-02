@@ -3,7 +3,7 @@ export interface IParserOptions {
 }
 
 export interface IParser {
-  parseImports(code: string, options?: IParserOptions): Array<IImport>;
+  parseImports(code: string, options?: IParserOptions): IImport[];
   formatImport(code: string, imported: IImport, eol?: string): string;
 }
 
@@ -20,13 +20,13 @@ export interface IImport {
 
   defaultMember?: string;
   namespaceMember?: string;
-  namedMembers: Array<NamedMember>;
+  namedMembers: NamedMember[];
 }
 
 export type ImportType = "import" | "require" | "import-equals" | "import-type";
 
-export type NamedMember = {
+export interface NamedMember {
   name: string;
   alias: string;
   type?: boolean;
-};
+}

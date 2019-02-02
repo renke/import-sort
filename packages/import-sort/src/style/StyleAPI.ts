@@ -29,22 +29,21 @@ function member(
         imported.namedMembers[0].alias;
       return predicate(importMember);
     };
-  } else {
-    const comparator = predicateOrComparator as IComparatorFunction;
-
-    return (firstImport: IImport, secondImport: IImport): number => {
-      const first =
-        firstImport.defaultMember ||
-        firstImport.namespaceMember ||
-        firstImport.namedMembers[0].alias;
-      const second =
-        secondImport.defaultMember ||
-        secondImport.namespaceMember ||
-        secondImport.namedMembers[0].alias;
-
-      return comparator(first, second);
-    };
   }
+  const comparator = predicateOrComparator as IComparatorFunction;
+
+  return (firstImport: IImport, secondImport: IImport): number => {
+    const first =
+      firstImport.defaultMember ||
+      firstImport.namespaceMember ||
+      firstImport.namedMembers[0].alias;
+    const second =
+      secondImport.defaultMember ||
+      secondImport.namespaceMember ||
+      secondImport.namedMembers[0].alias;
+
+    return comparator(first, second);
+  };
 }
 
 function moduleName(predicate: IPredicateFunction): IMatcherFunction;
@@ -60,16 +59,15 @@ function moduleName(
       const importMember = imported.moduleName;
       return predicate(importMember);
     };
-  } else {
-    const comparator = predicateOrComparator as IComparatorFunction;
-
-    return (firstImport: IImport, secondImport: IImport): number => {
-      const first = firstImport.moduleName;
-      const second = secondImport.moduleName;
-
-      return comparator(first, second);
-    };
   }
+  const comparator = predicateOrComparator as IComparatorFunction;
+
+  return (firstImport: IImport, secondImport: IImport): number => {
+    const first = firstImport.moduleName;
+    const second = secondImport.moduleName;
+
+    return comparator(first, second);
+  };
 }
 
 function name(comparator: IComparatorFunction): INamedMemberSorterFunction {
@@ -94,28 +92,16 @@ function not(matcher: IMatcherFunction): IMatcherFunction {
   };
 }
 
-function and(...matchers: Array<IMatcherFunction>): IMatcherFunction {
+function and(...matchers: IMatcherFunction[]): IMatcherFunction {
   return imported => {
     return matchers.every(matcher => matcher(imported));
   };
 }
 
-function or(...matchers: Array<IMatcherFunction>): IMatcherFunction {
+function or(...matchers: IMatcherFunction[]): IMatcherFunction {
   return imported => {
     return matchers.some(matcher => matcher(imported));
   };
-}
-
-function hasMember(imported: IImport): boolean {
-  return (
-    hasDefaultMember(imported) ||
-    hasNamespaceMember(imported) ||
-    hasNamedMembers(imported)
-  );
-}
-
-function hasNoMember(imported: IImport): boolean {
-  return !hasMember(imported);
 }
 
 function hasDefaultMember(imported: IImport): boolean {
@@ -128,6 +114,18 @@ function hasNamespaceMember(imported: IImport): boolean {
 
 function hasNamedMembers(imported: IImport): boolean {
   return imported.namedMembers.length > 0;
+}
+
+function hasMember(imported: IImport): boolean {
+  return (
+    hasDefaultMember(imported) ||
+    hasNamespaceMember(imported) ||
+    hasNamedMembers(imported)
+  );
+}
+
+function hasNoMember(imported: IImport): boolean {
+  return !hasMember(imported);
 }
 
 function hasOnlyDefaultMember(imported: IImport): boolean {
@@ -201,12 +199,12 @@ function isScopedModule(imported: IImport): boolean {
 }
 
 function startsWithUpperCase(text: string): boolean {
-  let start = text.charAt(0);
+  const start = text.charAt(0);
   return text.charAt(0) === start.toUpperCase();
 }
 
 function startsWithLowerCase(text: string): boolean {
-  let start = text.charAt(0);
+  const start = text.charAt(0);
   return text.charAt(0) === start.toLowerCase();
 }
 

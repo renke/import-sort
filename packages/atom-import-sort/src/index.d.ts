@@ -1,4 +1,4 @@
 declare module "loophole" {
-  export function allowUnsafeEval(f: () => any);
-  export function allowUnsafeNewFunction(f: () => any);
+  export function allowUnsafeEval(f: () => unknown);
+  export function allowUnsafeNewFunction(f: () => unknown);
 }

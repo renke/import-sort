@@ -9,7 +9,7 @@ export interface IConfigByGlobs {
 export interface IConfig {
   parser?: string;
   style?: string;
-  options?: any;
+  options?: object;
 }
 
 export interface IResolvedConfig {
@@ -45,7 +45,7 @@ export function getConfig(
   const actualConfig = mergeConfigs([defaultConfig, packageConfig]);
 
   if (!actualConfig) {
-    return;
+    return undefined;
   }
 
   const resolvedConfig = resolveConfig(actualConfig, directory);
@@ -60,7 +60,7 @@ function getConfigFromDirectory(
   const packageConfigs = getAllConfigsFromDirectory(directory);
 
   if (!packageConfigs) {
-    return;
+    return undefined;
   }
 
   return getConfigForExtension(packageConfigs, extension);
@@ -70,7 +70,7 @@ function getConfigForExtension(
   configs: IConfigByGlobs,
   extension: string,
 ): IConfig | undefined {
-  const foundConfigs: Array<IConfig | undefined> = Object.keys(configs).map(
+  const foundConfigs: (IConfig | undefined)[] = Object.keys(configs).map(
     joinedGlobs => {
       const globs = joinedGlobs.split(",").map(rawGlob => rawGlob.trim());
       const config = configs[joinedGlobs];
@@ -78,6 +78,8 @@ function getConfigForExtension(
       if (globs.some(glob => minimatch(extension, glob))) {
         return config;
       }
+
+      return undefined;
     },
   );
 
@@ -97,22 +99,24 @@ function getAllConfigsFromDirectory(
     const configsResult = configsLoader.searchSync(directory);
 
     if (!configsResult) {
-      return;
+      return undefined;
     }
 
     return configsResult.config;
   } catch (e) {
-    return;
+    // Do nothing…
   }
+
+  return undefined;
 }
 
 function mergeConfigs(
-  rawConfigs: Array<IConfig | undefined>,
+  rawConfigs: (IConfig | undefined)[],
 ): IConfig | undefined {
-  const configs = rawConfigs.filter(rawConfig => !!rawConfig) as Array<IConfig>;
+  const configs = rawConfigs.filter(rawConfig => !!rawConfig) as IConfig[];
 
   if (configs.length === 0) {
-    return;
+    return undefined;
   }
 
   return configs.reduce((previousConfig, currentConfig) => {
@@ -134,7 +138,7 @@ function mergeConfigs(
       config.options = currentConfig.options;
     }
 
-    return config!;
+    return config;
   });
 }
 
@@ -182,4 +186,6 @@ function resolveModule(module: string, directory?: string): string | undefined {
   if (defaultPath) {
     return defaultPath;
   }
+
+  return undefined;
 }

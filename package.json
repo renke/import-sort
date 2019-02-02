@@ -12,6 +12,7 @@
     "*.ts": [
       "npx import-sort-cli --write",
       "prettier --write",
+      "eslint --fix",
       "git add"
     ],
     "*.{json,md}": [

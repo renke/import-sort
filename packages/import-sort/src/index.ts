@@ -10,7 +10,7 @@ import StyleAPI from "./style/StyleAPI";
 
 export interface ISortResult {
   code: string;
-  changes: Array<ICodeChange>;
+  changes: ICodeChange[];
 }
 
 export interface ICodeChange {
@@ -25,25 +25,26 @@ export default function importSort(
   rawParser: string | IParser,
   rawStyle: string | IStyle,
   file?: string,
-  options?: any,
+  options?: object,
 ): ISortResult {
-  let parser: IParser | undefined;
   let style: IStyle;
 
-  parser =
+  const parser: IParser =
     typeof rawParser === "string" ? require(rawParser) : (rawParser as IParser);
 
   if (typeof rawStyle === "string") {
     style = require(rawStyle);
 
+    // eslint-disable-next-line
     if ((style as any).default) {
+      // eslint-disable-next-line
       style = (style as any).default;
     }
   } else {
     style = rawStyle as IStyle;
   }
 
-  return sortImports(code, parser!, style, file, options);
+  return sortImports(code, parser, style, file, options);
 }
 
 export function sortImports(
@@ -51,11 +52,12 @@ export function sortImports(
   parser: IParser,
   style: IStyle,
   file?: string,
-  options?: any,
+  options?: object,
 ): ISortResult {
+  // eslint-disable-next-line
   const items = addFallback(style, file, options || {})(StyleAPI);
 
-  const buckets: Array<Array<IImport>> = items.map(() => []);
+  const buckets: IImport[][] = items.map(() => []);
 
   const imports = parser.parseImports(code, {
     file,
@@ -67,15 +69,16 @@ export function sortImports(
 
   const eol = detectNewline.graceful(code);
 
-  const changes: Array<ICodeChange> = [];
+  const changes: ICodeChange[] = [];
 
   // Fill buckets
   for (const imported of imports) {
     let sortedImport = imported;
 
     const index = items.findIndex(item => {
+      // eslint-disable-next-line
       sortedImport = sortNamedMembers(imported, item.sortNamedMembers);
-      return !!item.match && item.match!(sortedImport);
+      return !!item.match && item.match(sortedImport);
     });
 
     if (index !== -1) {
@@ -85,7 +88,7 @@ export function sortImports(
 
   // Sort buckets
   buckets.forEach((bucket, index) => {
-    const sort = items[index].sort;
+    const {sort} = items[index];
 
     if (!sort) {
       return;
@@ -96,7 +99,7 @@ export function sortImports(
       return;
     }
 
-    const sorters = sort as Array<ISorterFunction>;
+    const sorters = sort as ISorterFunction[];
 
     if (sorters.length === 0) {
       return;
@@ -108,7 +111,7 @@ export function sortImports(
 
       while (comparison === 0 && sorters[sorterIndex]) {
         comparison = sorters[sorterIndex](first, second);
-        sorterIndex++;
+        sorterIndex += 1;
       }
 
       return comparison;
@@ -150,7 +153,7 @@ export function sortImports(
       let importEnd = imported.end;
 
       if (sortedCode.charAt(imported.end).match(/\s/)) {
-        importEnd++;
+        importEnd += 1;
       }
 
       changes.push({
@@ -165,14 +168,14 @@ export function sortImports(
         sortedCode.slice(importEnd, code.length);
     });
 
-  const start = imports[0].start;
+  const {start} = imports[0];
 
   // Split code at first original import
   let before = code.substring(0, start);
   let after = sortedCode.substring(start, sortedCode.length);
 
-  let oldBeforeLength = before.length;
-  let oldAfterLength = after.length;
+  const oldBeforeLength = before.length;
+  const oldAfterLength = after.length;
 
   let beforeChange: ICodeChange | undefined;
   let afterChange: ICodeChange | undefined;
@@ -254,7 +257,7 @@ export function sortImports(
 
 function sortNamedMembers(
   imported: IImport,
-  rawSort?: INamedMemberSorterFunction | Array<INamedMemberSorterFunction>,
+  rawSort?: INamedMemberSorterFunction | INamedMemberSorterFunction[],
 ): IImport {
   const sort = rawSort;
 
@@ -272,7 +275,7 @@ function sortNamedMembers(
     return singleSortedImport;
   }
 
-  const sorters = sort as Array<INamedMemberSorterFunction>;
+  const sorters = sort as INamedMemberSorterFunction[];
 
   if (sorters.length === 0) {
     return imported;
@@ -284,7 +287,7 @@ function sortNamedMembers(
 
     while (comparison === 0 && sorters[sorterIndex]) {
       comparison = sorters[sorterIndex](first, second);
-      sorterIndex++;
+      sorterIndex += 1;
     }
 
     return comparison;
@@ -296,10 +299,7 @@ function sortNamedMembers(
   return sortedImport;
 }
 
-export function applyChanges(
-  code: string,
-  changes: Array<ICodeChange>,
-): string {
+export function applyChanges(code: string, changes: ICodeChange[]): string {
   let changedCode = code;
 
   for (const change of changes) {
@@ -312,7 +312,7 @@ export function applyChanges(
   return changedCode;
 }
 
-function addFallback(style: IStyle, file?: string, options?: any): IStyle {
+function addFallback(style: IStyle, file?: string, options?: object): IStyle {
   return styleApi => {
     const items = [{separator: true}, {match: styleApi.always}];
 

@@ -1,16 +1,11 @@
 import {extname} from "path";
-import {ParseOptions} from "querystring";
 
 import {
   loadOptions as babelLoadOptions,
   loadPartialConfig as babelLoadPartialOptions,
   parse as babelParse,
 } from "@babel/core";
-import {
-  ParserOptions,
-  ParserPlugin,
-  parse as babelParserParse,
-} from "@babel/parser";
+import {ParserOptions, parse as babelParserParse} from "@babel/parser";
 import traverse from "@babel/traverse";
 import {
   isImportDefaultSpecifier,
@@ -21,7 +16,7 @@ import {
 import {IImport, IParserOptions, NamedMember} from "import-sort-parser";
 
 // TODO: Mocha currently doesn't pick up the declaration in index.d.ts
-// tslint:disable-next-line:no-var-requires
+// eslint-disable-next-line
 const findLineColumn = require("find-line-column");
 
 const TYPESCRIPT_EXTENSIONS = [".ts", ".tsx"];
@@ -79,7 +74,7 @@ const TYPESCRIPT_PARSER_OPTIONS = {
 export function parseImports(
   code: string,
   options: IParserOptions = {},
-): Array<IImport> {
+): IImport[] {
   const babelPartialOptions = babelLoadPartialOptions({filename: options.file});
 
   let parsed;
@@ -96,14 +91,17 @@ export function parseImports(
       ? TYPESCRIPT_PARSER_OPTIONS
       : FLOW_PARSER_OPTIONS;
 
-    parsed = babelParserParse(code, parserOptions as any);
+    parsed = babelParserParse(
+      code,
+      (parserOptions as unknown) as ParserOptions,
+    );
   }
 
-  const imports: Array<IImport> = [];
+  const imports: IImport[] = [];
 
   traverse(parsed, {
     ImportDeclaration(path) {
-      const node = path.node;
+      const {node} = path;
 
       const importStart = node.start;
       const importEnd = node.end;
@@ -132,8 +130,8 @@ export function parseImports(
           }
 
           previous = current;
-          start = comments[previous].start;
-          current--;
+          ({start} = comments[previous]);
+          current -= 1;
         }
       }
 
@@ -149,8 +147,8 @@ export function parseImports(
           }
 
           previous = current;
-          end = comments[previous].end;
-          current++;
+          ({end} = comments[previous]);
+          current += 1;
         }
       }
 
@@ -163,16 +161,16 @@ export function parseImports(
 
         moduleName: node.source.value,
 
-        type: (node as any).importKind === "type" ? "import-type" : "import",
+        type: node.importKind === "type" ? "import-type" : "import",
         namedMembers: [],
       };
 
       if (node.specifiers) {
         node.specifiers.forEach(specifier => {
           if (isImportSpecifier(specifier)) {
-            const type =
-              (specifier as any).importKind === "type" ? {type: true} : {};
-            imported.namedMembers!.push({
+            const type = specifier.importKind === "type" ? {type: true} : {};
+
+            imported.namedMembers.push({
               name: specifier.imported.name,
               alias: specifier.local.name,
               ...type,
@@ -216,12 +214,14 @@ export function formatImport(
       let prefix: string | undefined;
 
       if (useMultipleLines) {
-        prefix = namedMembersString.split(eol)[1].match(/^\s*/)![0];
+        [prefix] = namedMembersString
+          .split(eol)[1]
+          .match(/^\s*/) as RegExpMatchArray;
       }
 
-      let useSpaces = namedMembersString.charAt(1) === " ";
+      const useSpaces = namedMembersString.charAt(1) === " ";
 
-      let userTrailingComma = namedMembersString
+      const userTrailingComma = namedMembersString
         .replace("}", "")
         .trim()
         .endsWith(",");
@@ -245,7 +245,7 @@ export function formatImport(
 }
 
 function formatNamedMembers(
-  namedMembers: Array<NamedMember>,
+  namedMembers: NamedMember[],
   useMultipleLines: boolean,
   useSpaces: boolean,
   useTrailingComma: boolean,
@@ -271,27 +271,27 @@ function formatNamedMembers(
         .join("") +
       "}"
     );
-  } else {
-    const space = useSpaces ? " " : "";
-    const comma = useTrailingComma ? "," : "";
-
-    return (
-      "{" +
-      space +
-      namedMembers
-        .map(({name, alias, type}) => {
-          const typeModifier = type ? "type " : "";
-
-          if (name === alias) {
-            return `${typeModifier}${name}`;
-          }
-
-          return `${typeModifier}${name} as ${alias}`;
-        })
-        .join(", ") +
-      comma +
-      space +
-      "}"
-    );
   }
+
+  const space = useSpaces ? " " : "";
+  const comma = useTrailingComma ? "," : "";
+
+  return (
+    "{" +
+    space +
+    namedMembers
+      .map(({name, alias, type}) => {
+        const typeModifier = type ? "type " : "";
+
+        if (name === alias) {
+          return `${typeModifier}${name}`;
+        }
+
+        return `${typeModifier}${name} as ${alias}`;
+      })
+      .join(", ") +
+    comma +
+    space +
+    "}"
+  );
 }

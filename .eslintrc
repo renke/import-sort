@@ -5,6 +5,15 @@
   "rules": {
     "@typescript-eslint/indent": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+    "no-restricted-syntax": "off",
+    "@typescript-eslint/interface-name-prefix": "off",
+    "import/no-unresolved": "off",
+    "import/no-dynamic-require": "off",
+    "global-require": "off",
+    "no-use-before-define": ["error", "nofunc"],
+    "@typescript-eslint/no-use-before-define": ["error", "nofunc"],
+    "no-continue": "off",
+    "prefer-template": "off"
   }
 }
