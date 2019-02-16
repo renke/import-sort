@@ -1,6 +1,6 @@
 {
   "name": "import-sort-parser",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "Interfaces for import-sort parsers.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
