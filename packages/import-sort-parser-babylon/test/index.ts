@@ -6,6 +6,74 @@ import {IImport} from "import-sort-parser";
 import {formatImport, parseImports} from "../src";
 
 describe("parseImports", () => {
+  it(`should return no imports when using "import-sort-ignore" multi line comment`, () => {
+    let imports: IImport[];
+
+    imports = parseImports(
+      `
+      /* import-sort-ignore */
+      import "a";
+      import b from "b";
+      import {c} from "c";
+      import d, {e} from "f";
+      import g, {h as hh} from "i";
+      import * as j from "k";
+      import l, * as m from "o";
+      `.trim(),
+    );
+
+    assert.isEmpty(imports);
+
+    imports = parseImports(
+      `
+      import "a";
+      import b from "b";
+      import {c} from "c";
+      import d, {e} from "f";
+      import g, {h as hh} from "i";
+      import * as j from "k";
+      import l, * as m from "o";
+      /* import-sort-ignore */
+      `.trim(),
+    );
+
+    assert.isEmpty(imports);
+  });
+
+  it(`should return no imports when using "import-sort-ignore" single line comment`, () => {
+    let imports: IImport[];
+
+    imports = parseImports(
+      `
+      // import-sort-ignore
+      import "a";
+      import b from "b";
+      import {c} from "c";
+      import d, {e} from "f";
+      import g, {h as hh} from "i";
+      import * as j from "k";
+      import l, * as m from "o";
+      `.trim(),
+    );
+
+    assert.isEmpty(imports);
+
+    imports = parseImports(
+      `
+      import "a";
+      import b from "b";
+      import {c} from "c";
+      import d, {e} from "f";
+      import g, {h as hh} from "i";
+      import * as j from "k";
+      import l, * as m from "o";
+      // import-sort-ignore
+      `.trim(),
+    );
+
+    assert.isEmpty(imports);
+  });
+
   it("should return imports", () => {
     const imports = parseImports(
       `
