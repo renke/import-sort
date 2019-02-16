@@ -62,7 +62,8 @@ to import the following
 Sort your imports from the command line. Useful to sort all your files in bulk
 or from a script in your `package.json`.
 
-Install it with `npm install --save-dev import-sort-cli import-sort-parser-babylon import-sort-style-eslint`.
+Install it with `npm install --save-dev import-sort-cli` or use it directly with
+`npx import-sort-cli`.
 
 _ATTENTION_: Since version 4 `--write` modifies file in-place. The old
 `--overwrite` flag was removed. The CLI now behaves closer to
@@ -92,6 +93,12 @@ parser (say `import-sort-parser-babylon`) and a style (say
 The `import-sort` library is basically the heart that powers `import-sort-cli`
 and `atom-import-sort` and should be used if you want to integrate it with other
 environments.
+
+# Ignoring files
+
+Sometimes the imports in a certain file should not be sorted. To prevent
+`import-sort` from sorting a particular file, just add `// import-sort-ignore`
+or `/* import-sort-ignore */` to your file. Anwhere in the file is fine.
 
 # Dealing with comments
 
@@ -139,12 +146,8 @@ Just add the following to your `package.json` and adapt it to your liking:
 
 ```json
 "importSort": {
-  ".js, .jsx, .es6, .es": {
+  ".js, .jsx, .es6, .es, .mjs, .ts, .tsx": {
     "parser": "babylon",
-    "style": "eslint"
-  },
-  ".ts, .tsx": {
-    "parser": "typescript",
     "style": "eslint"
   }
 }

@@ -20,12 +20,8 @@ export interface IResolvedConfig {
 }
 
 export const DEFAULT_CONFIGS: IConfigByGlobs = {
-  ".js, .jsx, .es6, .es": {
+  ".js, .jsx, .es6, .es, .mjs, .ts, .tsx": {
     parser: "babylon",
-    style: "eslint",
-  },
-  ".ts, .tsx": {
-    parser: "typescript",
     style: "eslint",
   },
 };
