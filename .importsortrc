@@ -1,11 +1,6 @@
 {
-  ".js": {
-    "parser": "babylon",
-    "style": "module"
-  },
-
   ".ts": {
-    "parser": "typescript",
+    "parser": "babylon",
     "style": "module"
   }
 }
