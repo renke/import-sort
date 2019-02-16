@@ -99,6 +99,11 @@ export function parseImports(
 
   const imports: IImport[] = [];
 
+  const ignore = (parsed.comments || [])
+  .some(comment => comment.value.match(/\simport-sort-ignore\s/g))
+
+  if (ignore) return imports
+
   traverse(parsed, {
     ImportDeclaration(path) {
       const {node} = path;
