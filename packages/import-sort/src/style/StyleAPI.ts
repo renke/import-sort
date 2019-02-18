@@ -198,6 +198,10 @@ function isScopedModule(imported: IImport): boolean {
   return imported.moduleName.startsWith("@");
 }
 
+function isTypeImportType(imported: IImport): boolean {
+  return imported.type === "import-type";
+}
+
 function startsWithUpperCase(text: string): boolean {
   const start = text.charAt(0);
   return text.charAt(0) === start.toUpperCase();
@@ -285,6 +289,8 @@ const StyleAPI: IStyleAPI = {
   isAbsoluteModule,
   isScopedModule,
   isInstalledModule,
+
+  isTypeImportType,
 
   startsWithUpperCase,
   startsWithLowerCase,

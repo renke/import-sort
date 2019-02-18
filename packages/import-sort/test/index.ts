@@ -810,3 +810,53 @@ import {
     assert.equal(applyChanges(code, changes), expected);
   });
 });
+
+const TWO_BUCKETS_IMPORT_TYPE: IStyle = (styleApi: IStyleAPI): Array<IStyleItem> => {
+  const items: Array<IStyleItem> = [
+    {
+      match: styleApi.not(styleApi.isTypeImportType),
+      sort: styleApi.member(styleApi.naturally),
+    },
+    {
+      separator: true,
+    },
+    {
+      match: styleApi.always,
+      sort: styleApi.member(styleApi.naturally),
+      sortNamedMembers: styleApi.name(styleApi.naturally),
+    },
+  ];
+
+  return items;
+}
+
+describe("sortImports (babylon, TWO_BUCKETS_IMPORT_TYPE)", () => {
+  it("should sort code containing only imports", () => {
+    const code = 
+`
+import b from "./b";
+import type { tx, ty } from "./t2";
+import type { tb, ta } from "./t1";
+import a from "a";
+import c from "./c";
+`.trim() + "\n";
+
+    const expected = 
+`
+import a from "a";
+import b from "./b";
+import c from "./c";
+
+import type { ta, tb } from "./t1";
+import type { tx, ty } from "./t2";
+`.trim() + "\n";
+
+    const result = sortImports(code, parser, TWO_BUCKETS_IMPORT_TYPE);
+
+    const actual = result.code;
+    const changes = result.changes;
+
+    assert.equal(actual, expected);
+    assert.equal(applyChanges(code, changes), expected);
+  })
+})
