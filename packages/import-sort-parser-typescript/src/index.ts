@@ -1,6 +1,11 @@
 import {IImport, ImportType, NamedMember} from "import-sort-parser"; // tslint:disable-line
 import * as typescript from "typescript";
 
+// Match 'import-sort-ignore' when:
+// - Immediately in front of it is either whitespace, or the start of a comment ('//' or '/*')
+// - Immediately after it is either whitespace, the end of a multi-line comment ('*/') or the end of the input.
+const ignoreCommentRegExp = /(?:^\/\/|^\/\*|\s)import-sort-ignore(?:\s|\*\/|$)/;
+
 export function parseImports(code: string): IImport[] {
   const host: typescript.CompilerHost = {
     fileExists: () => true,
@@ -43,7 +48,27 @@ export function parseImports(code: string): IImport[] {
 
   const imports: IImport[] = [];
 
-  typescript.forEachChild(sourceFile, node => {
+  const ignoreFile = sourceFile.forEachChild(node => {
+    const leadingComments = getComments(sourceFile, node, false) || [];
+    const trailingComments = getComments(sourceFile, node, true) || [];
+
+    const comments = [...leadingComments, ...trailingComments];
+    for (const comment of comments) {
+      const text = code.substring(comment.pos, comment.end);
+      if (ignoreCommentRegExp.test(text)) {
+        return true;
+      }
+    }
+
+    // forEachChild will continue iterating as long as the callback returns `undefined`
+    return undefined;
+  });
+
+  if (ignoreFile) {
+    return imports;
+  }
+
+  sourceFile.forEachChild(node => {
     switch (node.kind) {
       case typescript.SyntaxKind.ImportDeclaration: {
         imports.push(
