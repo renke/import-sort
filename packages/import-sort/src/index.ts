@@ -20,12 +20,20 @@ export interface ICodeChange {
   note?: string;
 }
 
+export interface IOptions {
+  parserOptions?: object;
+
+  styleOptions?: object;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [option: string]: any;
+}
+
 export default function importSort(
   code: string,
   rawParser: string | IParser,
   rawStyle: string | IStyle,
   file?: string,
-  options?: object,
+  options?: IOptions,
 ): ISortResult {
   let style: IStyle;
 
@@ -52,14 +60,16 @@ export function sortImports(
   parser: IParser,
   style: IStyle,
   file?: string,
-  options?: object,
+  options?: IOptions,
 ): ISortResult {
+  const {parserOptions, styleOptions, ...rest}: IOptions = options || {};
   // eslint-disable-next-line
-  const items = addFallback(style, file, options || {})(StyleAPI);
+  const items = addFallback(style, file, {...rest, styleOptions})(StyleAPI);
 
   const buckets: IImport[][] = items.map(() => []);
 
   const imports = parser.parseImports(code, {
+    ...parserOptions,
     file,
   });
 

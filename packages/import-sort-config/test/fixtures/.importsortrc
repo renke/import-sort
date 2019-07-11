@@ -2,6 +2,12 @@
   "unprefixed": {
     "parser": "some-parser"
   },
+  "withoptions": {
+    "parser": {
+      "module": "some-parser",
+      "options": {"foo": "bar"}
+    }
+  },
   "shorthand": {
     "style": "test"
   },

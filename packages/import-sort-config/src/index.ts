@@ -6,17 +6,21 @@ export interface IConfigByGlobs {
   [globs: string]: IConfig;
 }
 
+export interface IConfigItem {
+  module: string;
+  options: Record<string, unknown>;
+}
 export interface IConfig {
-  parser?: string;
-  style?: string;
-  options?: object;
+  parser?: string | IConfigItem;
+  style?: string | IConfigItem;
+  options?: Record<string, unknown>;
 }
 
 export interface IResolvedConfig {
   config: IConfig;
 
-  parser?: string;
-  style?: string;
+  parser?: IConfigItem;
+  style?: IConfigItem;
 }
 
 export const DEFAULT_CONFIGS: IConfigByGlobs = {
@@ -154,18 +158,30 @@ function resolveConfig(config: IConfig, directory?: string): IResolvedConfig {
   return resolvedConfig;
 }
 
-function resolveParser(module: string, directory?: string) {
-  return (
+function resolveParser(parser: string | IConfigItem, directory?: string) {
+  let module: string | undefined;
+  let options: Record<string, unknown> = {};
+  if (typeof parser === "object") ({module, options} = parser);
+  else module = parser;
+
+  module =
     resolveModule(`import-sort-parser-${module}`, directory) ||
-    resolveModule(module, directory)
-  );
+    resolveModule(module, directory);
+
+  return module ? {options, module} : undefined;
 }
 
-function resolveStyle(module: string, directory?: string) {
-  return (
+function resolveStyle(style: string | IConfigItem, directory?: string) {
+  let module: string | undefined;
+  let options: Record<string, unknown> = {};
+  if (typeof style === "object") ({module, options} = style);
+  else module = style;
+
+  module =
     resolveModule(`import-sort-style-${module}`, directory) ||
-    resolveModule(module, directory)
-  );
+    resolveModule(module, directory);
+
+  return module ? {options, module} : undefined;
 }
 
 function resolveModule(module: string, directory?: string): string | undefined {

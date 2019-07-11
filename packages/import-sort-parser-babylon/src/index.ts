@@ -1,7 +1,6 @@
 import {extname} from "path";
 
 import {
-  loadOptions as babelLoadOptions,
   loadPartialConfig as babelLoadPartialOptions,
   parse as babelParse,
 } from "@babel/core";
@@ -71,30 +70,42 @@ const TYPESCRIPT_PARSER_OPTIONS = {
   plugins: TYPESCRIPT_PARSER_PLUGINS,
 };
 
+export interface BabelOptions extends IParserOptions {
+  cwd?: string;
+  envName?: string;
+  babelrc?: boolean;
+  root?: string;
+  rootMode?: string;
+  configFile?: string | false;
+  babelrcRoots?: true | string | string[];
+}
+
 export function parseImports(
   code: string,
-  options: IParserOptions = {},
+  options: BabelOptions = {},
 ): IImport[] {
-  const babelPartialOptions = babelLoadPartialOptions({filename: options.file});
+  const {file, ...rest}: BabelOptions = options;
+  const babelPartialOptions = babelLoadPartialOptions({
+    filename: file,
+    ...rest,
+  });
 
   let parsed;
 
   if (babelPartialOptions.hasFilesystemConfig()) {
     // We always prefer .babelrc (or similar) if one was found
-    parsed = babelParse(code, babelLoadOptions({filename: options.file}));
+    parsed = babelParse(code, {
+      filename: file,
+      ...rest,
+    });
   } else {
-    const {file} = options;
-
     const isTypeScript = file && TYPESCRIPT_EXTENSIONS.includes(extname(file));
 
     const parserOptions = isTypeScript
       ? TYPESCRIPT_PARSER_OPTIONS
       : FLOW_PARSER_OPTIONS;
 
-    parsed = babelParserParse(
-      code,
-      (parserOptions as unknown) as ParserOptions,
-    );
+    parsed = babelParserParse(code, parserOptions as ParserOptions);
   }
 
   const imports: IImport[] = [];
