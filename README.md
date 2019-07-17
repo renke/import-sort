@@ -173,7 +173,7 @@ By default, `import-sort` comes with these styles:
 - [`import-sort-style-renke`](packages/import-sort-style-renke): Renke's
   personal style.
 
-# Writing you own custom style
+# Writing your own custom style
 
 Since styles can now be configured using your `package.json` it's way easier to
 write and use your own style.
