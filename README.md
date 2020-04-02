@@ -188,6 +188,52 @@ The best way to write your own style is to look at existing styles like
 [`import-sort-style-renke`](packages/import-sort-style-renke/src/index.ts) and
 adapt it to your liking.
 
+## Using a custom style
+
+If you don't want to publish an NPM package with your custom style, you can set it up like this in your repo:
+
+```
+root
+- package.json
+- .importsortrc.json
+- node_modules/
+- import-sort-style-mycustomstyle
+  - index.js
+- postinstall.sh
+```
+
+In `.importsortrc.json`:
+```json
+{
+  ".js, .jsx, .es6, .es, .mjs, .ts, .tsx": {
+    "parser": "babylon",
+    "style": "mycustomstyle"
+  }
+}
+```
+
+In `index.js` put your custom config, starting from [`import-sort-style-renke`](packages/import-sort-style-renke/src/index.ts).
+
+In `postinstall.sh`:
+```sh
+#!/bin/bash
+
+# Don't forget to make this script executable by running `chmod u+x postinstall.sh`
+
+echo "Linking import sort style in node_modules"
+ln -s ./import-sort-style-mycustomstyle ./node_modules/.
+```
+
+And finally, for convenience, add the following script in your `package.json`, it will make sure to run the linking after you install your node_modules.
+```
+{
+  "scripts": {
+    "start": "...",
+    "postinstall": "./post-install.sh"
+  }
+}
+```
+
 # Feedback
 
 I appreciate any kind of feedback. Just create an issue or drop me a mail.
