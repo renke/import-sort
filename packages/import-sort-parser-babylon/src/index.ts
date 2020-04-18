@@ -185,7 +185,7 @@ export function parseImports(
             });
           } else if (isImportDefaultSpecifier(specifier)) {
             imported.defaultMember = specifier.local.name;
-          } else if (isImportNamespaceSpecifier) {
+          } else if (isImportNamespaceSpecifier(specifier)) {
             imported.namespaceMember = specifier.local.name;
           }
         });
