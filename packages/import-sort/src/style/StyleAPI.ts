@@ -36,11 +36,11 @@ function member(
     const first =
       firstImport.defaultMember ||
       firstImport.namespaceMember ||
-      firstImport.namedMembers[0].alias;
+      firstImport.namedMembers.length > 0 && firstImport.namedMembers[0].alias;
     const second =
       secondImport.defaultMember ||
       secondImport.namespaceMember ||
-      secondImport.namedMembers[0].alias;
+      secondImport.namedMembers.length > 0 && secondImport.namedMembers[0].alias;
 
     return comparator(first, second);
   };
