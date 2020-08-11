@@ -28,6 +28,14 @@ Usage: import-sort [OPTION]... [FILE/GLOB]...
   )
   .boolean("with-node-modules")
 
+  .describe("stdin", "Read from stdin.")
+  .boolean("stdin")
+  .conflicts("stdin", "write")
+  .implies("stdin", "stdin-filepath")
+
+  .describe("stdin-filepath", "Assumed path to file when read from stdin.")
+  .string("stdin-filepath")
+
   // tslint:disable-next-line:no-var-requires
   .version(require("../package.json").version)
   .alias("version", "v")
@@ -43,7 +51,12 @@ const listDifferent = argv["list-different"];
 const writeFiles = argv.write;
 const ignoreNodeModules = !argv["with-node-modules"];
 
-if (filePatterns.length === 0) {
+const {stdin, "stdin-filepath": stdinFilepath} = argv;
+
+if (
+  (stdin && (stdinFilepath === "" || stdinFilepath === undefined)) ||
+  (!stdin && filePatterns.length === 0)
+) {
   yargs.showHelp();
   process.exit(1);
 }
@@ -55,23 +68,27 @@ if (ignoreNodeModules) {
   ]);
 }
 
-let filePaths;
+let filePaths: string[] = [];
 
-try {
-  filePaths = globby
-    // @ts-ignore
-    .sync(filePatterns, {dot: true, expandDirectories: false})
-    .map(filePath => path.relative(process.cwd(), filePath));
-} catch (e) {
-  console.error("Invalid file patterns");
-  process.exit(2);
-}
+if (stdin) {
+  filePaths = [stdinFilepath as string];
+} else {
+  try {
+    filePaths = globby
+      // @ts-ignore
+      .sync(filePatterns, {dot: true, expandDirectories: false})
+      .map(filePath => path.relative(process.cwd(), filePath));
+  } catch (e) {
+    console.error("Invalid file patterns");
+    process.exit(2);
+  }
 
-if (filePaths.length === 0) {
-  console.error(
-    `No files found for the given patterns: ${filePatterns.join(", ")}`,
-  );
-  process.exit(2);
+  if (filePaths.length === 0) {
+    console.error(
+      `No files found for the given patterns: ${filePatterns.join(", ")}`,
+    );
+    process.exit(2);
+  }
 }
 
 for (const filePath of filePaths) {
@@ -84,7 +101,7 @@ for (const filePath of filePaths) {
     continue;
   }
 
-  const unsortedCode = readFileSync(filePath).toString("utf8");
+  const unsortedCode = readFileSync(stdin ? 0 : filePath).toString("utf8");
 
   const {parser, style, config: rawConfig} = config;
   let sortResult: ISortResult | undefined;
