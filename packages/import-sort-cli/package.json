@@ -30,6 +30,7 @@
     "@types/node": "^10.3.5",
     "@types/yargs": "^12.0.8",
     "@typescript-eslint/eslint-plugin": "^1.2.0",
+    "@typescript-eslint/parser": "^3.10.1",
     "chai": "^4.0.2",
     "eslint": "^5.13.0",
     "eslint-config-airbnb": "^17.1.0",
