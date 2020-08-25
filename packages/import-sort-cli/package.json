@@ -44,7 +44,7 @@
   "dependencies": {
     "diff": "^4.0.1",
     "file": "^0.2.2",
-    "globby": "^9.0.0",
+    "globby": "^11.0.1",
     "import-sort": "^6.0.0",
     "import-sort-config": "^6.0.0",
     "import-sort-parser": "^6.0.0",
