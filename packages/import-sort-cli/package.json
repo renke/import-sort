@@ -30,6 +30,7 @@
     "@types/node": "^10.3.5",
     "@types/yargs": "^12.0.8",
     "@typescript-eslint/eslint-plugin": "^1.2.0",
+    "@typescript-eslint/parser": "^3.10.1",
     "chai": "^4.0.2",
     "eslint": "^5.13.0",
     "eslint-config-airbnb": "^17.1.0",
@@ -44,7 +45,7 @@
   "dependencies": {
     "diff": "^4.0.1",
     "file": "^0.2.2",
-    "globby": "^9.0.0",
+    "globby": "^11.0.1",
     "import-sort": "^6.0.0",
     "import-sort-config": "^6.0.0",
     "import-sort-parser": "^6.0.0",

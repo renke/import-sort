@@ -6,5 +6,6 @@ yarn-error.log
 node_modules
 npm-debug.log
 packages/*/lib/
+tsconfig.tsbuildinfo
 
 !**/fixtures/node_modules/
