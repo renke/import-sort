@@ -630,7 +630,7 @@ import b from "b";
     assert.equal(applyChanges(code, changes), expected);
   });
 
-  it("should add a blank line after the shebang", () => {
+  it("should organiza imports after the shebang", () => {
     const code =
       `
 #!/usr/bin/env node
@@ -641,7 +641,6 @@ import a from "a";
     const expected =
       `
 #!/usr/bin/env node
-
 import a from "a";
 import b from "b";
 `.trim() + "\n";

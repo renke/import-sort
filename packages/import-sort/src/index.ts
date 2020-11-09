@@ -181,7 +181,7 @@ export function sortImports(
   let afterChange: ICodeChange | undefined;
 
   // Collapse all whitespace into a single blank line
-  before = before.replace(/\s+$/, match => {
+  before = before.replace(/[\t\v\f\r \u00a0\u2000-\u200b\u2028-\u2029\u3000]+$/, match => {
     beforeChange = {
       start: start - match.length,
       end: start,
